@@ -6,9 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref WaitWordRamAccess, GiveWordRamAccess, StopZ80, StartZ80
-	xref HBlankIrq, VBlankIrq, VSync
 
 ; ------------------------------------------------------------------------------
 ; Run MMD file
@@ -87,7 +84,7 @@ RunMmd:
 	move.b	d0,mmd_return_code				; Set return code
 
 	bsr.w	StopZ80						; Stop FM sound
-	move.b	#FM_CMD_STOP,FmSoundQueue2
+	move.b	#FM_CMD_STOP,z_fm_sound_queue_1
 	bsr.w	StartZ80
 
 	move.b	#0,ipx_vsync					; Clear VSync flag

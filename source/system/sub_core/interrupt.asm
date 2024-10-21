@@ -7,8 +7,6 @@
 	include	"system.inc"
 
 	section code_md_irq
-	
-	xref FileFunction
 
 ; ------------------------------------------------------------------------------
 ; Load file

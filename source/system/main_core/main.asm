@@ -6,11 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref VBlankIrq, GiveWordRamAccess, RunMmd, ReadSaveData
-	xref SubCpuCommand, Demo, NewGame, LoadGame
-	xref TimeAttack, BuramManager, DaGarden, VisualMode
-	xref SoundTest, StageSelect, BestStaffTimes
 
 ; ------------------------------------------------------------------------------
 

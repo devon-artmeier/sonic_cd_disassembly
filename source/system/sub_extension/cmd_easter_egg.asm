@@ -8,12 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref Special8EndFile, WaitWordRamAccess, GiveWordRamAccess, PlayEndingSong
-	xref FunIsInfiniteFile, PlayBossSong, McSonicFile, PlayRound8ASong
-	xref TailsFile, PlayDaGardenSong, BatmanSonicFile, PlayFinalBossSong
-	xref CuteSonicFile, PlayRound1CSong, BestStaffTimesFile, SpeedShoesSong
-	xref ResetCddaVolume
 
 ; ------------------------------------------------------------------------------
 ; Load special stage 8 credits

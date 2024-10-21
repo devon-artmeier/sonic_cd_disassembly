@@ -9,30 +9,6 @@
 	include	"pcm_driver.inc"
 
 	section code
-	
-	xref WaitWordRamAccess, ResetCddaVolume, GiveWordRamAccess
-	xref Round11AFile, Round11BFile, Round11CFile, Round11DFile
-	xref Round12AFile, Round12BFile, Round12CFile, Round12DFile
-	xref Round13CFile, Round13DFile, Demo11AFile, PcmDriverR1BFile
-	xref Round31AFile, Round31BFile, Round31CFile, Round31DFile
-	xref Round32AFile, Round32BFile, Round32CFile, Round32DFile
-	xref Round33CFile, Round33DFile, PcmDriverR3BFile
-	xref Round41AFile, Round41BFile, Round41CFile, Round41DFile
-	xref Round42AFile, Round42BFile, Round42CFile, Round42DFile
-	xref Round43CFile, Round43DFile, Demo43CFile, PcmDriverR4BFile
-	xref Round51AFile, Round51BFile, Round51CFile, Round51DFile
-	xref Round52AFile, Round52BFile, Round52CFile, Round52DFile
-	xref Round53CFile, Round53DFile, PcmDriverR5BFile
-	xref Round61AFile, Round61BFile, Round61CFile, Round61DFile
-	xref Round62AFile, Round62BFile, Round62CFile, Round62DFile
-	xref Round63CFile, Round63DFile, PcmDriverR6BFile
-	xref Round71AFile, Round71BFile, Round71CFile, Round71DFile
-	xref Round72AFile, Round72BFile, Round72CFile, Round72DFile
-	xref Round73CFile, Round73DFile, PcmDriverR7BFile
-	xref Round81AFile, Round81BFile, Round81CFile, Round81DFile
-	xref Round82AFile, Round82BFile, Round82CFile, Round82DFile
-	xref Round83CFile, Round83DFile, Demo82AFile, PcmDriverR8BFile
-	xref PcmDriverBoss
 
 ; ------------------------------------------------------------------------------
 ; Load stage

@@ -6,8 +6,6 @@
 	include	"include_main.inc"
 
 	section code_buram_funcs
-	
-	xref WaitWordRamAccess, GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------
 ; Run Backup Backup RAM cartridge command

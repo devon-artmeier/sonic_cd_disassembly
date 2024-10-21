@@ -6,9 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref ReadSaveData, WriteSaveData, RunMmd
-	xref mmd_return_code
 
 ; ------------------------------------------------------------------------------
 ; Load game

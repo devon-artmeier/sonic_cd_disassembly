@@ -6,9 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref RunMmd, SubCpuCommand, SpecialStage1Demo, SpecialStage6Demo
-	xref mmd_return_code
 
 ; ------------------------------------------------------------------------------
 ; Demo mode

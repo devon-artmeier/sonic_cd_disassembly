@@ -7,9 +7,6 @@
 	include	"variables.inc"
 
 	section code_2
-	
-	xref DecompressEnigma, EggmanTilemap, DataCorruptTilemap, UnformattedTilemap
-	xref UnformattedUsaTilemap, CartUnformattedTilemap, BuramFullTilemap
 
 ; ------------------------------------------------------------------------------
 ; Draw message tilemap

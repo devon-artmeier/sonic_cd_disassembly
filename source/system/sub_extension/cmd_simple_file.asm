@@ -8,9 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref IpxFile, SoundTestFile, McSonicFile, StageSelectFile
-	xref WaitWordRamAccess, GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------
 ; Load main program

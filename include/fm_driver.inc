@@ -3,12 +3,14 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
+	include	"fm_symbols.inc"
+
 ; ------------------------------------------------------------------------------
 ; Addresses
 ; ------------------------------------------------------------------------------
 
-FmSoundQueue1		equ Z80_RAM+$1C09			; Sound queue 1
-FmSoundQueue2		equ Z80_RAM+$1C0A			; Sound queue 2
-FmSoundQueue3		equ Z80_RAM+$1C0B			; Sound queue 3
+z_fm_sound_play		equ Z80_RAM+z_sound_play		; Sound play slot
+z_fm_sound_queue_1	equ Z80_RAM+z_sound_queue		; Sound queue 1
+z_fm_sound_queue_2	equ Z80_RAM+z_sound_queue+1		; Sound queue 2
 
 ; ------------------------------------------------------------------------------

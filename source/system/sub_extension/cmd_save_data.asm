@@ -9,9 +9,6 @@
 	include	"backup_ram.inc"
 
 	section code
-	
-	xref BuramScratch, BuramStrings, WaitWordRamAccess, BuramReadParams
-	xref GiveWordRamAccess, BuramWriteParams
 
 ; ------------------------------------------------------------------------------
 ; Read save data

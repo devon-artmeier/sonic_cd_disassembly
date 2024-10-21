@@ -6,8 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref RunMmd, StageSelections
 
 ; ------------------------------------------------------------------------------
 ; Stage selection entry
@@ -17,7 +15,6 @@
 ; ------------------------------------------------------------------------------
 
 timeAttackEntry macro
-	xref \1
 	dc.b	\1
 	endm
 

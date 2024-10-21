@@ -8,9 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref TitleMainFile, WaitWordRamAccess, GiveWordRamAccess, TitleSubFile
-	xref ResetCddaVolume, TitleScreenSong
 
 ; ------------------------------------------------------------------------------
 ; Load title screen

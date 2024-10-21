@@ -9,9 +9,6 @@
 	include	"da_garden.inc"
 
 	section code
-	
-	xref DaGardenMainFile, WaitWordRamAccess, DaGardenDataFile, GiveWordRamAccess
-	xref DaGardenSubFile, ResetCddaVolume, DaGardenSong
 
 ; ------------------------------------------------------------------------------
 ; Load D.A. Garden

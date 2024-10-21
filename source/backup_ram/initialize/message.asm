@@ -7,8 +7,6 @@
 	include	"variables.inc"
 
 	section code
-	
-	xref Finish, InitMegaDrive, LoadMessageArt, DrawMessageTilemap
 
 ; ------------------------------------------------------------------------------
 ; Backup RAM corrupted error

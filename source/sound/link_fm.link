@@ -1,0 +1,22 @@
+MEMORY {
+	ram: org = 0, len = 0x1C00
+	bss: org = 0x1C00, len = 0xE400
+}
+
+SECTIONS {
+	code: {
+		*(code_rst_00)
+		. = 8;
+		*(code_rst_08)
+		. = 0x18;
+		*(code_rst_18_20)
+		*(code)
+		*(data)
+		*(data_sfx_index)
+		*(data_sfx_priorities)
+		*(data_sfx)
+	} > ram
+	bss (NOLOAD): {
+		*(bss)	
+	} > bss
+}

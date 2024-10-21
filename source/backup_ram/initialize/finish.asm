@@ -7,8 +7,6 @@
 	include	"variables.inc"
 
 	section code
-	
-	xref GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------
 ; Finish operations

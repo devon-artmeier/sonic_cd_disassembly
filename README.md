@@ -4,7 +4,9 @@
 
 ## Requirements
 
-* [vasm](http://sun.hasenbraten.de/vasm/) (M68k CPU, Motorola syntax)
+* [vasm](http://sun.hasenbraten.de/vasm/)
+  * M68k CPU, Motorola syntax
+  * Z80 CPU, old style syntax
 * [vlink](http://sun.hasenbraten.de/vlink/)
 * [extract-asm-symbols](https://github.com/devon-artmeier/extract-asm-symbols)
 * make

@@ -23,8 +23,9 @@ DEPEND_MAIN       := $(INCLUDE_PATH)/backup_ram.inc \
                      $(INCLUDE_PATH)/da_garden.inc \
                      $(INCLUDE_PATH)/game_variables.inc \
                      $(INCLUDE_PATH)/include_main.inc \
-                     $(INCLUDE_PATH)/fm_sound_ids.inc \
                      $(INCLUDE_PATH)/fm_driver.inc \
+                     $(INCLUDE_PATH)/fm_sound_ids.inc \
+                     $(INCLUDE_PATH)/fm_symbols.inc \
                      $(INCLUDE_PATH)/mcd_main.inc \
                      $(INCLUDE_PATH)/mmd.inc \
                      $(INCLUDE_PATH)/special_stage.inc \
@@ -44,6 +45,7 @@ DEPEND_SUB        := $(INCLUDE_PATH)/backup_ram.inc \
                      source/sound/pcm/variables.inc
 
 # Output files
+OUT_FM_DRIVER     := $(BUILD_PATH)/z80.bin
 OUT_SUB_CORE      := $(BUILD_PATH)/sp.bin
 OUT_SUB_EXT       := $(FILES_PATH)/SPX___.BIN
 OUT_MAIN_BOOT     := $(BUILD_PATH)/ip.bin
@@ -51,7 +53,8 @@ OUT_MAIN_CORE     := $(FILES_PATH)/IPX___.MMD
 OUT_BURAM_INIT    := $(FILES_PATH)/BRAMINIT.MMD
 OUT_BURAM_SUB     := $(FILES_PATH)/BRAMSUB.BIN
 
-OUT_FILES         := $(OUT_SUB_CORE) \
+OUT_FILES         := $(OUT_FM_DRIVER) \
+                     $(OUT_SUB_CORE) \
                      $(OUT_SUB_EXT) \
 		     $(OUT_MAIN_BOOT) \
 		     $(OUT_MAIN_CORE) \
@@ -66,6 +69,7 @@ clean:
 	$(RM) $(BUILD_PATH)
 
 # Rules files
+        include $(SRC_PATH)/sound/make.rules
         include $(SRC_PATH)/system/make.rules
         include $(SRC_PATH)/backup_ram/make.rules
 

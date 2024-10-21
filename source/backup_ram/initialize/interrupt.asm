@@ -7,8 +7,6 @@
 	include	"variables.inc"
 
 	section code
-	
-	xref StopZ80, StartZ80, ReadController
 
 ; ------------------------------------------------------------------------------
 ; V-BLANK interrupt

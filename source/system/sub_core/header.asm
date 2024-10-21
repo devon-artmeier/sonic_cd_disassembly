@@ -7,8 +7,6 @@
 	include	"system.inc"
 
 	section code
-	
-	xref Initialize, Main, MegaDriveIrq, UserCall
 
 ; ------------------------------------------------------------------------------
 ; Header

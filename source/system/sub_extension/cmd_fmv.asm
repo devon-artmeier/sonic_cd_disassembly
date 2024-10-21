@@ -8,9 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref OpeningMainFile, WaitWordRamAccess, GiveWordRamAccess, OpeningSubFile
-	xref EndingMainFile, BadEndingSubFile, GoodEndingSubFile
 
 ; ------------------------------------------------------------------------------
 ; Load opening FMV

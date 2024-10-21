@@ -11,18 +11,6 @@
 	include	"../../sound/pcm/variables.inc"
 
 	section code
-	
-	xref FinishCommand, Round1ASong, Round1CSong, Round1DSong
-	xref Round3ASong, Round3CSong, Round3DSong, Round4ASong
-	xref Round4CSong, Round4DSong, Round5ASong, Round5CSong
-	xref Round5DSong, Round6ASong, Round6CSong, Round6DSong
-	xref Round7ASong, Round7CSong, Round7DSong, Round8ASong
-	xref Round8CSong, Round8DSong, BossSong, FinalBossSong
-	xref TimeAttackSong, SpecialStageSong, DaGardenSong, ProtoWarpSound
-	xref OpeningSong, EndingSong, TitleScreenSong, ResultsSong
-	xref SpeedShoesSong, InvincibleSong, GameOverSong, PcmDriverR1BFile
-	xref PcmDriverR3BFile, PcmDriverR4BFile, PcmDriverR5BFile, PcmDriverR6BFile
-	xref PcmDriverR7BFile, PcmDriverR8BFile
 
 ; ------------------------------------------------------------------------------
 ; Play "Future" voice clip

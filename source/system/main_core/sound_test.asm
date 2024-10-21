@@ -6,8 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref RunMmd
 
 ; ------------------------------------------------------------------------------
 ; Sound test

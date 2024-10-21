@@ -9,8 +9,6 @@
 
 	section code
 	
-	xref WarpFile, WaitWordRamAccess, GiveWordRamAccess
-	
 ; ------------------------------------------------------------------------------
 ; Load time warp cutscene
 ; ------------------------------------------------------------------------------

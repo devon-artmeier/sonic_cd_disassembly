@@ -8,9 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref WaitWordRamAccess, ThankYouMainFile, ThankYouDataFile, GiveWordRamAccess
-	xref ThankYouSubFile
 
 ; ------------------------------------------------------------------------------
 ; Load "Thank You" screen

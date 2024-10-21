@@ -7,8 +7,6 @@
 	include	"system.inc"
 
 	section code_load_file
-	
-	xref FileFunction
 
 ; ------------------------------------------------------------------------------
 ; Load file

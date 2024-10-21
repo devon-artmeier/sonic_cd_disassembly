@@ -8,8 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref MdInitFile, WaitWordRamAccess, GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------
 ; Load Mega Drive initialization

@@ -8,8 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref PencilTestMainFile, WaitWordRamAccess, GiveWordRamAccess, PencilTestSubFile
 
 ; ------------------------------------------------------------------------------
 ; Load pencil test FMV

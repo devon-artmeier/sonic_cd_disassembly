@@ -8,8 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref TimerIrq, FinishCommand, NullGraphicsIrq
 
 ; ------------------------------------------------------------------------------
 ; Define a command
@@ -20,9 +18,8 @@
 ; ------------------------------------------------------------------------------
 
 __command_id set 1
-command macro id, name
+command macro
 	xdef \1
-	xref \2
 	dc.w	(\2)-Commands
 	\1:		equ __command_id
 	__command_id:	set __command_id+1

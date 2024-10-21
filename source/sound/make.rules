@@ -1,0 +1,57 @@
+# Source folder paths
+SRC_PATH_SOUND    := $(SRC_PATH)/sound
+SRC_PATH_FM       := $(SRC_PATH_SOUND)/fm
+
+# Object folder paths
+OBJ_PATH_FM       := $(OBJ_PATH)/$(SRC_PATH_FM)
+
+# FM sound data files
+SRC_FM_DATA       := $(SRC_PATH_FM)/data.asm
+OBJ_FM_DATA       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DATA))
+
+DEPEND_FM_DATA    := $(SRC_PATH_FM)/constants.inc \
+                     $(SRC_PATH_FM)/smps2asm.inc
+
+SYMBOLS_FM_DATA   := -ip FM_
+
+# FM sound driver files
+SRC_FM_DRIVER     := $(SRC_PATH_FM)/start.asm \
+                     $(SRC_PATH_FM)/get_list.asm \
+                     $(SRC_PATH_FM)/read_pointer.asm \
+                     $(SRC_PATH_FM)/main.asm \
+                     $(SRC_PATH_FM)/track.asm \
+                     $(SRC_PATH_FM)/duration.asm \
+                     $(SRC_PATH_FM)/vibrato.asm \
+                     $(SRC_PATH_FM)/key_on_off.asm \
+                     $(SRC_PATH_FM)/portamento.asm \
+                     $(SRC_PATH_FM)/envelope.asm \
+                     $(SRC_PATH_FM)/instrument.asm \
+                     $(SRC_PATH_FM)/play_sound.asm \
+                     $(SRC_PATH_FM)/registers.asm \
+                     $(SRC_PATH_FM)/frequencies.asm \
+                     $(SRC_PATH_FM)/command.asm \
+                     $(SRC_PATH_FM)/info.asm \
+                     $(SRC_PATH_FM)/variables.asm
+OBJ_FM_DRIVER     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
+
+DEPEND_FM_DRIVER  := $(INCLUDE_PATH)/z80.inc \
+                     $(SRC_PATH_FM)/constants.inc
+
+SYMBOLS_FM_DRIVER := -iy z_sound_play \
+                     -iy z_sound_queue
+
+# FM sound driver
+$(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
+	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
+	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
+	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/variables.o
+
+$(OBJ_FM_DRIVER): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_FM) $(DEPEND_FM_DRIVER)
+	$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
+
+$(OBJ_FM_DATA): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_FM) $(DEPEND_FM_DATA)
+	$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
+
+# Create folders
+$(OBJ_PATH_FM): $(OBJ_PATH)
+	$(MKDIR) "$@"

@@ -7,8 +7,6 @@
 	include	"variables.inc"
 
 	section code_2
-	
-	xref DecompressNemesisVdp, EggmanArt, MessageArt, MessageUsaArt
 
 ; ------------------------------------------------------------------------------
 ; Load message art

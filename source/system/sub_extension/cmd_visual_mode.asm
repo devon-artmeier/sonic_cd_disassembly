@@ -8,9 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref VisualModeFile, WaitWordRamAccess, ResetCddaVolume, TitleScreenSong
-	xref GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------
 ; Load Visual Mode menu

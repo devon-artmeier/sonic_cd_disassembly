@@ -9,9 +9,6 @@
 	include	"special_stage.inc"
 
 	section code
-	
-	xref SpecialStageMainFile, WaitWordRamAccess, SpecialStageSubFile, GiveWordRamAccess
-	xref ResetCddaVolume, SpecialStageSong, ResultsSong
 
 ; ------------------------------------------------------------------------------
 ; Load special stage

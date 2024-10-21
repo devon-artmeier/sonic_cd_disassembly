@@ -7,12 +7,6 @@
 	include	"variables.inc"
 
 	section code
-	
-	xref VBlankIrq, WaitSubCpuStart, GiveWordRamAccess, WaitSubCpuInit
-	xref InitBuram, Unformatted, CartUnformatted, InitBuramParams
-	xref SearchBuram, ReadBuram, BuramCorrupted, CallReadSaveData
-	xref InitSaveData, WriteBuram, CallWriteSaveData, DeleteBuram
-	xref BuramFull, Finish
 
 ; ------------------------------------------------------------------------------
 

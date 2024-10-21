@@ -6,8 +6,6 @@
 	include	"include_main.inc"
 
 	section code
-	
-	xref RunMmd, SpecialStage1Demo
 
 ; ------------------------------------------------------------------------------
 ; Stage selection entry

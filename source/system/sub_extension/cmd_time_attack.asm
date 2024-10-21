@@ -8,9 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref TimeAttackMainFile, WaitWordRamAccess, GiveWordRamAccess, ResetCddaVolume
-	xref DaGardenSong, TimeAttackSong
 
 ; ------------------------------------------------------------------------------
 ; Load time attack menu

@@ -8,8 +8,6 @@
 	include	"system_symbols.inc"
 
 	section code
-	
-	xref BuramInitFile, WaitWordRamAccess, GiveWordRamAccess, BuramSubFile
 
 ; ------------------------------------------------------------------------------
 ; Load Backup RAM initialization

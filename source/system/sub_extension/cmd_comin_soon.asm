@@ -9,9 +9,6 @@
 
 	section code
 	
-	xref CominSoonFile, WaitWordRamAccess, GiveWordRamAccess, ResetCddaVolume
-	xref InvincibleSong
-
 ; ------------------------------------------------------------------------------
 ; Load "Comin' Soon" screen
 ; ------------------------------------------------------------------------------

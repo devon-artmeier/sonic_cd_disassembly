@@ -9,8 +9,6 @@
 	include	"special_stage.inc"
 
 	section code
-	
-	xref FinishCommand
 
 ; ------------------------------------------------------------------------------
 ; Reset special stage flags
