@@ -5,18 +5,15 @@
 
 	include	"constants.inc"
 	include	"smps2asm.inc"
+	
+	section data
 
 ; ------------------------------------------------------------------------------
-; Labels
+; Song index
 ; ------------------------------------------------------------------------------
 	
-	xdef SongIndex, SfxIndex, SfxPriorities
-	section data
+	xdef SongIndex
 SongIndex:
-	section data_sfx_index
-SfxIndex:
-	section data_sfx_priorities
-SfxPriorities:
 
 ; ------------------------------------------------------------------------------
 ; Define sound effect
@@ -122,5 +119,21 @@ sfx macro
 	sfx FM_DD,          SfxDD, $70, "sfx/DD.asm"
 	sfx FM_DE,          SfxDE, $70, "sfx/DE.asm"
 	sfx FM_DF,          SfxDF, -1,  "sfx/DF.asm"
+
+; ------------------------------------------------------------------------------
+; SFX index
+; ------------------------------------------------------------------------------
+	
+	section data_sfx_index
+	xdef SfxIndex
+SfxIndex:
+
+; ------------------------------------------------------------------------------
+; SFX priorities
+; ------------------------------------------------------------------------------
+
+	section data_sfx_priorities
+	xdef SfxPriorities
+SfxPriorities:
 
 ; ------------------------------------------------------------------------------

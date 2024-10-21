@@ -53,19 +53,24 @@ BURAM_SUB_DEPEND   := $(DEPEND_SUB) \
 
 # Initialization rules
 $(OUT_BURAM_INIT): $(OBJ_BURAM_INIT) $(BURAM_INIT_FUNCS)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_initialize.link -o $@ $^
 
 $(OBJ_BURAM_INIT): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_BURAM_INIT) $(BURAM_INIT_DEPEND)
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 
 $(BURAM_INIT_FUNCS): $(SRC_PATH_BURAM_CORE)/main_functions.asm
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 	
 # Sub CPU program rules
 $(OUT_BURAM_SUB): $(OBJ_BURAM_SUB)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_sub.link -o $@ $^
 
 $(OBJ_BURAM_SUB): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_BURAM_SUB) $(BURAM_SUB_DEPEND)
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 
 # Create folders

@@ -42,14 +42,17 @@ SYMBOLS_FM_DRIVER := -iy z_sound_play \
 
 # FM sound driver
 $(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
 	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
 	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/variables.o
 
 $(OBJ_FM_DRIVER): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_FM) $(DEPEND_FM_DRIVER)
+	$(ASSEMBLING)
 	$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
 
 $(OBJ_FM_DATA): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_FM) $(DEPEND_FM_DATA)
+	$(ASSEMBLING)
 	$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
 
 # Create folders

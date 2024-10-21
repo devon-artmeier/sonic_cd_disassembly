@@ -11,6 +11,8 @@ SECTIONS {
 		. = 0x18;
 		*(code_rst_18_20)
 		*(code)
+	} > ram
+	data: {
 		*(data)
 		*(data_sfx_index)
 		*(data_sfx_priorities)

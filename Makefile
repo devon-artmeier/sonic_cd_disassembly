@@ -1,5 +1,5 @@
 # Commands
-MKDIR := mkdir -p
-RM    := rm -rf
+MKDIR := @mkdir -p
+RM    := @rm -rf
 
 	include make.rules

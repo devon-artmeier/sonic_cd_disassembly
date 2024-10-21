@@ -100,34 +100,42 @@ OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
 
 # Main CPU core rules
 $(OUT_MAIN_CORE): $(OBJ_MAIN_CORE)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_core.link -o $@ $^
 
 $(OBJ_MAIN_CORE): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_MAIN_CORE) $(DEPEND_MAIN) $(OUT_SUB_EXT)
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 
 # Main CPU bootloader rules
 $(OUT_MAIN_BOOT): $(OBJ_MAIN_BOOT)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_boot.link -o $@ $^
 
 $(OBJ_MAIN_BOOT): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_MAIN_BOOT) $(DEPEND_MAIN) $(OUT_SUB_EXT)
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 	
 # Sub CPU extension rules
 $(OUT_SUB_EXT): $(OBJ_SUB_EXT)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
 	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_ids.inc $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/file_name_table.o $(OBJ_PATH_SUB_EXT)/main.o
 	$(RM) "spx.sym"
 
 $(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_SUB_EXT) $(DEPEND_SUB_EXT) $(OUT_SUB_CORE)
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 
 # Sub CPU core rules
 $(OUT_SUB_CORE): $(OBJ_SUB_CORE)
+	$(LINKING)
 	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile "sp.sym" -o $@ $^
 	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) sp.sym
 	$(RM) "sp.sym"
 
 $(OBJ_SUB_CORE): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_SUB_CORE) $(DEPEND_SUB_CORE)
+	$(ASSEMBLING)
 	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 
 # Create folders
