@@ -9,8 +9,8 @@
   * M68k CPU, Motorola syntax
   * Z80 CPU, old style syntax
 * [vlink](http://sun.hasenbraten.de/vlink/)
-* [extract-asm-symbols](https://github.com/devon-artmeier/extract-asm-symbols)
-* [make-asm-dependencies](https://github.com/devon-artmeier/make-asm-dependencies)
+* [extract_asm_symbols](https://github.com/devon-artmeier/extract_asm_symbols)
+* [make_asm_depend](https://github.com/devon-artmeier/make_asm_dependencies)
 
 ## Special Thanks
 
