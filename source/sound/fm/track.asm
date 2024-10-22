@@ -4,7 +4,7 @@
 ; ------------------------------------------------------------------------------
 
 	include	"z80.inc"
-	include	"constants.inc"
+	include	"variables.inc"
 	
 	section code
 	

@@ -3,17 +3,23 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"constants.inc"
+	include	"variables.inc"
 	include	"smps2asm.inc"
 	
 	section data
 
 ; ------------------------------------------------------------------------------
-; Song index
+; Labels
 ; ------------------------------------------------------------------------------
 	
-	xdef SongIndex
+	xdef SongIndex, SfxIndex, SfxPriorities
 SongIndex:
+
+	section data_sfx_index
+SfxIndex:
+
+	section data_sfx_priorities
+SfxPriorities:
 
 ; ------------------------------------------------------------------------------
 ; Define sound effect
@@ -115,28 +121,13 @@ sfx macro
 	sfx FM_DC,          SfxDC, $70
 	sfx FM_DD,          SfxDD, $70
 	sfx FM_DE,          SfxDE, $70
-	sfx FM_DF,          SfxDF, -1,
-
-; ------------------------------------------------------------------------------
-; SFX index
-; ------------------------------------------------------------------------------
-	
-	section data_sfx_index
-	xdef SfxIndex
-SfxIndex:
-
-; ------------------------------------------------------------------------------
-; SFX priorities
-; ------------------------------------------------------------------------------
-
-	section data_sfx_priorities
-	xdef SfxPriorities
-SfxPriorities:
+	sfx FM_DF,          SfxDF, -1
 
 ; ------------------------------------------------------------------------------
 ; SFX data
 ; ------------------------------------------------------------------------------
 
+	section data_sfx
 Sfx90:
 	include	"sfx/90.asm"
 Sfx91:
