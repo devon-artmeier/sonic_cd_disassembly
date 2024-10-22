@@ -2,8 +2,8 @@
 VASM_M68K         := vasmm68k_mot
 VASM_Z80          := vasmz80_oldstyle
 VLINK             := vlink
-EXTRACT_SYM       := extract-asm-symbols
-MAKE_DEPEND       := make-asm-dependencies
+EXTRACT_SYM       := extract_asm_symbols
+MAKE_DEPEND       := make_asm_depend
 
 # Folder paths
 BUILD_PATH        := build
