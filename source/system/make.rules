@@ -20,10 +20,7 @@ SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/header.asm \
                       $(SRC_PATH_SUB_CORE)/get_file_name.asm \
                       $(SRC_PATH_SUB_CORE)/file_engine.asm
 OBJ_SUB_CORE       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_CORE))
-
-DEPEND_SUB_CORE    := $(INCLUDE_PATH)/backup_ram.inc \
-                      $(INCLUDE_PATH)/mcd_sub.inc \
-                      $(INCLUDE_PATH)/system.inc
+DEPEND_SUB_CORE    := $(patsubst %.o,%.d,$(OBJ_SUB_CORE))
 
 SYMBOLS_SUB_CORE   := -iy TempSaveData \
                       -iy MegaDriveIrq \
@@ -59,16 +56,7 @@ SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/file_name_table.asm \
                       $(SRC_PATH_SUB_EXT)/cdda_ids.asm \
                       $(SRC_PATH_SUB_EXT)/backup_ram_scratch.asm
 OBJ_SUB_EXT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_EXT))
-
-DEPEND_SUB_EXT     := $(INCLUDE_PATH)/backup_ram.inc \
-                      $(INCLUDE_PATH)/cdda_ids.inc \
-                      $(INCLUDE_PATH)/da_garden.inc \
-                      $(INCLUDE_PATH)/mcd_sub.inc \
-                      $(INCLUDE_PATH)/pcm_driver.inc \
-                      $(INCLUDE_PATH)/pcm_sound_ids.inc \
-                      $(INCLUDE_PATH)/special_stage.inc \
-                      $(INCLUDE_PATH)/system.inc \
-                      $(INCLUDE_PATH)/system_symbols.inc
+DEPEND_SUB_EXT     := $(patsubst %.o,%.d,$(OBJ_SUB_EXT))
 
 SYMBOLS_SUB_EXT    := -ip FILE_ \
                       -ip SYS_ \
@@ -79,6 +67,7 @@ SYMBOLS_SUB_EXT    := -ip FILE_ \
 SRC_MAIN_BOOT      := $(SRC_PATH_MAIN_BOOT)/security_usa.asm \
                       $(SRC_PATH_MAIN_BOOT)/boot.asm
 OBJ_MAIN_BOOT      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_BOOT))
+DEPEND_MAIN_BOOT   := $(patsubst %.o,%.d,$(OBJ_MAIN_BOOT))
 
 # Main CPU core files
 SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
@@ -97,56 +86,77 @@ SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
                       $(SRC_PATH_MAIN_CORE)/save_data.asm \
                       $(SRC_PATH_MAIN_CORE)/functions.asm
 OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
+DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
+
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+	-include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE)
+endif
 
 # Main CPU core rules
 $(OUT_MAIN_CORE): $(OBJ_MAIN_CORE)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_core.link -o $@ $^
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_core.link -o $@ $^
 
-$(OBJ_MAIN_CORE): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_MAIN_CORE) $(DEPEND_MAIN) $(OUT_SUB_EXT)
+$(OBJ_MAIN_CORE): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MAIN_CORE)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_MAIN_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_CORE)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # Main CPU bootloader rules
 $(OUT_MAIN_BOOT): $(OBJ_MAIN_BOOT)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_boot.link -o $@ $^
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_boot.link -o $@ $^
 
-$(OBJ_MAIN_BOOT): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_MAIN_BOOT) $(DEPEND_MAIN) $(OUT_SUB_EXT)
+$(OBJ_MAIN_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MAIN_BOOT)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 	
 # Sub CPU extension rules
 $(OUT_SUB_EXT): $(OBJ_SUB_EXT)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
-	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_ids.inc $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/file_name_table.o $(OBJ_PATH_SUB_EXT)/main.o
-	$(RM) "spx.sym"
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_ids.inc $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/file_name_table.o $(OBJ_PATH_SUB_EXT)/main.o
+	@$(RM) "spx.sym"
 
-$(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_SUB_EXT) $(DEPEND_SUB_EXT) $(OUT_SUB_CORE)
+$(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_EXT)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_EXT)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # Sub CPU core rules
 $(OUT_SUB_CORE): $(OBJ_SUB_CORE)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile "sp.sym" -o $@ $^
-	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) sp.sym
-	$(RM) "sp.sym"
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile "sp.sym" -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) sp.sym
+	@$(RM) "sp.sym"
 
-$(OBJ_SUB_CORE): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_SUB_CORE) $(DEPEND_SUB_CORE)
+$(OBJ_SUB_CORE): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_CORE)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_CORE)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # Create folders
 $(OBJ_PATH_SUB_CORE): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)
 
 $(OBJ_PATH_SUB_EXT): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)
 
 $(OBJ_PATH_MAIN_BOOT): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)
 
 $(OBJ_PATH_MAIN_CORE): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)

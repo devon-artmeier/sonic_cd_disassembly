@@ -8,9 +8,7 @@ OBJ_PATH_FM       := $(OBJ_PATH)/$(SRC_PATH_FM)
 # FM sound data files
 SRC_FM_DATA       := $(SRC_PATH_FM)/data.asm
 OBJ_FM_DATA       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DATA))
-
-DEPEND_FM_DATA    := $(SRC_PATH_FM)/constants.inc \
-                     $(SRC_PATH_FM)/smps2asm.inc
+DEPEND_FM_DATA    := $(patsubst %.o,%.d,$(OBJ_FM_DATA))
 
 SYMBOLS_FM_DATA   := -ip FM_
 
@@ -33,28 +31,39 @@ SRC_FM_DRIVER     := $(SRC_PATH_FM)/start.asm \
                      $(SRC_PATH_FM)/info.asm \
                      $(SRC_PATH_FM)/variables.asm
 OBJ_FM_DRIVER     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
-
-DEPEND_FM_DRIVER  := $(INCLUDE_PATH)/z80.inc \
-                     $(SRC_PATH_FM)/constants.inc
+DEPEND_FM_DRIVER  := $(patsubst %.o,%.d,$(OBJ_FM_DRIVER))
 
 SYMBOLS_FM_DRIVER := -iy z_sound_play \
                      -iy z_sound_queue
 
-# FM sound driver
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER)
+endif
+
+# FM sound driver rules
 $(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
-	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
-	$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/variables.o
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/variables.o
 
-$(OBJ_FM_DRIVER): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_FM) $(DEPEND_FM_DRIVER)
+$(OBJ_FM_DRIVER): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_FM_DRIVER)
 	$(ASSEMBLING)
-	$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
+	@$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
 
-$(OBJ_FM_DATA): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_FM) $(DEPEND_FM_DATA)
+$(DEPEND_FM_DRIVER): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# FM data rules
+$(OBJ_FM_DATA): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_FM_DATA)
 	$(ASSEMBLING)
-	$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
+	@$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
+
+$(DEPEND_FM_DATA): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # Create folders
 $(OBJ_PATH_FM): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)

@@ -12,47 +12,47 @@
 
 	xdef EggmanArt
 EggmanArt:
-	incbin	"source/backup_ram/initialize/data/eggman_art.nem"
+	incbin	"data/eggman_art.nem"
 	even
 
 	xdef EggmanTilemap
 EggmanTilemap:
-	incbin	"source/backup_ram/initialize/data/eggman_tilemap.eni"
+	incbin	"data/eggman_tilemap.eni"
 	even
 
 	xdef MessageArt
 MessageArt:
-	incbin	"source/backup_ram/initialize/data/message_english_art.nem"
+	incbin	"data/message_english_art.nem"
 	even
 
 	xdef DataCorruptTilemap
 DataCorruptTilemap:
-	incbin	"source/backup_ram/initialize/data/data_corrupt_english_tilemap.eni"
+	incbin	"data/data_corrupt_english_tilemap.eni"
 	even
 
 	xdef UnformattedTilemap
 UnformattedTilemap:
-	incbin	"source/backup_ram/initialize/data/unformatted_english_tilemap.eni"
+	incbin	"data/unformatted_english_tilemap.eni"
 	even
 
 	xdef CartUnformattedTilemap
 CartUnformattedTilemap:
-	incbin	"source/backup_ram/initialize/data/cart_unformatted_english_tilemap.eni"
+	incbin	"data/cart_unformatted_english_tilemap.eni"
 	even
 
 	xdef BuramFullTilemap
 BuramFullTilemap:
-	incbin	"source/backup_ram/initialize/data/ram_full_english_tilemap.eni"
+	incbin	"data/ram_full_english_tilemap.eni"
 	even
 	
 	xdef MessageUsaArt
 MessageUsaArt:
-	incbin	"source/backup_ram/initialize/data/message_usa_art.nem"
+	incbin	"data/message_usa_art.nem"
 	even
 
 	xdef UnformattedUsaTilemap
 UnformattedUsaTilemap:
-	incbin	"source/backup_ram/initialize/data/unformatted_usa_tilemap.eni"
+	incbin	"data/unformatted_usa_tilemap.eni"
 	even
 
 ; ------------------------------------------------------------------------------

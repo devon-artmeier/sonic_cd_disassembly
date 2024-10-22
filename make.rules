@@ -1,8 +1,9 @@
 # Tools
-VASM_M68K         := @vasmm68k_mot
-VASM_Z80          := @vasmz80_oldstyle
-VLINK             := @vlink
-EXTRACT_SYM       := @extract-asm-symbols
+VASM_M68K         := vasmm68k_mot
+VASM_Z80          := vasmz80_oldstyle
+VLINK             := vlink
+EXTRACT_SYM       := extract-asm-symbols
+MAKE_DEPEND       := make-asm-dependencies
 
 # Folder paths
 BUILD_PATH        := build
@@ -17,36 +18,19 @@ VASM_M68K_FLAGS   := $(VASM_FLAGS) -devpac -opt-p=68000 -opt-o3+ -opt-ow-
 VASM_Z80_FLAGS    := $(VASM_FLAGS)
 VLINK_FLAGS       := -b rawbin1 -nowarn=22
 EXTRACT_SYM_FLAGS := -m asm -v u64
+MAKE_DEPEND_FLAGS := -i $(INCLUDE_PATH) -r
+
+# Make directory
+define make_dir
+	if [ ! -d "$(1)" ]; then \
+		$(MKDIR) "$(1)"; \
+	fi
+endef
 
 # Display assembling message
 ASSEMBLING        = @echo "Assembling \"$<\""
 LINKING           = @echo "Linking    \"$@\""
-
-# Main CPU dependencies
-DEPEND_MAIN       := $(INCLUDE_PATH)/backup_ram.inc \
-                     $(INCLUDE_PATH)/da_garden.inc \
-                     $(INCLUDE_PATH)/game_variables.inc \
-                     $(INCLUDE_PATH)/include_main.inc \
-                     $(INCLUDE_PATH)/fm_driver.inc \
-                     $(INCLUDE_PATH)/fm_sound_ids.inc \
-                     $(INCLUDE_PATH)/fm_symbols.inc \
-                     $(INCLUDE_PATH)/mcd_main.inc \
-                     $(INCLUDE_PATH)/mmd.inc \
-                     $(INCLUDE_PATH)/special_stage.inc \
-                     $(INCLUDE_PATH)/system_ids.inc
-
-# Sub CPU dependencies
-DEPEND_SUB        := $(INCLUDE_PATH)/backup_ram.inc \
-                     $(INCLUDE_PATH)/cdda_ids.inc \
-                     $(INCLUDE_PATH)/da_garden.inc \
-                     $(INCLUDE_PATH)/include_sub.inc \
-                     $(INCLUDE_PATH)/mcd_sub.inc \
-                     $(INCLUDE_PATH)/pcm_sound_ids.inc \
-                     $(INCLUDE_PATH)/special_stage.inc \
-                     $(INCLUDE_PATH)/system.inc \
-                     $(INCLUDE_PATH)/system_ids.inc \
-                     $(INCLUDE_PATH)/system_symbols.inc \
-                     source/sound/pcm/variables.inc
+MAKING_DEPENDS    = @echo "Generating \"$@\""
 
 # Output files
 OUT_FM_DRIVER     := $(BUILD_PATH)/z80.bin
@@ -65,12 +49,15 @@ OUT_FILES         := $(OUT_FM_DRIVER) \
 		     $(OUT_BURAM_INIT) \
 		     $(OUT_BURAM_SUB)
 
+# Reserved rules
+.PHONY: all clean
+
 # Compile everything together
 all: $(BUILD_PATH) $(FILES_PATH) $(OBJ_PATH) $(OUT_FILES)
 
 # Clean
 clean:
-	$(RM) $(BUILD_PATH)
+	@$(RM) $(BUILD_PATH)
 
 # Rules files
         include $(SRC_PATH)/sound/make.rules
@@ -78,11 +65,11 @@ clean:
         include $(SRC_PATH)/backup_ram/make.rules
 
 # Create folders
-$(OBJ_PATH):
-	$(MKDIR) "$@"
+$(OBJ_PATH): $(BUILD_PATH)
+	@$(call make_dir,$@)
 
 $(FILES_PATH): $(BUILD_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)
 
 $(BUILD_PATH):
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)

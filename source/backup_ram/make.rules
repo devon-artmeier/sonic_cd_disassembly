@@ -1,81 +1,80 @@
 # Source folder paths
-SRC_PATH_BURAM      := $(SRC_PATH)/backup_ram
-SRC_PATH_BURAM_CORE := $(SRC_PATH_BURAM)/core
-SRC_PATH_BURAM_INIT := $(SRC_PATH_BURAM)/initialize
-SRC_PATH_BURAM_SUB  := $(SRC_PATH_BURAM)/sub
+SRC_PATH_BURAM          := $(SRC_PATH)/backup_ram
+SRC_PATH_BURAM_CORE     := $(SRC_PATH_BURAM)/core
+SRC_PATH_BURAM_INIT     := $(SRC_PATH_BURAM)/initialize
+SRC_PATH_BURAM_SUB      := $(SRC_PATH_BURAM)/sub
 
 # Object folder paths
-OBJ_PATH_BURAM_INIT := $(OBJ_PATH)/$(SRC_PATH_BURAM_INIT)
-OBJ_PATH_BURAM_SUB  := $(OBJ_PATH)/$(SRC_PATH_BURAM_SUB)
+OBJ_PATH_BURAM_INIT     := $(OBJ_PATH)/$(SRC_PATH_BURAM_INIT)
+OBJ_PATH_BURAM_SUB      := $(OBJ_PATH)/$(SRC_PATH_BURAM_SUB)
 
 # Initialization files
-SRC_BURAM_INIT     := $(SRC_PATH_BURAM_INIT)/main.asm \
-                      $(SRC_PATH_BURAM_INIT)/interrupt.asm \
-                      $(SRC_PATH_BURAM_INIT)/message.asm \
-                      $(SRC_PATH_BURAM_INIT)/finish.asm \
-                      $(SRC_PATH_BURAM_INIT)/functions.asm \
-                      $(SRC_PATH_BURAM_INIT)/load_message_art.asm \
-                      $(SRC_PATH_BURAM_INIT)/nemesis.asm \
-                      $(SRC_PATH_BURAM_INIT)/draw_message_tilemap.asm \
-                      $(SRC_PATH_BURAM_INIT)/enigma.asm \
-                      $(SRC_PATH_BURAM_INIT)/data_usa.asm
-OBJ_BURAM_INIT     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_INIT))
+SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
+                           $(SRC_PATH_BURAM_INIT)/interrupt.asm \
+                           $(SRC_PATH_BURAM_INIT)/message.asm \
+                           $(SRC_PATH_BURAM_INIT)/finish.asm \
+                           $(SRC_PATH_BURAM_INIT)/functions.asm \
+                           $(SRC_PATH_BURAM_INIT)/load_message_art.asm \
+                           $(SRC_PATH_BURAM_INIT)/nemesis.asm \
+                           $(SRC_PATH_BURAM_INIT)/draw_message_tilemap.asm \
+                           $(SRC_PATH_BURAM_INIT)/enigma.asm \
+                           $(SRC_PATH_BURAM_INIT)/data_usa.asm
+OBJ_BURAM_INIT          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_INIT))
+DEPEND_BURAM_INIT       := $(patsubst %.o,%.d,$(OBJ_BURAM_INIT))
 
-BURAM_INIT_DEPEND  := $(DEPEND_MAIN) \
-                      $(SRC_PATH_BURAM_INIT)/variables.inc \
-                      $(SRC_PATH_BURAM_INIT)/data/cart_unformatted_english_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/cart_unformatted_japan_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/data_corrupt_english_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/data_corrupt_japan_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/eggman_art.nem \
-                      $(SRC_PATH_BURAM_INIT)/data/eggman_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/message_english_art.nem \
-                      $(SRC_PATH_BURAM_INIT)/data/message_japan_art.nem \
-                      $(SRC_PATH_BURAM_INIT)/data/message_usa_art.nem \
-                      $(SRC_PATH_BURAM_INIT)/data/palette.pal \
-                      $(SRC_PATH_BURAM_INIT)/data/ram_full_english_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/ram_full_japan_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/unformatted_english_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/unformatted_japan_tilemap.eni \
-                      $(SRC_PATH_BURAM_INIT)/data/unformatted_usa_tilemap.eni \
+SRC_BURAM_INIT_FUNCS    := $(SRC_PATH_BURAM_CORE)/main_functions.asm
+OBJ_BURAM_INIT_FUNCS    := $(OBJ_PATH)/$(SRC_PATH_BURAM_INIT)/backup_ram_functions.o
+DEPEND_BURAM_INIT_FUNCS := $(patsubst %.o,%.d,$(OBJ_BURAM_INIT_FUNCS))
 
-BURAM_INIT_FUNCS   := $(OBJ_PATH)/$(SRC_PATH_BURAM_INIT)/backup_ram_functions.obj
-
-# Sub CPU extension files
+# Sub CPU program files
 SRC_BURAM_SUB      := $(SRC_PATH_BURAM_SUB)/main.asm \
                       $(SRC_PATH_BURAM_SUB)/interrupt.asm \
                       $(SRC_PATH_BURAM_SUB)/functions.asm \
                       $(SRC_PATH_BURAM_SUB)/command.asm
 OBJ_BURAM_SUB      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_SUB))
+DEPEND_BURAM_SUB   := $(patsubst %.o,%.d,$(OBJ_BURAM_SUB))
 
-BURAM_SUB_DEPEND   := $(DEPEND_SUB) \
-                      $(SRC_PATH_BURAM_SUB)/variables.inc
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+	-include $(DEPEND_BURAM_INIT) $(DEPEND_BURAM_INIT_FUNCS) $(DEPEND_BURAM_SUB)
+endif
 
 # Initialization rules
-$(OUT_BURAM_INIT): $(OBJ_BURAM_INIT) $(BURAM_INIT_FUNCS)
+$(OUT_BURAM_INIT): $(OBJ_BURAM_INIT) $(OBJ_BURAM_INIT_FUNCS)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_initialize.link -o $@ $^
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_initialize.link -o $@ $^
 
-$(OBJ_BURAM_INIT): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_BURAM_INIT) $(BURAM_INIT_DEPEND)
+$(OBJ_BURAM_INIT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_BURAM_INIT)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
 
-$(BURAM_INIT_FUNCS): $(SRC_PATH_BURAM_CORE)/main_functions.asm
+$(DEPEND_BURAM_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_INIT)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+$(OBJ_BURAM_INIT_FUNCS): $(SRC_BURAM_INIT_FUNCS) | $(DEPEND_BURAM_INIT_FUNCS)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
-	
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_BURAM_INIT_FUNCS): $(SRC_BURAM_INIT_FUNCS) | $(OBJ_PATH_BURAM_INIT)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
 # Sub CPU program rules
 $(OUT_BURAM_SUB): $(OBJ_BURAM_SUB)
 	$(LINKING)
-	$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_sub.link -o $@ $^
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_sub.link -o $@ $^
 
-$(OBJ_BURAM_SUB): $(OBJ_PATH)/%.o: %.asm $(OBJ_PATH_BURAM_SUB) $(BURAM_SUB_DEPEND)
+$(OBJ_BURAM_SUB): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_BURAM_SUB)
 	$(ASSEMBLING)
-	$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_BURAM_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_SUB)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # Create folders
 $(OBJ_PATH_BURAM_INIT): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)
 
 $(OBJ_PATH_BURAM_SUB): $(OBJ_PATH)
-	$(MKDIR) "$@"
+	@$(call make_dir,$@)
