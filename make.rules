@@ -38,6 +38,7 @@ OUT_SUB_CORE      := $(BUILD_PATH)/sp.bin
 OUT_SUB_EXT       := $(FILES_PATH)/SPX___.BIN
 OUT_MAIN_BOOT     := $(BUILD_PATH)/ip.bin
 OUT_MAIN_CORE     := $(FILES_PATH)/IPX___.MMD
+OUT_MD_INIT       := $(FILES_PATH)/MDINIT.MMD
 OUT_BURAM_INIT    := $(FILES_PATH)/BRAMINIT.MMD
 OUT_BURAM_SUB     := $(FILES_PATH)/BRAMSUB.BIN
 
@@ -46,6 +47,7 @@ OUT_FILES         := $(OUT_FM_DRIVER) \
                      $(OUT_SUB_EXT) \
 		     $(OUT_MAIN_BOOT) \
 		     $(OUT_MAIN_CORE) \
+		     $(OUT_MD_INIT) \
 		     $(OUT_BURAM_INIT) \
 		     $(OUT_BURAM_SUB)
 

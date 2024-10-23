@@ -4,12 +4,14 @@ SRC_PATH_SUB_CORE  := $(SRC_PATH_SYSTEM)/sub_core
 SRC_PATH_SUB_EXT   := $(SRC_PATH_SYSTEM)/sub_extension
 SRC_PATH_MAIN_BOOT := $(SRC_PATH_SYSTEM)/main_boot
 SRC_PATH_MAIN_CORE := $(SRC_PATH_SYSTEM)/main_core
+SRC_PATH_MD_INIT   := $(SRC_PATH_SYSTEM)/md_initialize
 
 # Object folder paths
 OBJ_PATH_SUB_CORE  := $(OBJ_PATH)/$(SRC_PATH_SUB_CORE)
 OBJ_PATH_SUB_EXT   := $(OBJ_PATH)/$(SRC_PATH_SUB_EXT)
 OBJ_PATH_MAIN_BOOT := $(OBJ_PATH)/$(SRC_PATH_MAIN_BOOT)
 OBJ_PATH_MAIN_CORE := $(OBJ_PATH)/$(SRC_PATH_MAIN_CORE)
+OBJ_PATH_MD_INIT   := $(OBJ_PATH)/$(SRC_PATH_MD_INIT)
 
 # Sub CPU core files
 SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/header.asm \
@@ -88,9 +90,30 @@ SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
 OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
 DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
 
+# Mega Drive initialization files
+SRC_MD_INIT        := $(SRC_PATH_MD_INIT)/main.asm \
+                      $(SRC_PATH_MD_INIT)/controller.asm \
+                      $(SRC_PATH_MD_INIT)/data.asm \
+                      $(SRC_PATH_MD_INIT)/functions.asm
+OBJ_MD_INIT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MD_INIT))
+DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
+
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE)
+	-include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE) $(DEPEND_MD_INIT)
 endif
+
+# Mega Drive initialization core rules
+$(OUT_MD_INIT): $(OBJ_MD_INIT)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_md_initialize.link -o $@ $^
+
+$(OBJ_MD_INIT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MD_INIT)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_MD_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MD_INIT)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # Main CPU core rules
 $(OUT_MAIN_CORE): $(OBJ_MAIN_CORE)
@@ -159,4 +182,7 @@ $(OBJ_PATH_MAIN_BOOT): $(OBJ_PATH)
 	@$(call make_dir,$@)
 
 $(OBJ_PATH_MAIN_CORE): $(OBJ_PATH)
+	@$(call make_dir,$@)
+
+$(OBJ_PATH_MD_INIT): $(OBJ_PATH)
 	@$(call make_dir,$@)

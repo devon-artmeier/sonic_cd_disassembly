@@ -77,9 +77,9 @@ WaitSubCpuInit:
 
 	xdef InitMegaDrive
 InitMegaDrive:
-	lea	.VdpRegisters(pc),a0				; Set up VDP registers
+	lea	VdpRegisters(pc),a0				; Set up VDP registers
 	move.w	#$8000,d0
-	moveq	#.VdpRegistersEnd-.VdpRegisters-1,d7
+	moveq	#$13-1,d7
 
 .SetVdpRegisters:
 	move.b	(a0)+,d0
@@ -111,8 +111,8 @@ InitMegaDrive:
 	dbf	d7,.ClearPlaneB
 
 	vdpCmd move.l,0,CRAM,WRITE,VDP_CTRL			; Load palette
-	lea	.Palette(pc),a0
-	moveq	#(.PaletteEnd-.Palette)/4-1,d7
+	lea	Palette(pc),a0
+	moveq	#(PaletteEnd-Palette)/4-1,d7
 
 .LoadPalette:
 	move.l	(a0)+,VDP_DATA
@@ -132,12 +132,12 @@ InitMegaDrive:
 
 ; ------------------------------------------------------------------------------
 
-.Palette:
+Palette:
 	incbin	"source/backup_ram/initialize/data/palette.pal"
-.PaletteEnd:
+PaletteEnd:
 	even
 
-.VdpRegisters:
+VdpRegisters:
 	dc.b	%00000100					; No H-BLANK interrupt
 	dc.b	%00110100					; V-BLANK interrupt, DMA, mode 5
 	dc.b	$C000/$400					; Plane A location
@@ -148,7 +148,7 @@ InitMegaDrive:
 	dc.b	0						; Background color line 0 color 0
 	dc.b	0						; Reserved
 	dc.b	0						; Reserved
-	dc.b	0						; H-INT counter 0
+	dc.b	0						; H-BLANK interrupt counter 0
 	dc.b	%00000110					; Scroll by tile
 	dc.b	%10000001					; H40
 	dc.b	$D000/$400					; Horizontal scroll table lcation
@@ -157,7 +157,6 @@ InitMegaDrive:
 	dc.b	%00000001					; 64x32 tile plane size
 	dc.b	0						; Window horizontal position 0
 	dc.b	0						; Window vertical position 0
-.VdpRegistersEnd:
 	even
 
 ; ------------------------------------------------------------------------------
