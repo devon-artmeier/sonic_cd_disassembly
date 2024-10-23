@@ -32,7 +32,6 @@ VdpRegisters:
 	dc.b	%00000001					; 64x32 tile plane size
 	dc.b	0						; Window horizontal position 0
 	dc.b	0						; Window vertical position 0
-VdpRegistersEnd:
 	even
 
 ; ------------------------------------------------------------------------------
