@@ -14,12 +14,7 @@ OBJ_PATH_MAIN_CORE := $(OBJ_PATH)/$(SRC_PATH_MAIN_CORE)
 OBJ_PATH_MD_INIT   := $(OBJ_PATH)/$(SRC_PATH_MD_INIT)
 
 # Sub CPU core files
-SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/header.asm \
-                      $(SRC_PATH_SUB_CORE)/initialize.asm \
-                      $(SRC_PATH_SUB_CORE)/temp_save.asm \
-                      $(SRC_PATH_SUB_CORE)/interrupt.asm \
-                      $(SRC_PATH_SUB_CORE)/load_file.asm \
-                      $(SRC_PATH_SUB_CORE)/get_file_name.asm \
+SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/main.asm \
                       $(SRC_PATH_SUB_CORE)/file_engine.asm
 OBJ_SUB_CORE       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_CORE))
 DEPEND_SUB_CORE    := $(patsubst %.o,%.d,$(OBJ_SUB_CORE))
