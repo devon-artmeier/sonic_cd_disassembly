@@ -6,6 +6,94 @@
 	include	"include_main.inc"
 
 	section code
+	
+; ------------------------------------------------------------------------------
+; Read controller data
+; ------------------------------------------------------------------------------
+
+	xdef ReadController
+ReadController:
+	lea	ctrl_data,a0					; Controller data buffer
+	lea	IO_DATA_2,a1					; Controller port 2
+	
+	move.b	#0,(a1)						; TH = 0
+	tst.w	(a0)						; Delay
+	move.b	(a1),d0						; Read start and A buttons
+	lsl.b	#2,d0
+	andi.b	#$C0,d0
+	
+	move.b	#$40,(a1)					; TH = 1
+	tst.w	(a0)						; Delay
+	move.b	(a1),d1						; Read B, C, and D-pad buttons
+	andi.b	#$3F,d1
+
+	or.b	d1,d0						; Combine button data
+	not.b	d0						; Flip bits
+	move.b	d0,d1						; Make copy
+
+	move.b	(a0),d2						; Mask out tapped buttons
+	eor.b	d2,d0
+	move.b	d1,(a0)+					; Store pressed buttons
+	and.b	d1,d0						; Store tapped buttons
+	move.b	d0,(a0)+
+	rts
+
+; ------------------------------------------------------------------------------
+
+	xdef ctrl_data, ctrl_press, ctrl_tap
+ctrl_data:							; Controller data
+ctrl_press:
+	dc.b	0						; Controller pressed buttons data
+ctrl_tap:
+	dc.b	0						; Controller tapped buttons data
+
+; ------------------------------------------------------------------------------
+; VDP register data
+; ------------------------------------------------------------------------------
+
+	xdef VdpRegisters
+VdpRegisters:
+	dc.b	%00000100					; No H-BLANK interrupt
+	dc.b	%00110100					; V-BLANK interrupt, DMA, mode 5
+	dc.b	$C000/$400					; Plane A location
+	dc.b	0						; Window location
+	dc.b	$C000/$2000					; Plane B location
+	dc.b	$E000/$200					; Sprite table location
+	dc.b	0						; Reserved
+	dc.b	0						; Background color line 0 color 0
+	dc.b	0						; Reserved
+	dc.b	0						; Reserved
+	dc.b	0						; H-BLANK interrupt counter 0
+	dc.b	%00000000					; Scroll by screen
+	dc.b	%10000001					; H40
+	dc.b	$E400/$400					; Horizontal scroll table lcation
+	dc.b	0						; Reserved
+	dc.b	2						; Auto increment by 2
+	dc.b	%00000001					; 64x32 tile plane size
+	dc.b	0						; Window horizontal position 0
+	dc.b	0						; Window vertical position 0
+	even
+
+; ------------------------------------------------------------------------------
+; FM SFX Sound driver
+; ------------------------------------------------------------------------------
+
+	xdef FmDriver
+FmDriver:
+	incbin	"../../../build/z80.bin"
+FmDriverEnd:
+	even
+
+	xdef FM_DRIVER_SIZE
+FM_DRIVER_SIZE		equ FmDriverEnd-FmDriver
+
+; ------------------------------------------------------------------------------
+; Saved status register
+; ------------------------------------------------------------------------------
+
+	xdef saved_sr
+saved_sr:
+	dc.w	0
 
 ; ------------------------------------------------------------------------------
 ; Initialize the Mega Drive hardware

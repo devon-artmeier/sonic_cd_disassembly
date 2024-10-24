@@ -42,7 +42,7 @@ VBlankIrq:
 ; ------------------------------------------------------------------------------
 
 .Main:
-	bra.w	.Main2						; ?
+	bra.w	.Main2
 
 .Main2:
 	bsr.w	StartZ80					; Start the Z80

@@ -15,6 +15,6 @@
 
 	xdef TempSaveData
 TempSaveData:
-	include	"../../backup_ram/core/initial_data.asm"
+	include	"../../backup_ram/initial_data.asm"
 
 ; ------------------------------------------------------------------------------

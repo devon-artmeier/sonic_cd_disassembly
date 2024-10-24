@@ -41,6 +41,7 @@ OUT_MAIN_CORE     := $(FILES_PATH)/IPX___.MMD
 OUT_MD_INIT       := $(FILES_PATH)/MDINIT.MMD
 OUT_BURAM_INIT    := $(FILES_PATH)/BRAMINIT.MMD
 OUT_BURAM_SUB     := $(FILES_PATH)/BRAMSUB.BIN
+OUT_TITLE_MAIN    := $(FILES_PATH)/TITLEM.MMD
 
 OUT_FILES         := $(OUT_FM_DRIVER) \
                      $(OUT_SUB_CORE) \
@@ -49,7 +50,8 @@ OUT_FILES         := $(OUT_FM_DRIVER) \
 		     $(OUT_MAIN_CORE) \
 		     $(OUT_MD_INIT) \
 		     $(OUT_BURAM_INIT) \
-		     $(OUT_BURAM_SUB)
+		     $(OUT_BURAM_SUB) \
+		     $(OUT_TITLE_MAIN)
 
 # Reserved rules
 .PHONY: all clean
@@ -65,6 +67,7 @@ clean:
         include $(SRC_PATH)/sound/make.rules
         include $(SRC_PATH)/system/make.rules
         include $(SRC_PATH)/backup_ram/make.rules
+        include $(SRC_PATH)/title/make.rules
 
 # Create folders
 $(OBJ_PATH): $(BUILD_PATH)

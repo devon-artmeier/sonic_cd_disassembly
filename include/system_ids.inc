@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Symbols extracted from
-; build/.obj/source/system/sub_extension/file_name_table.o
+; build/.obj/source/system/sub_extension/files.o
 ; build/.obj/source/system/sub_extension/main.o
 ; ------------------------------------------------------------------------------
 

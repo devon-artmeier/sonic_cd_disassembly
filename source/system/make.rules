@@ -31,32 +31,9 @@ SYMBOLS_SUB_CORE   := -iy TempSaveData \
                       -iy FileFunction
 
 # Sub CPU extension files
-SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/file_name_table.asm \
-                      $(SRC_PATH_SUB_EXT)/backup_ram_params.asm \
+SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/files.asm \
                       $(SRC_PATH_SUB_EXT)/main.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_pencil_test.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_backup_ram_manager.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_thank_you.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_special_stage_flags.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_backup_ram_init.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_save_data.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_stage.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_md_init.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_title.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_comin_soon.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_easter_egg.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_simple_file.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_visual_mode.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_warp.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_time_attack.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_da_garden.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_fmv.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_special_stage.asm \
-                      $(SRC_PATH_SUB_EXT)/cmd_sound.asm \
-                      $(SRC_PATH_SUB_EXT)/interrupt.asm \
-                      $(SRC_PATH_SUB_EXT)/communication.asm \
-                      $(SRC_PATH_SUB_EXT)/cdda_ids.asm \
-                      $(SRC_PATH_SUB_EXT)/backup_ram_scratch.asm
+                      $(SRC_PATH_SUB_EXT)/data.asm
 OBJ_SUB_EXT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_EXT))
 DEPEND_SUB_EXT     := $(patsubst %.o,%.d,$(OBJ_SUB_EXT))
 
@@ -73,27 +50,12 @@ DEPEND_MAIN_BOOT   := $(patsubst %.o,%.d,$(OBJ_MAIN_BOOT))
 
 # Main CPU core files
 SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
-                      $(SRC_PATH_MAIN_CORE)/best_staff_times.asm \
-                      $(SRC_PATH_MAIN_CORE)/backup_ram_manager.asm \
-                      $(SRC_PATH_MAIN_CORE)/special_stage_demo.asm \
-                      $(SRC_PATH_MAIN_CORE)/game.asm \
-                      $(SRC_PATH_MAIN_CORE)/stage_select.asm \
-                      $(SRC_PATH_MAIN_CORE)/demo.asm \
-                      $(SRC_PATH_MAIN_CORE)/sound_test.asm \
-                      $(SRC_PATH_MAIN_CORE)/visual_mode.asm \
-                      $(SRC_PATH_MAIN_CORE)/da_garden.asm \
-                      $(SRC_PATH_MAIN_CORE)/time_attack.asm \
-                      $(SRC_PATH_MAIN_CORE)/mmd.asm \
-                      $(SRC_PATH_MAIN_CORE)/interrupt.asm \
-                      $(SRC_PATH_MAIN_CORE)/save_data.asm \
                       $(SRC_PATH_MAIN_CORE)/functions.asm
 OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
 DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
 
 # Mega Drive initialization files
 SRC_MD_INIT        := $(SRC_PATH_MD_INIT)/main.asm \
-                      $(SRC_PATH_MD_INIT)/controller.asm \
-                      $(SRC_PATH_MD_INIT)/data.asm \
                       $(SRC_PATH_MD_INIT)/functions.asm
 OBJ_MD_INIT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MD_INIT))
 DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
@@ -145,7 +107,7 @@ $(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
 $(OUT_SUB_EXT): $(OBJ_SUB_EXT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_ids.inc $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/file_name_table.o $(OBJ_PATH_SUB_EXT)/main.o
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_ids.inc $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/files.o $(OBJ_PATH_SUB_EXT)/main.o
 	@$(RM) "spx.sym"
 
 $(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_EXT)

@@ -21,9 +21,15 @@ Start:
 	lea	game_variables,a0				; Clear variables
 	move.w	#GAME_VARIABLES_SIZE/4-1,d7
 
-.ClearVars:
+.ClearVariables:
 	move.l	#0,(a0)+
-	dbf	d7,.ClearVars
+	dbf	d7,.ClearVariables
+	ifne GAME_VARIABLES_SIZE&2
+		clr.w	(a0)+
+	endif
+	ifne GAME_VARIABLES_SIZE&1
+		clr.b	(a0)+
+	endif
 
 	lea	VdpRegisters(pc),a0				; Initialize Mega Drive hardware
 	bsr.w	InitMegaDrive

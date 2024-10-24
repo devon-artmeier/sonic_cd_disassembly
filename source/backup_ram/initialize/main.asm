@@ -32,9 +32,15 @@ Start:
 	lea	VARIABLES,a0					; Clear variables
 	move.w	#VARIABLES_SIZE/4-1,d7
 
-.ClearVars:
+.ClearVariables:
 	move.l	#0,(a0)+
-	dbf	d7,.ClearVars
+	dbf	d7,.ClearVariables
+	ifne VARIABLES_SIZE&2
+		clr.w	(a0)+
+	endif
+	ifne VARIABLES_SIZE&1
+		clr.b	(a0)+
+	endif
 
 	move.w	#0,vblank_routine				; Reset V-BLANK routine ID
 	
