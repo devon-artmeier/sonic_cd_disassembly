@@ -154,6 +154,7 @@ fileName macro label, id, name
 	fileName PencilTestSubFile,    FILE_PENCIL_SUB,       "PTEST.BIN;1"
 	fileName Demo43CFile,          FILE_DEMO_43C,         "DEMO43C.MMD;1"
 	fileName Demo82AFile,          FILE_DEMO_82A,         "DEMO82A.MMD;1"
+	even
 
 ; ------------------------------------------------------------------------------
 ; Backup RAM read parameters

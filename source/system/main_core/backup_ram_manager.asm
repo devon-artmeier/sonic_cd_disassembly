@@ -4,8 +4,18 @@
 ; ------------------------------------------------------------------------------
 
 	include	"include_main.inc"
-	include	"variables.inc"
 
 	section code
+
+; ------------------------------------------------------------------------------
+; Backup RAM manager
+; ------------------------------------------------------------------------------
+
+	xdef BuramManager
+BuramManager:
+	move.w	#SYS_BURAM_MANAGER,d0				; Run Backup RAM manager
+	bsr.w	RunMmd
+	bsr.w	ReadSaveData					; Read save data
+	rts
 
 ; ------------------------------------------------------------------------------

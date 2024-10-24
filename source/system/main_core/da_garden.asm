@@ -3,10 +3,17 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"mcd_sub.inc"
-	include	"system.inc"
-	include	"system_symbols.inc"
+	include	"include_main.inc"
 
 	section code
+
+; ------------------------------------------------------------------------------
+; D.A. Garden
+; ------------------------------------------------------------------------------
+
+	xdef DaGarden
+DaGarden:
+	move.w	#SYS_DA_GARDEN,d0				; Run D.A. Garden
+	bra.w	RunMmd
 
 ; ------------------------------------------------------------------------------

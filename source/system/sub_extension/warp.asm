@@ -3,15 +3,22 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"../../sound/pcm/variables.inc"
+	include	"mcd_sub.inc"
+	include	"system.inc"
+	include	"system_symbols.inc"
+
+	section code
 	
 ; ------------------------------------------------------------------------------
-; Addresses
+; Load time warp cutscene
 ; ------------------------------------------------------------------------------
 
-PcmDriver		equ PRG_RAM+$40000			; PCM driver location
-PcmDriverOrigin		equ PcmDriver+$10			; PCM driver code origin
-RunPcmDriver		equ PcmDriver+$10			; Run PCM driver
-PcmSoundQueue		equ PcmDriver+$18+pcm.sound_queue	; PCM sound queue
+	xdef LoadWarp
+LoadWarp:
+	lea	WarpFile(pc),a0					; Load file
+	bsr.w	WaitWordRamAccess
+	lea	WORD_RAM_2M,a1
+	jsr	LoadFile
+	bra.w	GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------

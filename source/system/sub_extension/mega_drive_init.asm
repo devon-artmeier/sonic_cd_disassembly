@@ -3,18 +3,22 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_sub.inc"
-	include	"variables.inc"
+	include	"mcd_sub.inc"
+	include	"system.inc"
+	include	"system_symbols.inc"
 
 	section code
 
 ; ------------------------------------------------------------------------------
-; Unknown graphics interrupt handler
+; Load Mega Drive initialization
 ; ------------------------------------------------------------------------------
 
-	xdef GraphicsIrq
-GraphicsIrq:
-	move.b	#0,irq1_flag					; Clear IRQ1 flag
-	rte
+	xdef LoadMegaDriveInit
+LoadMegaDriveInit:
+	lea	MdInitFile(pc),a0				; Load file
+	bsr.w	WaitWordRamAccess
+	lea	WORD_RAM_2M,a1
+	jsr	LoadFile
+	bra.w	GiveWordRamAccess
 
 ; ------------------------------------------------------------------------------

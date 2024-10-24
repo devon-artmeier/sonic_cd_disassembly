@@ -33,4 +33,13 @@ InstrumentRegsSsgEg:
 SpecialFm3Regs:
 	db	0ADh, 0AEh, 0ACh, 0A6h				; FM3 frequency
 	
+; --------------------------------------------------------------------------------
+; Frequency table
+; --------------------------------------------------------------------------------
+
+	xdef FrequencyTable
+FrequencyTable:
+	;	C     C#/Db D     D#/Eb E     F     F#/Gb G     G#/Ab A     A#/Bb B
+	dw	284h, 2ABh, 2D3h, 2FEh, 32Dh, 35Ch, 38Fh, 3C5h, 3FFh, 43Ch, 47Ch, 4C0h
+	
 ; ------------------------------------------------------------------------------

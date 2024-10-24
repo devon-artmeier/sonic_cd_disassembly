@@ -134,7 +134,7 @@ MCD_1BPP_COLOR		equ $FFFF804C 				; 1BPP conversion color
 MCD_1BPP_IN		equ $FFFF804E 				; 1BPP conversion input data
 MCD_1BPP_OUT		equ $FFFF8050 				; 1BPP conversion output data
 MCD_IMG_CTRL		equ $FFFF8058				; Image render control (2M)
-MCD_IMG_SRC_MAP		equ $FFFF805A 				; Image source map address (2M)
+MCD_IMG_STAMP_MAP	equ $FFFF805A 				; Image stamp map address (2M)
 MCD_IMG_STRIDE		equ $FFFF805C 				; Image buffer stride (2M)
 MCD_IMG_START		equ $FFFF805E 				; Image buffer address (2M)
 MCD_IMG_OFFSET		equ $FFFF8060 				; Image buffer pixel offset (2M)
@@ -222,11 +222,11 @@ MCDR_HOCK_BIT		equ 2					; Host clock flag
 MCDR_HOCK		equ 1<<MCDR_HOCK_BIT
 
 ; MCD_IMG_CTRL
-MCDR_RPT_BIT		equ 0					; Image source map repeat flag (lower byte)
+MCDR_RPT_BIT		equ 0					; Image stamp map repeat flag (lower byte)
 MCDR_RPT		equ 1<<MCDR_RPT_BIT
-MCDR_STS_BIT		equ 1					; Image source stamp size flag (lower byte)
+MCDR_STS_BIT		equ 1					; Image stamp size flag (lower byte)
 MCDR_STS		equ 1<<MCDR_STS_BIT
-MCDR_SMS_BIT		equ 2					; Image source size flag (lower byte)
+MCDR_SMS_BIT		equ 2					; Image stamp map size flag (lower byte)
 MCDR_SMS		equ 1<<MCDR_SMS_BIT
 MCDR_GRON_BIT		equ 7					; Image rendering flag (upper byte)
 MCDR_GRON		equ 1<<MCDR_GRON_BIT

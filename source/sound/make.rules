@@ -14,6 +14,12 @@ SYMBOLS_FM_DATA   := -ip FM_
 
 # FM sound driver files
 SRC_FM_DRIVER     := $(SRC_PATH_FM)/main.asm \
+                     $(SRC_PATH_FM)/track.asm \
+                     $(SRC_PATH_FM)/instrument.asm \
+                     $(SRC_PATH_FM)/fm_write.asm \
+                     $(SRC_PATH_FM)/play_sound.asm \
+                     $(SRC_PATH_FM)/fm_registers.asm \
+                     $(SRC_PATH_FM)/command.asm \
                      $(SRC_PATH_FM)/info.asm
 OBJ_FM_DRIVER     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
 DEPEND_FM_DRIVER  := $(patsubst %.o,%.d,$(OBJ_FM_DRIVER))
@@ -30,7 +36,7 @@ $(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/main.o
 
 $(OBJ_FM_DRIVER): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_FM_DRIVER)
 	$(ASSEMBLING)

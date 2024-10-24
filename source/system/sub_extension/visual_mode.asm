@@ -3,25 +3,28 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	section data
+	include	"mcd_sub.inc"
+	include	"system.inc"
+	include	"system_symbols.inc"
+
+	section code
 
 ; ------------------------------------------------------------------------------
-; Backup RAM read parameters
+; Load Visual Mode menu
 ; ------------------------------------------------------------------------------
 
-	xdef BuramReadParams
-BuramReadParams:
-	dc.b	"SONICCD____"
-	even
+	xdef LoadVisualMode
+LoadVisualMode:
+	lea	VisualModeFile(pc),a0				; Load file
+	bsr.w	WaitWordRamAccess
+	lea	WORD_RAM_2M,a1
+	jsr	LoadFile
 
-; ------------------------------------------------------------------------------
-; Backup RAM write parameters
-; ------------------------------------------------------------------------------
+	bsr.w	ResetCddaVolume					; Play title screen music
+	lea	TitleScreenSong(pc),a0
+	move.w	#MSCPLAYR,d0
+	jsr	_CDBIOS
 
-	xdef BuramWriteParams
-BuramWriteParams:
-	dc.b	"SONICCD____"
-	dc.b	0
-	dc.w	$B
+	bra.w	GiveWordRamAccess				; Give Main CPU Word RAM access
 
 ; ------------------------------------------------------------------------------

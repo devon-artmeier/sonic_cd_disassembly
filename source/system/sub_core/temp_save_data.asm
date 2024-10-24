@@ -3,15 +3,18 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"../../sound/pcm/variables.inc"
-	
+	include	"mcd_sub.inc"
+	include	"system.inc"
+	include	"backup_ram.inc"
+
+	section data_temp_save
+
 ; ------------------------------------------------------------------------------
-; Addresses
+; Temporary save data area
 ; ------------------------------------------------------------------------------
 
-PcmDriver		equ PRG_RAM+$40000			; PCM driver location
-PcmDriverOrigin		equ PcmDriver+$10			; PCM driver code origin
-RunPcmDriver		equ PcmDriver+$10			; Run PCM driver
-PcmSoundQueue		equ PcmDriver+$18+pcm.sound_queue	; PCM sound queue
+	xdef TempSaveData
+TempSaveData:
+	include	"../../backup_ram/initial_data.asm"
 
 ; ------------------------------------------------------------------------------

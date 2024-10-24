@@ -15,6 +15,7 @@ OBJ_PATH_MD_INIT   := $(OBJ_PATH)/$(SRC_PATH_MD_INIT)
 
 # Sub CPU core files
 SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/main.asm \
+                      $(SRC_PATH_SUB_CORE)/temp_save_data.asm \
                       $(SRC_PATH_SUB_CORE)/file_engine.asm
 OBJ_SUB_CORE       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_CORE))
 DEPEND_SUB_CORE    := $(patsubst %.o,%.d,$(OBJ_SUB_CORE))
@@ -28,6 +29,26 @@ SYMBOLS_SUB_CORE   := -iy TempSaveData \
 # Sub CPU extension files
 SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/files.asm \
                       $(SRC_PATH_SUB_EXT)/main.asm \
+                      $(SRC_PATH_SUB_EXT)/pencil_test.asm \
+                      $(SRC_PATH_SUB_EXT)/backup_ram_manager.asm \
+                      $(SRC_PATH_SUB_EXT)/thank_you.asm \
+                      $(SRC_PATH_SUB_EXT)/special_stage_flags.asm \
+                      $(SRC_PATH_SUB_EXT)/backup_ram_init.asm \
+                      $(SRC_PATH_SUB_EXT)/backup_ram.asm \
+                      $(SRC_PATH_SUB_EXT)/stage.asm \
+                      $(SRC_PATH_SUB_EXT)/mega_drive_init.asm \
+                      $(SRC_PATH_SUB_EXT)/title.asm \
+                      $(SRC_PATH_SUB_EXT)/comin_soon.asm \
+                      $(SRC_PATH_SUB_EXT)/easter_egg.asm \
+                      $(SRC_PATH_SUB_EXT)/simple_file.asm \
+                      $(SRC_PATH_SUB_EXT)/visual_mode.asm \
+                      $(SRC_PATH_SUB_EXT)/warp.asm \
+                      $(SRC_PATH_SUB_EXT)/time_attack.asm \
+                      $(SRC_PATH_SUB_EXT)/da_garden.asm \
+                      $(SRC_PATH_SUB_EXT)/fmv.asm \
+                      $(SRC_PATH_SUB_EXT)/special_stage.asm \
+                      $(SRC_PATH_SUB_EXT)/sound.asm \
+                      $(SRC_PATH_SUB_EXT)/io.asm \
                       $(SRC_PATH_SUB_EXT)/data.asm
 OBJ_SUB_EXT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_EXT))
 DEPEND_SUB_EXT     := $(patsubst %.o,%.d,$(OBJ_SUB_EXT))
@@ -45,13 +66,23 @@ DEPEND_MAIN_BOOT   := $(patsubst %.o,%.d,$(OBJ_MAIN_BOOT))
 
 # Main CPU core files
 SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
+                      $(SRC_PATH_MAIN_CORE)/best_staff_times.asm \
+                      $(SRC_PATH_MAIN_CORE)/backup_ram_manager.asm \
+                      $(SRC_PATH_MAIN_CORE)/special_stage_demo.asm \
+                      $(SRC_PATH_MAIN_CORE)/game.asm \
+                      $(SRC_PATH_MAIN_CORE)/stage_select.asm \
+                      $(SRC_PATH_MAIN_CORE)/demo.asm \
+                      $(SRC_PATH_MAIN_CORE)/sound_test.asm \
+                      $(SRC_PATH_MAIN_CORE)/visual_mode.asm \
+                      $(SRC_PATH_MAIN_CORE)/da_garden.asm \
+                      $(SRC_PATH_MAIN_CORE)/time_attack.asm \
                       $(SRC_PATH_MAIN_CORE)/functions.asm
 OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
 DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
 
 # Mega Drive initialization files
 SRC_MD_INIT        := $(SRC_PATH_MD_INIT)/main.asm \
-                      $(SRC_PATH_MD_INIT)/functions.asm
+                      $(SRC_PATH_MD_INIT)/io.asm
 OBJ_MD_INIT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MD_INIT))
 DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
 

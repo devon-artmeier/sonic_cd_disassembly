@@ -11,7 +11,7 @@ OBJ_PATH_TITLE_SUB      := $(OBJ_PATH)/$(SRC_PATH_TITLE_SUB)
 
 # Main CPU files
 SRC_TITLE_MAIN          := $(SRC_PATH_TITLE_MAIN)/main.asm \
-                           $(SRC_PATH_TITLE_MAIN)/interrupt.asm \
+                           $(SRC_PATH_TITLE_MAIN)/io.asm \
                            $(SRC_PATH_TITLE_MAIN)/functions.asm \
                            $(SRC_PATH_TITLE_MAIN)/object.asm \
                            $(SRC_PATH_TITLE_OBJECTS)/sonic.asm \

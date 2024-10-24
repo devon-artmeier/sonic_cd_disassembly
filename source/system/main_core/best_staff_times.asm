@@ -3,15 +3,17 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"../../sound/pcm/variables.inc"
-	
+	include	"include_main.inc"
+
+	section code
+
 ; ------------------------------------------------------------------------------
-; Addresses
+; Best staff times
 ; ------------------------------------------------------------------------------
 
-PcmDriver		equ PRG_RAM+$40000			; PCM driver location
-PcmDriverOrigin		equ PcmDriver+$10			; PCM driver code origin
-RunPcmDriver		equ PcmDriver+$10			; Run PCM driver
-PcmSoundQueue		equ PcmDriver+$18+pcm.sound_queue	; PCM sound queue
+	xdef BestStaffTimes
+BestStaffTimes:
+	move.w	#SYS_STAFF_TIMES,d0				; Run staff best times screen
+	bra.w	RunMmd
 
 ; ------------------------------------------------------------------------------
