@@ -11,6 +11,7 @@
 * [vlink](http://sun.hasenbraten.de/vlink/)
 * [extract_asm_symbols](https://github.com/devon-artmeier/extract_asm_symbols)
 * [make_asm_depend](https://github.com/devon-artmeier/make_asm_dependencies)
+* mkisofs (from [cdrtools](https://sourceforge.net/projects/cdrtools/))
 
 ## Special Thanks
 

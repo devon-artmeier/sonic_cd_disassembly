@@ -52,7 +52,7 @@ LoadSpecialStage:
 
 	jsr	PRG_RAM+$10000					; Run Sub CPU program
 
-	move.l	#MegaDriveIrq,_USERCALL2+2			; Restore IRQ2
+	move.l	#FileEngineIrq,_USERCALL2+2			; Restore IRQ2
 	
 	btst	#1,spec_stage_flags_copy			; Were we in time attack mode?
 	bne.s	.NoResultsSong					; If so, branch

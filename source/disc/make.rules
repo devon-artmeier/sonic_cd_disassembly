@@ -1,0 +1,33 @@
+# Source folder path
+SRC_PATH_DISC      := $(SRC_PATH)/disc
+SRC_PATH_DISC_BOOT := $(SRC_PATH_DISC)/boot
+
+# Object folder path
+OBJ_PATH_DISC_BOOT := $(OBJ_PATH)/$(SRC_PATH_DISC_BOOT)
+
+# Files
+SRC_DISC_BOOT      := $(SRC_PATH_DISC_BOOT)/header.asm \
+                      $(SRC_PATH_DISC_BOOT)/boot.asm
+OBJ_DISC_BOOT      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DISC_BOOT))
+DEPEND_DISC_BOOT   := $(patsubst %.o,%.d,$(OBJ_DISC_BOOT))
+
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+	-include $(DEPEND_DISC_BOOT)
+endif
+
+# Main CPU program rules
+$(OUT_DISC_BOOT): $(OBJ_DISC_BOOT)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DISC)/link_boot.link -o $@ $^
+
+$(OBJ_DISC_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DISC_BOOT)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+
+$(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# Create folders
+$(OBJ_PATH_DISC_BOOT): $(OBJ_PATH)
+	@$(call make_dir,$@)

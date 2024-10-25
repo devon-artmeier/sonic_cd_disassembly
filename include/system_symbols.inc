@@ -4,7 +4,7 @@
 ; ------------------------------------------------------------------------------
 
 TempSaveData    equ $7400
-MegaDriveIrq    equ $7700
+FileEngineIrq   equ $7700
 LoadFile        equ $7800
 GetFileName     equ $7840
 FileFunction    equ $7880

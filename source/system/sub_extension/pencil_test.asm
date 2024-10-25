@@ -29,7 +29,7 @@ LoadPencilTest:
 
 	jsr	PRG_RAM+$30000					; Run Sub CPU program
 
-	move.l	#MegaDriveIrq,_USERCALL2+2			; Restore IRQ2
+	move.l	#FileEngineIrq,_USERCALL2+2			; Restore IRQ2
 	andi.b	#~(MCDR_RET|MCDR_MODE),MCD_MEM_MODE		; Set to 2M mode
 	move.b	#MCDR_SUB_READ,MCD_CDC_DEVICE			; Set CDC device to "Sub CPU"
 	move.l	#0,cur_pcm_driver				; Reset current PCM driver

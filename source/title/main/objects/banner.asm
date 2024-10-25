@@ -33,7 +33,7 @@ ObjBanner:
 
 	xdef BannerSprites
 BannerSprites:
-	include	"../data/banner_sprites.asm"
+	include	"../../data/banner_sprites.asm"
 	even
 
 ; ------------------------------------------------------------------------------

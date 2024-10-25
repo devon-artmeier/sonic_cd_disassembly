@@ -554,7 +554,7 @@ SetOption:
 
 	xdef MenuSprites
 MenuSprites:
-	include	"../data/menu_sprites.asm"
+	include	"../../data/menu_sprites.asm"
 	even
 
 ; ------------------------------------------------------------------------------
@@ -675,7 +675,7 @@ LeftMenuArrow:
 
 	xdef MenuArrowSprites
 MenuArrowSprites:
-	include	"../data/menu_arrow_sprites.asm"
+	include	"../../data/menu_arrow_sprites.asm"
 	even
 
 ; ------------------------------------------------------------------------------

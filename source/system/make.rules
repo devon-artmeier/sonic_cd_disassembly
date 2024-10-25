@@ -21,7 +21,7 @@ OBJ_SUB_CORE       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_CORE))
 DEPEND_SUB_CORE    := $(patsubst %.o,%.d,$(OBJ_SUB_CORE))
 
 SYMBOLS_SUB_CORE   := -iy TempSaveData \
-                      -iy MegaDriveIrq \
+                      -iy FileEngineIrq \
                       -iy LoadFile \
                       -iy GetFileName \
                       -iy FileFunction

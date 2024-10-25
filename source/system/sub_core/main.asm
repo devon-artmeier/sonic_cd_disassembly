@@ -25,7 +25,7 @@ Header:
 .Offsets:
 	dc.w	Initialize-.Offsets
 	dc.w	Main-.Offsets
-	dc.w	MegaDriveIrq-.Offsets
+	dc.w	FileEngineIrq-.Offsets
 	dc.w	UserCall-.Offsets
 	dc.w	0
 

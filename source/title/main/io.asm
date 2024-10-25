@@ -195,7 +195,7 @@ VdpRegisters:
 	even
 
 InitPalette:
-	incbin	"data/palette_initial.pal"
+	incbin	"../data/palette_initial.pal"
 InitPaletteEnd:
 
 ; ------------------------------------------------------------------------------
@@ -204,7 +204,7 @@ InitPaletteEnd:
 
 	xdef TitlePalette
 TitlePalette:
-	incbin	"data/palette.pal"
+	incbin	"../data/palette.pal"
 	even
 
 ; ------------------------------------------------------------------------------

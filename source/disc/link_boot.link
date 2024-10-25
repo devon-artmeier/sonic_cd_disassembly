@@ -1,0 +1,19 @@
+MEMORY {
+	disc: org = 0, len = 0x8000
+}
+
+SECTIONS {
+	code: {
+		FILL8(0x20);
+		*(disc_header)
+		. = 0x100;
+		*(disc_game_header)
+		. = 0x200;
+		FILL8(0x00);
+		*(disc_ip)
+		. = 0xFFE;
+		*(disc_version)
+		. = 0x1000;
+		*(disc_sp)
+	} > disc
+}

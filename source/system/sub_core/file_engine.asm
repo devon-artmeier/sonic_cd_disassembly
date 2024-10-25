@@ -14,9 +14,9 @@
 ;	a1.l - File read destination buffer
 ; ------------------------------------------------------------------------------
 
-	section code_md_irq
-	xdef MegaDriveIrq
-MegaDriveIrq:
+	section code_file_irq
+	xdef FileEngineIrq
+FileEngineIrq:
 	movem.l	d0-a6,-(sp)					; Save registers
 	move.w	#FILE_OPERATION,d0				; Perform file engine operation
 	jsr	FileFunction

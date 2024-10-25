@@ -54,7 +54,7 @@ CommandHandler:
 	move.w	Commands(pc,d0.w),d0
 	jsr	Commands(pc,d0.w)
 
-	move.l	#MegaDriveIrq,_USERCALL2+2			; Restore IRQ2 address
+	move.l	#FileEngineIrq,_USERCALL2+2			; Restore IRQ2 address
 	bclr	#MCDR_IEN1_BIT,MCD_IRQ_MASK			; Disable graphics interrupt
 	move.l	#NullGraphicsIrq,_LEVEL1+2			; Reset graphics interrupt address
 

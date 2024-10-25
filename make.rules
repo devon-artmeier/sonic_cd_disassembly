@@ -1,16 +1,22 @@
+# Folder paths
+BUILD_PATH        := build
+FILES_PATH        := $(BUILD_PATH)/files
+MISC_PATH         := $(BUILD_PATH)/misc
+OBJ_PATH          := $(BUILD_PATH)/.obj
+INCLUDE_PATH      := include
+SRC_PATH          := source
+
+# Disc files
+OUT_DISC          := $(BUILD_PATH)/sonic_cd.iso
+OUT_DISC_BOOT     := $(MISC_PATH)/disc_header.bin
+
 # Tools
 VASM_M68K         := vasmm68k_mot
 VASM_Z80          := vasmz80_oldstyle
 VLINK             := vlink
 EXTRACT_SYM       := extract_asm_symbols
 MAKE_DEPEND       := make_asm_depend
-
-# Folder paths
-BUILD_PATH        := build
-FILES_PATH        := $(BUILD_PATH)/files
-OBJ_PATH          := $(BUILD_PATH)/.obj
-INCLUDE_PATH      := include
-SRC_PATH          := source
+MKISOFS           := mkisofs
 
 # Flags
 VASM_FLAGS        := -Fvobj -quiet -ldots -unsshift -I$(INCLUDE_PATH)
@@ -19,6 +25,9 @@ VASM_Z80_FLAGS    := $(VASM_FLAGS)
 VLINK_FLAGS       := -b rawbin1 -nowarn=22
 EXTRACT_SYM_FLAGS := -m asm -v u64
 MAKE_DEPEND_FLAGS := -i $(INCLUDE_PATH) -r
+MKISOFS_FLAGS     := -quiet -abstract "ABS.TXT" -biblio "BIB.TXT" -copyright "CPY.TXT" -A "SEGA ENTERPRISES" \
+                     -V "SONIC_CD___" -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid "MEGA_CD" \
+		     -G "$(OUT_DISC_BOOT)" -iso-level 1 -pad
 
 # Make directory
 define make_dir
@@ -31,17 +40,19 @@ endef
 ASSEMBLING        = @echo "Assembling \"$<\""
 LINKING           = @echo "Linking    \"$@\""
 MAKING_DEPENDS    = @echo "Generating \"$@\""
+BUILDING_DISC     = @echo "Building   \"$@\""
 
 # Output files
-OUT_FM_DRIVER     := $(BUILD_PATH)/z80.bin
-OUT_SUB_CORE      := $(BUILD_PATH)/sp.bin
+OUT_FM_DRIVER     := $(MISC_PATH)/z80.bin
+OUT_SUB_CORE      := $(MISC_PATH)/sp.bin
 OUT_SUB_EXT       := $(FILES_PATH)/SPX___.BIN
-OUT_MAIN_BOOT     := $(BUILD_PATH)/ip.bin
+OUT_MAIN_BOOT     := $(MISC_PATH)/ip.bin
 OUT_MAIN_CORE     := $(FILES_PATH)/IPX___.MMD
 OUT_MD_INIT       := $(FILES_PATH)/MDINIT.MMD
 OUT_BURAM_INIT    := $(FILES_PATH)/BRAMINIT.MMD
 OUT_BURAM_SUB     := $(FILES_PATH)/BRAMSUB.BIN
 OUT_TITLE_MAIN    := $(FILES_PATH)/TITLEM.MMD
+OUT_TITLE_SUB     := $(FILES_PATH)/TITLES.BIN
 
 OUT_FILES         := $(OUT_FM_DRIVER) \
                      $(OUT_SUB_CORE) \
@@ -51,13 +62,19 @@ OUT_FILES         := $(OUT_FM_DRIVER) \
 		     $(OUT_MD_INIT) \
 		     $(OUT_BURAM_INIT) \
 		     $(OUT_BURAM_SUB) \
-		     $(OUT_TITLE_MAIN)
+		     $(OUT_TITLE_MAIN) \
+		     $(OUT_TITLE_SUB)
 
 # Reserved rules
 .PHONY: all clean
 
 # Compile everything together
-all: $(BUILD_PATH) $(FILES_PATH) $(OBJ_PATH) $(OUT_FILES)
+all: $(OUT_DISC)
+
+# Disc image rule
+$(OUT_DISC): $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $(OUT_DISC_BOOT)
+	$(BUILDING_DISC)
+	@$(MKISOFS) $(MKISOFS_FLAGS) -o $@ $(FILES_PATH)
 
 # Clean
 clean:
@@ -68,9 +85,13 @@ clean:
         include $(SRC_PATH)/system/make.rules
         include $(SRC_PATH)/backup_ram/make.rules
         include $(SRC_PATH)/title/make.rules
+        include $(SRC_PATH)/disc/make.rules
 
 # Create folders
 $(OBJ_PATH): $(BUILD_PATH)
+	@$(call make_dir,$@)
+
+$(MISC_PATH): $(BUILD_PATH)
 	@$(call make_dir,$@)
 
 $(FILES_PATH): $(BUILD_PATH)

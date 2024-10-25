@@ -72,7 +72,7 @@ Hover:
 
 	xdef PlanetSprites
 PlanetSprites:
-	include	"../data/planet_sprites.asm"
+	include	"../../data/planet_sprites.asm"
 	even
 
 ; ------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ LoadDaGarden:
 
 	jsr	PRG_RAM+$10000					; Run Sub CPU program
 
-	move.l	#MegaDriveIrq,_USERCALL2+2			; Restore IRQ2
+	move.l	#FileEngineIrq,_USERCALL2+2			; Restore IRQ2
 	rts
 
 ; ------------------------------------------------------------------------------

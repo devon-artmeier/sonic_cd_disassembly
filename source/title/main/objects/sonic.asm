@@ -116,7 +116,7 @@ ObjSonic:
 
 	xdef SonicSprites
 SonicSprites:
-	include	"../data/sonic_sprites.asm"
+	include	"../../data/sonic_sprites.asm"
 	even
 
 ; ------------------------------------------------------------------------------

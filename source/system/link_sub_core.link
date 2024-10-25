@@ -8,7 +8,7 @@ SECTIONS {
 		. = 0x7400;
 		*(data_temp_save)
 		. = 0x7700;
-		*(code_md_irq)
+		*(code_file_irq)
 		. = 0x7800;
 		*(code_load_file)
 		. = 0x7840;

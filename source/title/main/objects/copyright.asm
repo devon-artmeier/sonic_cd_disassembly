@@ -40,9 +40,9 @@ ObjCopyright:
 	xdef CopyrightSprites
 CopyrightSprites:
 	;if REGION=USA
-		include	"../data/copyright_sprites_u.asm"
+		include	"../../data/copyright_sprites_u.asm"
 	;else
-	;	include	"../data/copyright_sprites_je.asm"
+	;	include	"../../data/copyright_sprites_je.asm"
 	;endif
 	even
 
@@ -74,7 +74,7 @@ ObjTm:
 
 	xdef TmSprites
 TmSprites:
-	include	"../data/copyright_tm_sprites.asm"
+	include	"../../data/copyright_tm_sprites.asm"
 	even
 
 ; ------------------------------------------------------------------------------
