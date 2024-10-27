@@ -10,6 +10,7 @@
 ; Counts
 RHYTHM_TRACK_COUNT	equ 1					; Number of rhythm tracks
 PCM_TRACK_COUNT		equ 8					; Number of PCM tracks
+TRACK_COUNT		equ RHYTHM_TRACK_COUNT+PCM_TRACK_COUNT	; Total number of tracks
 
 ; Track flags
 	rsreset
@@ -39,8 +40,8 @@ track.duration_timer	rs.b 1					; Duration timer
 track.duration		rs.b 1					; Duration
 track.staccato_timer	rs.b 1					; Staccato timer
 track.staccato		rs.b 1					; Staccato
-track.Detune		rs.b 1					; Detune
-track.Freq		rs.w 1					; Frequency
+track.detune		rs.b 1					; Detune
+track.frequency		rs.w 1					; Frequency
 track.sample_bank	rs.b 1					; Sample RAM bank ID
 track.sample_blocks	rs.b 1					; Sample stream block counter
 track.prev_sample_pos	rs.w 1					; Previous sample playback position
@@ -115,5 +116,22 @@ sample.staccato		rs.b 1					; Sample staccato time
 sample.mode		rs.b 1					; Sample mode
 sample.dest_addr	rs.w 1					; Sample destination address
 sample.struct_size	rs.b 0					; Size of structure
+
+; ------------------------------------------------------------------------------
+; Driver into structure
+; ------------------------------------------------------------------------------
+
+	rsreset
+info.music_priorities	rs.l 1					; Music priorities address
+			rs.l 1
+info.music_index	rs.l 1					; Music index address (unused)
+info.sfx_index		rs.l 1					; SFX index address
+			rs.l 1
+			rs.l 1
+info.first_sfx_id	rs.l 1					; First SFX ID
+info.origin		rs.l 1					; Origin address
+info.sfx_priorities	rs.l 1					; SFX priorities address
+info.cmd_priorities	rs.l 1					; Command priorities address
+info.struct_size	rs.b 0					; Size of structure
 
 ; ------------------------------------------------------------------------------

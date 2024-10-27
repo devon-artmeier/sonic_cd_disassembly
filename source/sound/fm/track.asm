@@ -160,7 +160,7 @@ ParseTrackCommand:
 	ex	af,af'
 	
 	bit	TRACK_RAW_FREQ,(ix+track.flags)			; Is raw frequency mode set?
-	jp	nz,.RawFreqMode					; If so, branch
+	jp	nz,.RawFrequencyMode				; If so, branch
 	
 	or	a						; Is the read byte a duration value?
 	jp	p,.CalcDuration					; If so, branch
@@ -178,15 +178,15 @@ ParseTrackCommand:
 	ex	af,af'
 	xor	a
 
-.GetFreqBlock:
+.GetFrequencyBlock:
 	ex	af,af'
 	sub	e
-	jr	c,.GotFreqBlock
+	jr	c,.GotFrequencyBlock
 	ex	af,af'
 	add	a,d
-	jr	.GetFreqBlock
+	jr	.GetFrequencyBlock
 
-.GotFreqBlock:
+.GotFrequencyBlock:
 	add	a,e						; Get frequency value
 	ld	hl,FrequencyTable
 	rst	18h
@@ -216,13 +216,13 @@ ParseTrackCommand:
 
 ; --------------------------------------------------------------------------------
 
-.RawFreqMode:
+.RawFrequencyMode:
 	ld	h,a						; Get raw frequency value
 	ld	a,(de)
 	inc	de
 	ld	l,a
 	or	h
-	jr	z,.SetRawFreq					; If it's 0, branch
+	jr	z,.SetRawFrequency				; If it's 0, branch
 	
 	ld	a,(ix+track.transpose)				; Add transposition value
 	ld	b,0
@@ -234,7 +234,7 @@ ParseTrackCommand:
 	ld	c,a
 	add	hl,bc
 
-.SetRawFreq:
+.SetRawFrequency:
 	ld	(ix+track.frequency),l				; Set frequency
 	ld	(ix+track.frequency+1),h
 	
@@ -370,7 +370,7 @@ UpdateVibrato:
 	ld	h,(ix+track.vibrato_offset+1)
 	
 	dec	(ix+track.vibrato_speed)			; Update speed counter
-	jr	nz,.UpdateDir
+	jr	nz,.UpdateDirection
 	ld	e,(ix+track.vibrato_params)
 	ld	d,(ix+track.vibrato_params+1)
 	push	de
@@ -388,7 +388,7 @@ UpdateVibrato:
 	ld	(ix+track.vibrato_offset),l
 	ld	(ix+track.vibrato_offset+1),h
 
-.UpdateDir:
+.UpdateDirection:
 	pop	bc						; Add input frequency
 	add	hl,bc
 	

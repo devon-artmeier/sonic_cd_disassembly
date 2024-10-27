@@ -1,0 +1,14 @@
+MEMORY {
+	ram: org = 0x40000, len = 0x40000
+}
+
+SECTIONS {
+	code: {
+		*(signature)
+		. = 0x40010;
+		*(code)
+	} > ram
+	data: {
+		*(data)
+	} > ram
+}

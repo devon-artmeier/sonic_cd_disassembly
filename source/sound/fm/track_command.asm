@@ -36,7 +36,7 @@ TrackCommand:
 
 .Commands:
 	dw	PanCommand					; Set panning
-	dw	PortaSpeedCommand				; Set detune
+	dw	PortaSpeedCommand				; Set portamento speed
 	dw	CommunicationCommand				; Set communication flag
 	dw	SilenceCommand					; Silence track
 	dw	StopCommand					; Stop

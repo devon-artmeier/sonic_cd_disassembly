@@ -12,8 +12,8 @@
 ; Labels
 ; ------------------------------------------------------------------------------
 	
-	xdef SongIndex, SfxIndex, SfxPriorities
-SongIndex:
+	xdef MusicIndex, SfxIndex, SfxPriorities
+MusicIndex:
 
 	section data_sfx_index
 SfxIndex:
