@@ -63,6 +63,7 @@ endef
 # Messages
 # ------------------------------------------------------------------------------
 
+COPYING              = @echo "Copying    \"$@\""
 ASSEMBLING           = @echo "Assembling \"$<\""
 LINKING              = @echo "Linking    \"$@\""
 MAKING_DEPENDS       = @echo "Generating \"$@\""

@@ -3,6 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
+	include	"regions.inc"
 	include	"variables.inc"
 	include	"macros.inc"
 	include	"smps2asm.inc"
