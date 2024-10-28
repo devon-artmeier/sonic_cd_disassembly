@@ -9,6 +9,18 @@ SECTIONS {
 		*(code)
 	} > ram
 	data: {
-		*(data)
+		*(data_sfx_index)
+		*(data_song_priorities)
+		*(data_song_priorities_end)
+		*(data_sfx_priorities)
+		*(data_sfx_priorities_end)
+		*(data_cmd_priorities)
+		*(data_cmd_priorities_end)
+		*(data_song_index)
+		*(data_songs)
+		*(data_sfx)
+		*(data_sample_index)
+		*(data_sample_index_end)
+		*(data_samples)
 	} > ram
 }

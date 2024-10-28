@@ -3,15 +3,12 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"../../sound/pcm/variables.inc"
+	include	"pcm_symbols.inc"
 	
 ; ------------------------------------------------------------------------------
 ; Addresses
 ; ------------------------------------------------------------------------------
 
-PcmDriver		equ PRG_RAM+$40000			; PCM driver location
-PcmDriverOrigin		equ PcmDriver+$10			; PCM driver code origin
-RunPcmDriver		equ PcmDriver+$10			; Run PCM driver
-PcmSoundQueue		equ PcmDriver+$18+pcm.sound_queue	; PCM sound queue
+PcmSoundQueue		equ PcmVariables+pcm.sound_queue	; PCM sound queue
 
 ; ------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_sub.inc"
+	include	"mcd_sub.inc"
 	include	"variables.inc"
 
 	section code
@@ -34,7 +34,7 @@ HandleFadeOut:
 	beq.w	ResetDriver					; If it has run out, branch
 	move.b	pcm.fade_delay(a5),pcm.fade_delay_timer(a5)
 
-	lea	pcm.rhythm(a5),a3				; Fade out music tracks
+	lea	pcm.rhythm(a5),a3				; Fade out song tracks
 	moveq	#TRACK_COUNT-1,d7
 	move.b	pcm.fade_speed(a5),d6				; Get fade speed
 	add.b	d6,pcm.unk_fade_volume(a5)			; Add to unknown fade volume

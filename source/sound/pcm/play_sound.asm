@@ -3,7 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_sub.inc"
+	include	"mcd_sub.inc"
 	include	"variables.inc"
 
 	section code
@@ -30,23 +30,23 @@ ProcessSoundQueue:
 	move.b	d0,d1
 	clr.b	(a1)+						; Clear slot
 
-	cmpi.b	#PCMM_START,d0					; Is a music queued?
+	cmpi.b	#PCM_SONG_START,d0				; Is a song queued?
 	bcs.s	.NextSlot					; If not, branch
-	cmpi.b	#PCMM_END,d0
-	bls.w	.MusicId					; If so, branch
+	cmpi.b	#PCM_SONG_END,d0
+	bls.w	.SongId						; If so, branch
 
-	cmpi.b	#PCMS_START,d0					; Is a sound effect queued?
+	cmpi.b	#PCM_SFX_START,d0				; Is a sound effect queued?
 	bcs.s	.NextSlot					; If not, branch
 	;if BOSS<>0
 	;	cmpi.b	#$BA,d0
 	;else
-		cmpi.b	#PCMS_END,d0
+		cmpi.b	#PCM_SFX_END,d0
 	;endif
 	bls.w	.SfxId						; If so, branch
 
-	cmpi.b	#PCMC_START,d0					; Is a music queued?
+	cmpi.b	#PCM_CMD_START,d0				; Is a song queued?
 	bcs.s	.NextSlot					; If not, branch
-	cmpi.b	#PCMC_END,d0
+	cmpi.b	#PCM_CMD_END,d0
 	bls.w	.CommandId					; If so, branch
 
 	bra.s	.NextSlot					; Go to next slot
@@ -67,18 +67,18 @@ ProcessSoundQueue:
 .End:
 	rts
 
-.MusicId:
-	subi.b	#PCMM_START,d0					; Get priority level
-	lea	MusicPriorities(pc),a0
+.SongId:
+	subi.b	#PCM_SONG_START,d0				; Get priority level
+	lea	SongPriorities(pc),a0
 	bra.s	.CheckPriority					; Check it
 
 .SfxId:
-	subi.b	#PCMS_START,d0					; Get priority level
+	subi.b	#PCM_SFX_START,d0				; Get priority level
 	lea	SfxPriorities(pc),a0
 	bra.s	.CheckPriority					; Check it
 
 .CommandId:
-	subi.b	#PCMC_START,d0					; Get priority level
+	subi.b	#PCM_CMD_START,d0				; Get priority level
 	lea	CmdPriorities(pc),a0
 	bra.s	.CheckPriority					; Check it
 
@@ -98,42 +98,42 @@ PlaySoundId:
 	bpl.w	StopSound					; If we are stopping all sound, branch
 	move.b	#$80,pcm.sound_play(a5)				; Mark sound queue as processed
 
-	cmpi.b	#PCMM_START,d7					; Is it a music?
+	cmpi.b	#PCM_SONG_START,d7				; Is it a song?
 	bcs.s	.End						; If not, branch
-	cmpi.b	#PCMM_END,d7
-	bls.w	PlayMusic					; If so, branch
+	cmpi.b	#PCM_SONG_END,d7
+	bls.w	PlaySong					; If so, branch
 
-	cmpi.b	#PCMS_START,d7					; Is it a sound effect?
+	cmpi.b	#PCM_SFX_START,d7				; Is it a sound effect?
 	bcs.s	.End						; If not, branch
 	;if BOSS<>0
 	;	cmpi.b	#$BA,d7
 	;else
-		cmpi.b	#PCMS_END,d7
+		cmpi.b	#PCM_SFX_END,d7
 	;endif
 	bls.w	PlaySfx						; If so, branch
 
-	cmpi.b	#PCMC_START,d7					; Is it a command?
+	cmpi.b	#PCM_CMD_START,d7				; Is it a command?
 	bcs.s	.End						; If not, branch
-	cmpi.b	#PCMC_END,d7
+	cmpi.b	#PCM_CMD_END,d7
 	bls.w	RunCommand					; If so, branch
 
 .End:
 	rts
 
 ; ------------------------------------------------------------------------------
-; Play a music
+; Play a song
 ; ------------------------------------------------------------------------------
 ; PARAMETERS:
-;	d7.b - Music ID
+;	d7.b - Song ID
 ;	a4.l - Pointer to PCM registers
 ;	a5.l - Pointer to driver variables
 ; ------------------------------------------------------------------------------
 
-PlayMusic:
+PlaySong:
 	jsr	ResetDriver(pc)					; Reset driver
 
-	lea	MusicIndex(pc),a2				; Get pointer to music
-	subi.b	#PCMM_START,d7
+	lea	SongIndex(pc),a2				; Get pointer to song
+	subi.b	#PCM_SONG_START,d7
 	andi.w	#$7F,d7
 	lsl.w	#2,d7
 	movea.l	(a2,d7.w),a2
@@ -211,7 +211,7 @@ ChannelIds:
 
 PlaySfx:
 	lea	SfxIndex(pc),a2					; Get pointer to SFX
-	subi.b	#PCMS_START,d7
+	subi.b	#PCM_SFX_START,d7
 	andi.w	#$7F,d7
 	lsl.w	#2,d7
 	movea.l	(a2,d7.w),a2
@@ -231,7 +231,7 @@ PlaySfx:
 	lea	pcm.sfx_1(a5),a3				; Get PCM track data
 	moveq	#0,d0
 	move.b	1(a2),d0
-	ifeq track.struct_size=$80
+	ifne track.struct_size=$80
 		lsl.w	#7,d0
 	else
 		mulu.w	#track.struct_size,d0

@@ -73,7 +73,7 @@ MainLoop:
 	bne.s	.WaitMainCPUDone				; If not, wait
 	bclr	#0,MCD_SUB_FLAG					; Communication is done
 
-	move.w	#FDRCHG,d0					; Fade music out
+	move.w	#FDRCHG,d0					; Fade CD audio out
 	moveq	#$20,d1
 	jsr	_CDBIOS
 

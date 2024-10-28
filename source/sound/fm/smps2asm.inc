@@ -336,7 +336,7 @@ smpsFM3SpecialMode macro
 	db	$FE, \1, \2, \3, \4
 	endm
 
-; FF01xx - Set music tempo modifier to xx
+; FF01xx - Set song tempo modifier to xx
 smpsSetTempoMod macro
 	db	$FF, 1, \1
 	endm
@@ -465,3 +465,4 @@ vcTL4 set \4
 	db	vcTL4,             vcTL3,             vcTL2,             vcTL1
 	endm
 
+; ------------------------------------------------------------------------------

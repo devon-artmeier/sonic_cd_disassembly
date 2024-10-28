@@ -21,7 +21,7 @@ LoadTimeAttack:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bsr.w	ResetCddaVolume					; Play time attack music
+	bsr.w	ResetCddaVolume					; Play time attack song
 	;if REGION=USA
 		lea	DaGardenSong(pc),a0
 	;else

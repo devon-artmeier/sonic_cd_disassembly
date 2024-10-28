@@ -3,7 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_sub.inc"
+	include	"mcd_sub.inc"
 	include	"variables.inc"
 
 	section code
@@ -18,19 +18,19 @@
 
 	xdef UpdateTracks
 UpdateTracks:
-	clr.b	pcm.sfx_mode(a5)				; Music mode
+	clr.b	pcm.sfx_mode(a5)				; Song mode
 
-	lea	pcm.rhythm(a5),a3				; Update music tracks
+	lea	pcm.rhythm(a5),a3				; Update song tracks
 	moveq	#PCM_TRACK_COUNT-1,d7
 
-.MusicTracks:
+.SongTracks:
 	adda.w	#track.struct_size,a3				; Next track
 	tst.b	(a3)						; Is this track playing?
-	bpl.s	.NextMusicTrack					; If not, branch
+	bpl.s	.NextSongTrack					; If not, branch
 	jsr	UpdateTrack(pc)					; Update track
 
-.NextMusicTrack:
-	dbf	d7,.MusicTracks					; Loop until finished
+.NextSongTrack:
+	dbf	d7,.SongTracks					; Loop until finished
 
 	lea	pcm.sfx_1(a5),a3				; Update SFX tracks
 	move.b	#$80,pcm.sfx_mode(a5)				; SFX mode

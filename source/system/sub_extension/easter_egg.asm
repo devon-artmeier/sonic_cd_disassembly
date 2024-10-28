@@ -21,7 +21,7 @@ LoadSpecialStage8End:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bra.w	PlayEndingSong					; Play ending music
+	bra.w	PlayEndingSong					; Play ending song
 
 ; ------------------------------------------------------------------------------
 ; Load "Fun is infinite" screen
@@ -35,7 +35,7 @@ LoadFunIsInfinite:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bra.w	PlayBossSong					; Play boss music
+	bra.w	PlayBossSong					; Play boss song
 
 ; ------------------------------------------------------------------------------
 ; Load M.C. Sonic screen
@@ -49,7 +49,7 @@ LoadMcSonic:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bra.w	PlayRound8ASong					; Play Metallic Madness Present music
+	bra.w	PlayRound8ASong					; Play Metallic Madness Present song
 
 ; ------------------------------------------------------------------------------
 ; Load Tails screen
@@ -63,7 +63,7 @@ LoadTails:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bra.w	PlayDaGardenSong				; Play D.A. Garden music
+	bra.w	PlayDaGardenSong				; Play D.A. Garden song
 
 ; ------------------------------------------------------------------------------
 ; Load Batman Sonic screen
@@ -77,7 +77,7 @@ LoadBatman:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bra.w	PlayFinalBossSong				; Play final boss music
+	bra.w	PlayFinalBossSong				; Play final boss song
 
 ; ------------------------------------------------------------------------------
 ; Load cute Sonic screen
@@ -91,7 +91,7 @@ LoadCuteSonic:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bra.w	PlayRound1CSong					; Play Palmtree Panic Good Future music
+	bra.w	PlayRound1CSong					; Play Palmtree Panic Good Future song
 
 ; ------------------------------------------------------------------------------
 ; Load best staff times screen
@@ -105,7 +105,7 @@ LoadBestStaffTimes:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	lea	SpeedShoesSong(pc),a0				; Play speed shoes music
+	lea	SpeedShoesSong(pc),a0				; Play speed shoes song
 	bsr.w	ResetCddaVolume
 	move.w	#MSCPLAYR,d0
 	jmp	_CDBIOS

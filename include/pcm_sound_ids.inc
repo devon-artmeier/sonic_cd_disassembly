@@ -1,50 +1,32 @@
 ; ------------------------------------------------------------------------------
-; Sonic CD (1993) Disassembly
-; By Devon Artmeier
+; Symbols extracted from
+; build/.obj/source/sound/pcm/command.o
+; build/.obj/source/sound/pcm/data_r1b.o
 ; ------------------------------------------------------------------------------
 
-; ------------------------------------------------------------------------------
-; Music
-; ------------------------------------------------------------------------------
-
-	rsset $81
-PCM_SONG_START		rs.b 0					; Starting ID
-PCM_SONG_PAST		rs.b 1					; Past song
-			rs.b $E
-PCM_SONG_END		equ __RS-1				; Ending ID
-
-; ------------------------------------------------------------------------------
-; Sound effects
-; ------------------------------------------------------------------------------
-
-	rsset $B0
-PCM_SFX_START		rs.b 0					; Starting ID
-PCM_SFX_SONG_LOOP	rs.b 1					; Song loop (unused)
-PCM_SFX_FUTURE		rs.b 1					; "Future"
-PCM_SFX_PAST		rs.b 1					; "Past"
-PCM_SFX_ALRIGHT		rs.b 1					; "Alright"
-PCM_SFX_OUTTA_HERE	rs.b 1					; "I'm outta here"
-PCM_SFX_YES		rs.b 1					; "Yes"
-PCM_SFX_YEAH		rs.b 1					; "Yeah"
-PCM_SFX_AMY_GIGGLE	rs.b 1					; Amy giggle
-PCM_SFX_AMY_YELP	rs.b 1					; Amy yelp
-PCM_SFX_STOMP		rs.b 1					; Mech stomp
-PCM_SFX_BUMPER		rs.b 1					; Bumper
-PCM_SFX_BREAK		rs.b 1					; Glass break
-			rs.b 4
-PCMS_END		equ __RS-1				; Ending ID
-
-; ------------------------------------------------------------------------------
-; Commands
-; ------------------------------------------------------------------------------
-
-	rsset $E0
-PCM_CMD_START		rs.b 0					; Starting ID
-PCM_CMD_FADE_OUT	rs.b 1					; Fade out
-PCM_CMD_STOP		rs.b 1					; Stop
-PCM_CMD_PAUSE		rs.b 1					; Pause
-PCM_CMD_UNPAUSE		rs.b 1					; Unpause
-PCM_CMD_MUTE		rs.b 1					; Mute
-PCM_CMD_END		equ __RS-1				; Ending ID
+PCM_SONG_START          equ $81
+PCM_SONG_PAST           equ $81
+PCM_SONG_END            equ $8F
+PCM_SFX_START           equ $B0
+PCM_SFX_UNKOWN          equ $B0
+PCM_SFX_FUTURE          equ $B1
+PCM_SFX_PAST            equ $B2
+PCM_SFX_ALRIGHT         equ $B3
+PCM_SFX_OUTTA_HERE      equ $B4
+PCM_SFX_YES             equ $B5
+PCM_SFX_YEAH            equ $B6
+PCM_SFX_AMY_GIGGLE      equ $B7
+PCM_SFX_AMY_YELP        equ $B8
+PCM_SFX_STOMP           equ $B9
+PCM_SFX_BUMPER          equ $BA
+PCM_SFX_BREAK           equ $BB
+PCM_SFX_END             equ $BF
+PCM_CMD_FADE_OUT        equ $E0
+PCM_CMD_START           equ $E0
+PCM_CMD_STOP            equ $E1
+PCM_CMD_PAUSE           equ $E2
+PCM_CMD_UNPAUSE         equ $E3
+PCM_CMD_MUTE            equ $E4
+PCM_CMD_END             equ $E4
 
 ; ------------------------------------------------------------------------------

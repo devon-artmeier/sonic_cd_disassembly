@@ -31,7 +31,7 @@ LoadDaGarden:
 	lea	PRG_RAM+$10000,a1
 	jsr	LoadFile
 
-	bsr.w	ResetCddaVolume					; Play D.A. Garden music
+	bsr.w	ResetCddaVolume					; Play D.A. Garden song
 	lea	DaGardenSong(pc),a0
 	move.w	#MSCPLAYR,d0
 	jsr	_CDBIOS

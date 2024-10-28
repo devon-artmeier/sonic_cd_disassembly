@@ -45,7 +45,7 @@ LoadSpecialStage:
 
 	bsr.w	GiveWordRamAccess				; Give Main CPU Word RAM access
 
-	bsr.w	ResetCddaVolume					; Play special stage music
+	bsr.w	ResetCddaVolume					; Play special stage song
 	lea	SpecialStageSong(pc),a0
 	move.w	#MSCPLAYR,d0
 	jsr	_CDBIOS
@@ -57,7 +57,7 @@ LoadSpecialStage:
 	btst	#1,spec_stage_flags_copy			; Were we in time attack mode?
 	bne.s	.NoResultsSong					; If so, branch
 	
-	bsr.w	ResetCddaVolume					; If not, play results music
+	bsr.w	ResetCddaVolume					; If not, play results song
 	lea	ResultsSong(pc),a0
 	move.w	#MSCPLAY1,d0
 	jsr	_CDBIOS

@@ -48,9 +48,20 @@ SRC_PCM_DRIVER      := $(SRC_PATH_PCM)/main.asm \
 OBJ_PCM_DRIVER     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DRIVER))
 DEPEND_PCM_DRIVER  := $(patsubst %.o,%.d,$(OBJ_PCM_DRIVER))
 
+SYMBOLS_PCM_DRIVER := -iy PcmDriver \
+                      -iy PcmDriverOrigin \
+                      -iy RunPcmDriver \
+                      -iy InitPcmDriver \
+                      -iy PcmVariables \
+                      -iy pcm.sound_queue
+
 SRC_PCM_DATA_R1B    := $(SRC_PATH_PCM)/data_r1b.asm
 OBJ_PCM_DATA_R1B    := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R1B))
 DEPEND_PCM_DATA_R1B := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R1B))
+
+SYMBOLS_PCM_DATA    := -ip PCM_SONG_ \
+                       -ip PCM_SFX_ \
+                       -ip PCM_CMD_
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA_R1B)
@@ -60,7 +71,7 @@ endif
 $(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_PATH_FM)/data.o
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/main.o
 
 $(OBJ_FM_DRIVER): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_FM_DRIVER)
@@ -83,13 +94,14 @@ $(DEPEND_FM_DATA): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
 # PCM sound driver rules
 $(OUT_PCM_DRIVER_R1B): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R1B)
 	$(LINKING)
-	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -o $@ $^
-#	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_sound_ids.inc $(SYMBOLS_FM_DATA) $(OBJ_FM_DATA)
-#	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/fm_symbols.inc $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/main.o
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile "pcm.sym" -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_sound_ids.inc $(SYMBOLS_PCM_DATA) $(OBJ_PATH_PCM)/command.o $(OBJ_PATH_PCM)/data_r1b.o
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o "pcm.sym"
+	@$(RM) "pcm.sym"
 
 $(OBJ_PCM_DATA_R1B): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R1B)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
 
 $(DEPEND_PCM_DATA_R1B): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 	$(MAKING_DEPENDS)

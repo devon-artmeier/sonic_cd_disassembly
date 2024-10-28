@@ -3,7 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_sub.inc"
+	include	"mcd_sub.inc"
 	include	"variables.inc"
 
 	section code
@@ -112,7 +112,7 @@ CommunicationCommand:
 ; ------------------------------------------------------------------------------
 ; CDDA loop flag track command
 ; ------------------------------------------------------------------------------
-; This was called in the prototype PCM music loop segments, but still
+; This was called in the prototype PCM song loop segments, but still
 ; didn't function.
 ; ------------------------------------------------------------------------------
 ; PARAMETERS:
@@ -157,7 +157,7 @@ VolumeCommand:
 	rts
 
 .CapVolumeAt0:
-	tst.b	pcm.fade_steps(a5)				; Is the music fading out?
+	tst.b	pcm.fade_steps(a5)				; Is the song fading out?
 	beq.s	.End						; If not, branch
 	bclr	#TRACK_PLAY,(a3)				; Stop track
 	move.b	#0,PCM_VOLUME-PCM_REGS(a4)			; Set volume to 0
@@ -393,7 +393,7 @@ TransposeCommand:
 ; ------------------------------------------------------------------------------
 
 GlobalTickMultCommand:
-	lea	pcm.rhythm(a5),a0				; Update music tracks
+	lea	pcm.rhythm(a5),a0				; Update song tracks
 	move.b	(a2)+,d0
 	move.w	#track.struct_size,d1
 	moveq	#TRACK_COUNT-1,d2

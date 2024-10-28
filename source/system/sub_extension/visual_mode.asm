@@ -20,7 +20,7 @@ LoadVisualMode:
 	lea	WORD_RAM_2M,a1
 	jsr	LoadFile
 
-	bsr.w	ResetCddaVolume					; Play title screen music
+	bsr.w	ResetCddaVolume					; Play title screen song
 	lea	TitleScreenSong(pc),a0
 	move.w	#MSCPLAYR,d0
 	jsr	_CDBIOS

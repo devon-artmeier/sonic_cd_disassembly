@@ -26,7 +26,7 @@ LoadTitleScreen:
 
 	bsr.w	GiveWordRamAccess				; Give Main CPU Word RAM access
 
-	bsr.w	ResetCddaVolume					; Play title screen music
+	bsr.w	ResetCddaVolume					; Play title screen song
 	lea	TitleScreenSong(pc),a0
 	move.w	#MSCPLAY1,d0
 	jsr	_CDBIOS

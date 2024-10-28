@@ -16,7 +16,7 @@
 DriverInfo:
 	dw	SfxPriorities					; Sound effect priority table
 	dw	0
-	dw	MusicIndex					; Music index
+	dw	SongIndex					; Song index
 	dw	SfxIndex					; SFX index
 	dw	0
 	dw	0

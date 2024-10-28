@@ -136,7 +136,7 @@ VARIABLES_CLEAR_SIZE	equ variables_end-z_sound_play		; Variables clear size
 	phase 0
 info.sfx_priorities	ds 2					; SFX priorities address
 			ds 2
-info.music_index	ds 2					; Music index address (unused)
+info.song_index		ds 2					; Song index address (unused)
 info.sfx_index		ds 2					; SFX index address
 			ds 2
 			ds 2

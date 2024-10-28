@@ -5,15 +5,14 @@
 
 	include	"variables.inc"
 	include	"smps2asm.inc"
-	
-	section data
 
 ; ------------------------------------------------------------------------------
 ; Labels
 ; ------------------------------------------------------------------------------
 	
-	xdef MusicIndex, SfxIndex, SfxPriorities
-MusicIndex:
+	xdef SongIndex, SfxIndex, SfxPriorities
+	section data_song_index
+SongIndex:
 
 	section data_sfx_index
 SfxIndex:
@@ -23,6 +22,11 @@ SfxPriorities:
 
 ; ------------------------------------------------------------------------------
 ; Define sound effect
+; ------------------------------------------------------------------------------
+; PARAMETERS:
+;	\1 - ID constant name
+;	\2 - Sound effect label
+;	\3 - Priority
 ; ------------------------------------------------------------------------------
 
 __sfx_id    set FM_START
@@ -39,7 +43,7 @@ sfx macro
 	endm
 
 ; ------------------------------------------------------------------------------
-; Sound effect index
+; Sound effects
 ; ------------------------------------------------------------------------------
 
 	sfx FM_SKID,        Sfx90, $7A
@@ -123,8 +127,6 @@ sfx macro
 	sfx FM_DE,          SfxDE, $70
 	sfx FM_DF,          SfxDF, -1
 
-; ------------------------------------------------------------------------------
-; SFX data
 ; ------------------------------------------------------------------------------
 
 	section data_sfx

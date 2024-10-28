@@ -21,7 +21,7 @@ LoadCominSoon:
 	jsr	LoadFile
 	bsr.w	GiveWordRamAccess
 
-	bsr.w	ResetCddaVolume					; Play invincibility music
+	bsr.w	ResetCddaVolume					; Play invincibility song
 	lea	InvincibleSong(pc),a0
 	move.w	#MSCPLAYR,d0
 	jmp	_CDBIOS

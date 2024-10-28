@@ -111,12 +111,12 @@ PlayBreakSfx:
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play past music
+; Play past song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayPastSong
 PlayPastSong:
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Play music
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Play song
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
@@ -225,189 +225,189 @@ ResetCddaVolume:
 	rts
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic Present music
+; Play Palmtree Panic Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound1ASong
 PlayRound1ASong:
-	lea	Round1ASong(pc),a0				; Play music
+	lea	Round1ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic Good Future music
+; Play Palmtree Panic Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound1CSong
 PlayRound1CSong:
-	lea	Round1CSong(pc),a0				; Play music
+	lea	Round1CSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic Bad Future music
+; Play Palmtree Panic Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound1DSong
 PlayRound1DSong:
-	lea	Round1DSong(pc),a0				; Play music
+	lea	Round1DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos Present music
+; Play Collision Chaos Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound3ASong
 PlayRound3ASong:
-	lea	Round3ASong(pc),a0				; Play music
+	lea	Round3ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos Good Future music
+; Play Collision Chaos Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound3CSong
 PlayRound3CSong:
-	lea	Round3CSong(pc),a0				; Play music
+	lea	Round3CSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos Bad Future music
+; Play Collision Chaos Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound3DSong
 PlayRound3DSong:
-	lea	Round3DSong(pc),a0				; Play music
+	lea	Round3DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest Present music
+; Play Tidal Tempest Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound4ASong
 PlayRound4ASong:
-	lea	Round4ASong(pc),a0				; Play music
+	lea	Round4ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest Good Future music
+; Play Tidal Tempest Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound4CSong
 PlayRound4CSong:
-	lea	Round4CSong(pc),a0				; Play music
+	lea	Round4CSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest Bad Future music
+; Play Tidal Tempest Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound4DSong
 PlayRound4DSong:
-	lea	Round4DSong(pc),a0				; Play music
+	lea	Round4DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant Present music
+; Play Quartz Quadrant Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound5ASong
 PlayRound5ASong:
-	lea	Round5ASong(pc),a0				; Play music
+	lea	Round5ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant Good Future music
+; Play Quartz Quadrant Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound5CSong
 PlayRound5CSong:
-	lea	Round5CSong(pc),a0				; Play music
+	lea	Round5CSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant Bad Future music
+; Play Quartz Quadrant Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound5DSong
 PlayRound5DSong:
-	lea	Round5DSong(pc),a0				; Play music
+	lea	Round5DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench Present music
+; Play Wacky Workbench Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound6ASong
 PlayRound6ASong:
-	lea	Round6ASong(pc),a0				; Play music
+	lea	Round6ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench Good Future music
+; Play Wacky Workbench Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound6CSong
 PlayRound6CSong:
-	lea	Round6CSong(pc),a0				; Play music
+	lea	Round6CSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench Bad Future music
+; Play Wacky Workbench Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound6DSong
 PlayRound6DSong:
-	lea	Round6DSong(pc),a0				; Play music
+	lea	Round6DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway Present music
+; Play Stardust Speedway Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound7ASong
 PlayRound7ASong:
-	lea	Round7ASong(pc),a0				; Play music
+	lea	Round7ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway Good Future music
+; Play Stardust Speedway Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound7CSong
 PlayRound7CSong:
-	lea	Round7CSong(pc),a0				; Play music
+	lea	Round7CSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway Bad Future music
+; Play Stardust Speedway Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound7DSong
 PlayRound7DSong:
-	lea	Round7DSong(pc),a0				; Play music
+	lea	Round7DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness Present music
+; Play Metallic Madness Present song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound8ASong
 PlayRound8ASong:
-	lea	Round8ASong(pc),a0				; Play music
+	lea	Round8ASong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness Good Future music
+; Play Metallic Madness Good Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound8CSong
 PlayRound8CSong:
-	lea	Round8CSong(pc),a0				; Play music
+	lea	Round8CSong(pc),a0				; Play song
 
 ; ------------------------------------------------------------------------------
 ; Loop CD audio
 ; ------------------------------------------------------------------------------
 ; PARAMETERS
-;	a0.l - Pointer to music ID
+;	a0.l - Pointer to song ID
 ; ------------------------------------------------------------------------------
 
 	xdef LoopCdda
@@ -418,57 +418,57 @@ LoopCdda:
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness Bad Future music
+; Play Metallic Madness Bad Future song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayRound8DSong
 PlayRound8DSong:
-	lea	Round8DSong(pc),a0				; Play music
+	lea	Round8DSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play boss music
+; Play boss song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayBossSong
 PlayBossSong:
-	lea	BossSong(pc),a0					; Play music
+	lea	BossSong(pc),a0					; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play final boss music
+; Play final boss song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayFinalBossSong
 PlayFinalBossSong:
-	lea	FinalBossSong(pc),a0				; Play music
+	lea	FinalBossSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play time attack menu music
+; Play time attack menu song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayTimeAttackSong
 PlayTimeAttackSong:
-	lea	TimeAttackSong(pc),a0				; Play music
+	lea	TimeAttackSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play special stage music
+; Play special stage song
 ; ------------------------------------------------------------------------------
 
 	xdef PlaySpecialStageSong
 PlaySpecialStageSong:
-	lea	SpecialStageSong(pc),a0				; Play music
+	lea	SpecialStageSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play D.A. Garden music
+; Play D.A. Garden song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayDaGardenSong
 PlayDaGardenSong:
-	lea	DaGardenSong(pc),a0				; Play music
+	lea	DaGardenSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
@@ -481,72 +481,72 @@ PlayProtoWarpSound:
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play opening music
+; Play opening song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayOpeningSong
 PlayOpeningSong:
-	lea	OpeningSong(pc),a0				; Play music
+	lea	OpeningSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play ending music
+; Play ending song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayEndingSong
 PlayEndingSong:
-	lea	EndingSong(pc),a0				; Play music
+	lea	EndingSong(pc),a0				; Play song
 	bra.s	LoopCdda
 
 ; ------------------------------------------------------------------------------
-; Play title screen music
+; Play title screen song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayTitleSong
 PlayTitleSong:
-	lea	TitleScreenSong(pc),a0				; Play music
+	lea	TitleScreenSong(pc),a0				; Play song
 	bra.s	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play results music
+; Play results song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayResultsSong
 PlayResultsSong:
-	lea	ResultsSong(pc),a0				; Play music
+	lea	ResultsSong(pc),a0				; Play song
 	bra.s	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play speed shoes music
+; Play speed shoes song
 ; ------------------------------------------------------------------------------
 
 	xdef PlaySpeedShoesSong
 PlaySpeedShoesSong:
-	lea	SpeedShoesSong(pc),a0				; Play music
+	lea	SpeedShoesSong(pc),a0				; Play song
 	bra.s	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play invincibility music
+; Play invincibility song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayInvincibleSong
 PlayInvincibleSong:
-	lea	InvincibleSong(pc),a0				; Play music
+	lea	InvincibleSong(pc),a0				; Play song
 	bra.s	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play game over music
+; Play game over song
 ; ------------------------------------------------------------------------------
 
 	xdef PlayGameOverSong
 PlayGameOverSong:
-	lea	GameOverSong(pc),a0				; Play music
+	lea	GameOverSong(pc),a0				; Play song
 
 ; ------------------------------------------------------------------------------
 ; Play CD audio
 ; ------------------------------------------------------------------------------
 ; PARAMETERS
-;	a0.l - Pointer to music ID
+;	a0.l - Pointer to song ID
 ; ------------------------------------------------------------------------------
 
 	xdef PlayCdda
@@ -557,282 +557,282 @@ PlayCdda:
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic Present music (sound test)
+; Play Palmtree Panic Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound1ASong
 TestRound1ASong:
-	lea	Round1ASong(pc),a0				; Play music
+	lea	Round1ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic Good Future music (sound test)
+; Play Palmtree Panic Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound1CSong
 TestRound1CSong:
-	lea	Round1CSong(pc),a0				; Play music
+	lea	Round1CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic Bad Future music (sound test)
+; Play Palmtree Panic Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound1DSong
 TestRound1DSong:
-	lea	Round1DSong(pc),a0				; Play music
+	lea	Round1DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos Present music (sound test)
+; Play Collision Chaos Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound3ASong
 TestRound3ASong:
-	lea	Round3ASong(pc),a0				; Play music
+	lea	Round3ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos Good Future music (sound test)
+; Play Collision Chaos Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound3CSong
 TestRound3CSong:
-	lea	Round3CSong(pc),a0				; Play music
+	lea	Round3CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos Bad Future music (sound test)
+; Play Collision Chaos Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound3DSong
 TestRound3DSong:
-	lea	Round3DSong(pc),a0				; Play music
+	lea	Round3DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest Present music (sound test)
+; Play Tidal Tempest Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound4ASong
 TestRound4ASong:
-	lea	Round4ASong(pc),a0				; Play music
+	lea	Round4ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest Good Future music (sound test)
+; Play Tidal Tempest Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound4CSong
 TestRound4CSong:
-	lea	Round4CSong(pc),a0				; Play music
+	lea	Round4CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest Bad Future music (sound test)
+; Play Tidal Tempest Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound4DSong
 TestRound4DSong:
-	lea	Round4DSong(pc),a0				; Play music
+	lea	Round4DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant Present music (sound test)
+; Play Quartz Quadrant Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound5ASong
 TestRound5ASong:
-	lea	Round5ASong(pc),a0				; Play music
+	lea	Round5ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant Good Future music (sound test)
+; Play Quartz Quadrant Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound5CSong
 TestRound5CSong:
-	lea	Round5CSong(pc),a0				; Play music
+	lea	Round5CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant Bad Future music (sound test)
+; Play Quartz Quadrant Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound5DSong
 TestRound5DSong:
-	lea	Round5DSong(pc),a0				; Play music
+	lea	Round5DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench Present music (sound test)
+; Play Wacky Workbench Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound6ASong
 TestRound6ASong:
-	lea	Round6ASong(pc),a0				; Play music
+	lea	Round6ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench Good Future music (sound test)
+; Play Wacky Workbench Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound6CSong
 TestRound6CSong:
-	lea	Round6CSong(pc),a0				; Play music
+	lea	Round6CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench Bad Future music (sound test)
+; Play Wacky Workbench Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound6DSong
 TestRound6DSong:
-	lea	Round6DSong(pc),a0				; Play music
+	lea	Round6DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway Present music (sound test)
+; Play Stardust Speedway Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound7ASong
 TestRound7ASong:
-	lea	Round7ASong(pc),a0				; Play music
+	lea	Round7ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway Good Future music (sound test)
+; Play Stardust Speedway Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound7CSong
 TestRound7CSong:
-	lea	Round7CSong(pc),a0				; Play music
+	lea	Round7CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway Bad Future music (sound test)
+; Play Stardust Speedway Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound7DSong
 TestRound7DSong:
-	lea	Round7DSong(pc),a0				; Play music
+	lea	Round7DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness Present music (sound test)
+; Play Metallic Madness Present song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound8ASong
 TestRound8ASong:
-	lea	Round8ASong(pc),a0				; Play music
+	lea	Round8ASong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness Good Future music (sound test)
+; Play Metallic Madness Good Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound8CSong
 TestRound8CSong:
-	lea	Round8CSong(pc),a0				; Play music
+	lea	Round8CSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness Bad Future music (sound test)
+; Play Metallic Madness Bad Future song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound8DSong
 TestRound8DSong:
-	lea	Round8DSong(pc),a0				; Play music
+	lea	Round8DSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play boss music (sound test)
+; Play boss song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestBossSong
 TestBossSong:
-	lea	BossSong(pc),a0					; Play music
+	lea	BossSong(pc),a0					; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play final boss music (sound test)
+; Play final boss song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestFinalSong
 TestFinalSong:
-	lea	FinalBossSong(pc),a0				; Play music
+	lea	FinalBossSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play title screen music (sound test)
+; Play title screen song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestTitleSong
 TestTitleSong:
-	lea	TitleScreenSong(pc),a0				; Play music
+	lea	TitleScreenSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play time attack menu music (sound test)
+; Play time attack menu song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestTimeAttackSong
 TestTimeAttackSong:
-	lea	TimeAttackSong(pc),a0				; Play music
+	lea	TimeAttackSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play results music (sound test)
+; Play results song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestResultsSong
 TestResultsSong:
-	lea	ResultsSong(pc),a0				; Play music
+	lea	ResultsSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play speed shoes music (sound test)
+; Play speed shoes song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestSpeedShoesSong
 TestSpeedShoesSong:
-	lea	SpeedShoesSong(pc),a0				; Play music
+	lea	SpeedShoesSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play invincibility music (sound test)
+; Play invincibility song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestInvincibleSong
 TestInvincibleSong:
-	lea	InvincibleSong(pc),a0				; Play music
+	lea	InvincibleSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play game over music (sound test)
+; Play game over song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestGameOverSong
 TestGameOverSong:
-	lea	GameOverSong(pc),a0				; Play music
+	lea	GameOverSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play special stage music (sound test)
+; Play special stage song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestSpecialStageSong
 TestSpecialStageSong:
-	lea	SpecialStageSong(pc),a0				; Play music
+	lea	SpecialStageSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play D.A. Garden music (sound test)
+; Play D.A. Garden song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestDaGardenSong
 TestDaGardenSong:
-	lea	DaGardenSong(pc),a0				; Play music
+	lea	DaGardenSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
@@ -845,21 +845,21 @@ TestProtoWarpSound:
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play opening music (sound test)
+; Play opening song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestOpeningSong
 TestOpeningSong:
-	lea	OpeningSong(pc),a0				; Play music
+	lea	OpeningSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
-; Play ending music (sound test)
+; Play ending song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestEndingSong
 TestEndingSong:
-	lea	EndingSong(pc),a0				; Play music
+	lea	EndingSong(pc),a0				; Play song
 	bra.w	PlayCdda
 
 ; ------------------------------------------------------------------------------
@@ -973,80 +973,80 @@ TestBumperSfx:
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Palmtree Panic past music (sound test)
+; Play Palmtree Panic past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound1BSong
 TestRound1BSong:
 	lea	PcmDriverR1BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Collision Chaos past music (sound test)
+; Play Collision Chaos past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound3BSong
 TestRound3BSong:
 	lea	PcmDriverR3BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Tidal Tempest past music (sound test)
+; Play Tidal Tempest past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound4BSong
 TestRound4BSong:
 	lea	PcmDriverR4BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Quartz Quadrant past music (sound test)
+; Play Quartz Quadrant past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound5BSong
 TestRound5BSong:
 	lea	PcmDriverR5BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Wacky Workbench past music (sound test)
+; Play Wacky Workbench past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound6BSong
 TestRound6BSong:
 	lea	PcmDriverR6BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Stardust Speedway past music (sound test)
+; Play Stardust Speedway past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound7BSong
 TestRound7BSong:
 	lea	PcmDriverR7BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play Metallic Madness past music (sound test)
+; Play Metallic Madness past song (sound test)
 ; ------------------------------------------------------------------------------
 
 	xdef TestRound8BSong
 TestRound8BSong:
 	lea	PcmDriverR8BFile(pc),a0				; Load PCM driver
 	bsr.w	LoadPcmDriver
-	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue music ID
+	move.b	#PCM_SONG_PAST,PcmSoundQueue			; Queue song ID
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------

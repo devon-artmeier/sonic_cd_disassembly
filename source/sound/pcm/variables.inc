@@ -7,21 +7,23 @@
 ; Constants
 ; ------------------------------------------------------------------------------
 
+; IDs
+PCM_SONG_START		equ $81					; Starting song ID
+PCM_SONG_END		equ $8F					; Ending song ID
+PCM_SFX_START		equ $B0					; Starting SFX ID
+PCM_SFX_END		equ $BF					; Ending SFX ID
+PCM_CMD_START		equ $E0					; Starting command ID
+PCM_CMD_END		equ $E4					; Ending command ID
+
 ; Counts
 RHYTHM_TRACK_COUNT	equ 1					; Number of rhythm tracks
 PCM_TRACK_COUNT		equ 8					; Number of PCM tracks
 TRACK_COUNT		equ RHYTHM_TRACK_COUNT+PCM_TRACK_COUNT	; Total number of tracks
 
 ; Track flags
-	rsreset
-			rs.b 1
-TRACK_REST		rs.b 1					; Rest flag
-			rs.b 1
-			rs.b 1
-TRACK_LEGATO		rs.b 1					; Legato flag
-			rs.b 1
-			rs.b 1
-TRACK_PLAY		rs.b 1					; Play flag
+TRACK_REST		equ 1					; Rest flag
+TRACK_LEGATO		equ 4					; Legato flag
+TRACK_PLAY		equ 7					; Play flag
 
 ; ------------------------------------------------------------------------------
 ; Track variables structure
@@ -71,7 +73,7 @@ pcm.tempo_timer		rs.b 1					; Tempo timer
 pcm.on			rs.b 1					; Channels on/off array
 pcm.sfx_priority	rs.b 1					; Saved SFX priority level
 pcm.communication	rs.b 1					; Communication flag
-pcm.cdda_loop		rs.b 1					; CDDA music loop flag
+pcm.cdda_loop		rs.b 1					; CDDA song loop flag
 pcm.unk_counter		rs.b 1					; Unknown counter
 			rs.b 2
 pcm.sound_play		rs.b 1					; Sound play queue
@@ -86,14 +88,14 @@ pcm.fade_delay_timer	rs.b 1					; Fade out delay timer
 pcm.unk_fade_volume	rs.b 1					; Unknown fade out volume
 			rs.b $80-__RS
 pcm.rhythm		rs.b track.struct_size			; Rhythm track (unused)
-pcm.track_1		rs.b track.struct_size			; Music PCM1 track
-pcm.track_2		rs.b track.struct_size			; Music PCM2 track
-pcm.track_3		rs.b track.struct_size			; Music PCM3 track
-pcm.track_4		rs.b track.struct_size			; Music PCM4 track
-pcm.track_5		rs.b track.struct_size			; Music PCM5 track
-pcm.track_6		rs.b track.struct_size			; Music PCM6 track
-pcm.track_7		rs.b track.struct_size			; Music PCM7 track
-pcm.track_8		rs.b track.struct_size			; Music PCM8 track
+pcm.track_1		rs.b track.struct_size			; Song PCM1 track
+pcm.track_2		rs.b track.struct_size			; Song PCM2 track
+pcm.track_3		rs.b track.struct_size			; Song PCM3 track
+pcm.track_4		rs.b track.struct_size			; Song PCM4 track
+pcm.track_5		rs.b track.struct_size			; Song PCM5 track
+pcm.track_6		rs.b track.struct_size			; Song PCM6 track
+pcm.track_7		rs.b track.struct_size			; Song PCM7 track
+pcm.track_8		rs.b track.struct_size			; Song PCM8 track
 pcm.sfx_1		rs.b track.struct_size			; SFX PCM1 track
 pcm.sfx_2		rs.b track.struct_size			; SFX PCM2 track
 pcm.sfx_3		rs.b track.struct_size			; SFX PCM3 track
@@ -122,9 +124,9 @@ sample.struct_size	rs.b 0					; Size of structure
 ; ------------------------------------------------------------------------------
 
 	rsreset
-info.music_priorities	rs.l 1					; Music priorities address
+info.song_priorities	rs.l 1					; Song priorities address
 			rs.l 1
-info.music_index	rs.l 1					; Music index address (unused)
+info.song_index		rs.l 1					; Song index address (unused)
 info.sfx_index		rs.l 1					; SFX index address
 			rs.l 1
 			rs.l 1
