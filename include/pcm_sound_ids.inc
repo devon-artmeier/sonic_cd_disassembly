@@ -2,6 +2,7 @@
 ; Symbols extracted from
 ; build/.obj/source/sound/pcm/command.o
 ; build/.obj/source/sound/pcm/data_r1b.o
+; build/.obj/source/sound/pcm/data_r3b.o
 ; ------------------------------------------------------------------------------
 
 PCM_SONG_START          equ $81
@@ -19,7 +20,7 @@ PCM_SFX_AMY_GIGGLE      equ $B7
 PCM_SFX_AMY_YELP        equ $B8
 PCM_SFX_STOMP           equ $B9
 PCM_SFX_BUMPER          equ $BA
-PCM_SFX_BREAK           equ $BB
+PCM_SFX_SHATTER         equ $BB
 PCM_SFX_END             equ $BF
 PCM_CMD_FADE_OUT        equ $E0
 PCM_CMD_START           equ $E0

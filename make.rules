@@ -45,6 +45,8 @@ BUILDING_DISC     = @echo "Building   \"$@\""
 # Output files
 OUT_FM_DRIVER      := $(MISC_PATH)/z80.bin
 OUT_PCM_DRIVER_R1B := $(FILES_PATH)/SNCBNK1B.BIN
+OUT_PCM_DRIVER_R3B := $(FILES_PATH)/SNCBNK3B.BIN
+OUT_PCM_SOUND_IDS  := $(INCLUDE_PATH)/pcm_sound_ids.inc
 OUT_SUB_CORE       := $(MISC_PATH)/sp.bin
 OUT_SUB_EXT        := $(FILES_PATH)/SPX___.BIN
 OUT_MAIN_BOOT      := $(MISC_PATH)/ip.bin
@@ -57,6 +59,8 @@ OUT_TITLE_SUB      := $(FILES_PATH)/TITLES.BIN
 
 OUT_FILES         := $(OUT_FM_DRIVER) \
                      $(OUT_PCM_DRIVER_R1B) \
+                     $(OUT_PCM_DRIVER_R3B) \
+                     $(OUT_PCM_SOUND_IDS) \
                      $(OUT_SUB_CORE) \
                      $(OUT_SUB_EXT) \
 		     $(OUT_MAIN_BOOT) \
@@ -90,13 +94,13 @@ clean:
         include $(SRC_PATH)/disc/make.rules
 
 # Create folders
-$(OBJ_PATH): $(BUILD_PATH)
+$(FILES_PATH): $(BUILD_PATH)
 	@$(call make_dir,$@)
-
+	
 $(MISC_PATH): $(BUILD_PATH)
 	@$(call make_dir,$@)
-
-$(FILES_PATH): $(BUILD_PATH)
+	
+$(OBJ_PATH): $(BUILD_PATH)
 	@$(call make_dir,$@)
 
 $(BUILD_PATH):

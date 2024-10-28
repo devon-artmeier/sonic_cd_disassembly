@@ -102,12 +102,12 @@ PlayBumperSfx:
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------
-; Play glass break sound
+; Play glass shatter sound
 ; ------------------------------------------------------------------------------
 
-	xdef PlayBreakSfx
-PlayBreakSfx:
-	move.b	#PCM_SFX_BREAK,PcmSoundQueue			; Play sound
+	xdef PlayShatterSfx
+PlayShatterSfx:
+	move.b	#PCM_SFX_SHATTER,PcmSoundQueue			; Play sound
 	bra.w	FinishCommand
 
 ; ------------------------------------------------------------------------------

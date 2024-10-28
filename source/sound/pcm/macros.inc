@@ -64,45 +64,36 @@ command macro
 	endm
 	
 ; ------------------------------------------------------------------------------
-; Define sample pointer
+; Define sample
 ; ------------------------------------------------------------------------------
 ; PARAMETERS:
-;	\1 - ID constant name
-;	\2 - Sample metadata label
-; ------------------------------------------------------------------------------
-
-__sample_id	set 0
-sample_ptr macro
-	xdef \1
-	section data_sample_index
-	dc.l	\2
-	\1:		equ __sample_id
-	__sample_id:	set __sample_id+1
-	endm
-
-; ------------------------------------------------------------------------------
-; End of sample table
-; ------------------------------------------------------------------------------
-
-sample_ptr_end macro
-	SAMPLE_COUNT:	equ __sample_id
-	endm
-
-; ------------------------------------------------------------------------------
-; Define sample info
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - Sample label
+;	\1 - Sample name
 ;	\2 - Loop point
 ;	\3 - Staccato time
 ;	\4 - Sample mode (0 = stream, else static)
 ;	\5 - Destination address (only if static)
 ; ------------------------------------------------------------------------------
 
+__sample_id	set 0
 sample macro
-	dc.l	\1, (\1End)-(\1), \2
+	xdef s\1
+	section data_sample_index
+	dc.l	\1Info
+	section data_samples
+\1Info:
+	dc.l	\1Sample, (\1SampleEnd)-(\1Sample), \2
 	dc.b	\3, \4
 	dc.w	\5
+	s\1:		equ __sample_id
+	__sample_id:	set __sample_id+1
+	endm
+
+; ------------------------------------------------------------------------------
+; End of sample index
+; ------------------------------------------------------------------------------
+
+samples_end macro
+	SAMPLE_COUNT:	equ __sample_id
 	endm
 	
 ; ------------------------------------------------------------------------------
@@ -114,9 +105,9 @@ sample macro
 ; ------------------------------------------------------------------------------
 
 sample_data macro
-\1:
+\1Sample:
 	incbin	\2
-\1End:
+\1SampleEnd:
 	endm
 
 ; ------------------------------------------------------------------------------

@@ -194,7 +194,7 @@ Commands:
 	command SYS_VOLUME_RESET,     ResetCddaVolumeCmd
 	command SYS_PCM_PAUSE,        PausePcm,               
 	command SYS_PCM_UNPAUSE,      UnpausePcm
-	command SYS_SFX_BREAK,        PlayBreakSfx
+	command SYS_SFX_SHATTER,      PlayShatterSfx
 	command SYS_BAD_END,          LoadBadEnding
 	command SYS_GOOD_END,         LoadGoodEnding
 	command SYS_TEST_R1A,         TestRound1ASong

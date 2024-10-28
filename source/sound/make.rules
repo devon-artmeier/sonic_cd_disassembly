@@ -1,70 +1,74 @@
 # Source folder paths
-SRC_PATH_SOUND      := $(SRC_PATH)/sound
-SRC_PATH_FM         := $(SRC_PATH_SOUND)/fm
-SRC_PATH_PCM        := $(SRC_PATH_SOUND)/pcm
+SRC_PATH_SOUND       := $(SRC_PATH)/sound
+SRC_PATH_FM          := $(SRC_PATH_SOUND)/fm
+SRC_PATH_PCM         := $(SRC_PATH_SOUND)/pcm
 
 # Object folder paths
-OBJ_PATH_FM         := $(OBJ_PATH)/$(SRC_PATH_FM)
-OBJ_PATH_PCM        := $(OBJ_PATH)/$(SRC_PATH_PCM)
+OBJ_PATH_FM          := $(OBJ_PATH)/$(SRC_PATH_FM)
+OBJ_PATH_PCM         := $(OBJ_PATH)/$(SRC_PATH_PCM)
 
 # FM sound data files
-SRC_FM_DATA         := $(SRC_PATH_FM)/data.asm
-OBJ_FM_DATA         := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DATA))
-DEPEND_FM_DATA      := $(patsubst %.o,%.d,$(OBJ_FM_DATA))
+SRC_FM_DATA          := $(SRC_PATH_FM)/data.asm
+OBJ_FM_DATA          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DATA))
+DEPEND_FM_DATA       := $(patsubst %.o,%.d,$(OBJ_FM_DATA))
 
-SYMBOLS_FM_DATA     := -ip FM_
+SYMBOLS_FM_DATA      := -ip FM_
 
 # FM sound driver files
-SRC_FM_DRIVER       := $(SRC_PATH_FM)/main.asm \
-                       $(SRC_PATH_FM)/track.asm \
-                       $(SRC_PATH_FM)/instrument.asm \
-                       $(SRC_PATH_FM)/fm_write.asm \
-                       $(SRC_PATH_FM)/play_sound.asm \
-                       $(SRC_PATH_FM)/fm_registers.asm \
-                       $(SRC_PATH_FM)/track_command.asm \
-                       $(SRC_PATH_FM)/info.asm
-OBJ_FM_DRIVER       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
-DEPEND_FM_DRIVER    := $(patsubst %.o,%.d,$(OBJ_FM_DRIVER))
+SRC_FM_DRIVER        := $(SRC_PATH_FM)/main.asm \
+                        $(SRC_PATH_FM)/track.asm \
+                        $(SRC_PATH_FM)/instrument.asm \
+                        $(SRC_PATH_FM)/fm_write.asm \
+                        $(SRC_PATH_FM)/play_sound.asm \
+                        $(SRC_PATH_FM)/fm_registers.asm \
+                        $(SRC_PATH_FM)/track_command.asm \
+                        $(SRC_PATH_FM)/info.asm
+OBJ_FM_DRIVER        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
+DEPEND_FM_DRIVER     := $(patsubst %.o,%.d,$(OBJ_FM_DRIVER))
 
-SYMBOLS_FM_DRIVER   := -iy z_sound_play \
-                       -iy z_sound_queue
+SYMBOLS_FM_DRIVER    := -iy z_sound_play \
+                        -iy z_sound_queue
 
 # PCM sound driver files
-SRC_PCM_DRIVER      := $(SRC_PATH_PCM)/main.asm \
-                       $(SRC_PATH_PCM)/track.asm \
-                       $(SRC_PATH_PCM)/sample.asm \
-                       $(SRC_PATH_PCM)/play_sound.asm \
-                       $(SRC_PATH_PCM)/fade.asm \
-                       $(SRC_PATH_PCM)/pause.asm \
-                       $(SRC_PATH_PCM)/tempo.asm \
-                       $(SRC_PATH_PCM)/key_on_off.asm \
-                       $(SRC_PATH_PCM)/command.asm \
-                       $(SRC_PATH_PCM)/reset.asm \
-                       $(SRC_PATH_PCM)/stop_sound.asm \
-                       $(SRC_PATH_PCM)/initialize.asm \
-                       $(SRC_PATH_PCM)/frequencies.asm \
-                       $(SRC_PATH_PCM)/track_command.asm \
-                       $(SRC_PATH_PCM)/info.asm
-OBJ_PCM_DRIVER     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DRIVER))
-DEPEND_PCM_DRIVER  := $(patsubst %.o,%.d,$(OBJ_PCM_DRIVER))
+SRC_PCM_DRIVER       := $(SRC_PATH_PCM)/main.asm \
+                        $(SRC_PATH_PCM)/track.asm \
+                        $(SRC_PATH_PCM)/sample.asm \
+                        $(SRC_PATH_PCM)/play_sound.asm \
+                        $(SRC_PATH_PCM)/fade.asm \
+                        $(SRC_PATH_PCM)/pause.asm \
+                        $(SRC_PATH_PCM)/tempo.asm \
+                        $(SRC_PATH_PCM)/key_on_off.asm \
+                        $(SRC_PATH_PCM)/command.asm \
+                        $(SRC_PATH_PCM)/reset.asm \
+                        $(SRC_PATH_PCM)/stop_sound.asm \
+                        $(SRC_PATH_PCM)/initialize.asm \
+                        $(SRC_PATH_PCM)/frequencies.asm \
+                        $(SRC_PATH_PCM)/track_command.asm \
+                        $(SRC_PATH_PCM)/info.asm
+OBJ_PCM_DRIVER      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DRIVER))
+DEPEND_PCM_DRIVER   := $(patsubst %.o,%.d,$(OBJ_PCM_DRIVER))
 
-SYMBOLS_PCM_DRIVER := -iy PcmDriver \
-                      -iy PcmDriverOrigin \
-                      -iy RunPcmDriver \
-                      -iy InitPcmDriver \
-                      -iy PcmVariables \
-                      -iy pcm.sound_queue
+SYMBOLS_PCM_DRIVER   = -iy PcmDriver \
+                       -iy PcmDriverOrigin \
+                       -iy RunPcmDriver \
+                       -iy InitPcmDriver \
+                       -iy PcmVariables \
+                       -iy pcm.sound_queue
 
-SRC_PCM_DATA_R1B    := $(SRC_PATH_PCM)/data_r1b.asm
-OBJ_PCM_DATA_R1B    := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R1B))
-DEPEND_PCM_DATA_R1B := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R1B))
+SRC_PCM_DATA_R1B     := $(SRC_PATH_PCM)/data_r1b.asm
+OBJ_PCM_DATA_R1B     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R1B))
+DEPEND_PCM_DATA_R1B  := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R1B))
 
-SYMBOLS_PCM_DATA    := -ip PCM_SONG_ \
-                       -ip PCM_SFX_ \
-                       -ip PCM_CMD_
+SRC_PCM_DATA_R3B     := $(SRC_PATH_PCM)/data_r3b.asm
+OBJ_PCM_DATA_R3B     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R3B))
+DEPEND_PCM_DATA_R3B  := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R3B))
+
+SYMBOLS_PCM_DATA     := -ip PCM_SONG_ \
+                        -ip PCM_SFX_ \
+                        -ip PCM_CMD_
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA_R1B)
+	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA_R1B) $(DEPEND_PCM_DATA_R3B)
 endif
 
 # FM sound driver rules
@@ -91,13 +95,15 @@ $(DEPEND_FM_DATA): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
-# PCM sound driver rules
+# PCM sound IDs rules
+$(OUT_PCM_SOUND_IDS): $(OBJ_PCM_DRIVER) $(OUT_PCM_DRIVER_R1B) $(OUT_PCM_DRIVER_R3B)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_PCM_DATA) $(OBJ_PATH_PCM)/command.o $(OBJ_PCM_DATA_R1B) $(OBJ_PCM_DATA_R3B)
+
+# PCM sound driver (R1) rules
 $(OUT_PCM_DRIVER_R1B): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R1B)
 	$(LINKING)
-	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile "pcm.sym" -o $@ $^
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_sound_ids.inc $(SYMBOLS_PCM_DATA) $(OBJ_PATH_PCM)/command.o $(OBJ_PATH_PCM)/data_r1b.o
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o "pcm.sym"
-	@$(RM) "pcm.sym"
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
 
 $(OBJ_PCM_DATA_R1B): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R1B)
 	$(ASSEMBLING)
@@ -107,6 +113,21 @@ $(DEPEND_PCM_DATA_R1B): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# PCM sound driver (R3) rules
+$(OUT_PCM_DRIVER_R3B): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R3B)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_R3B): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R3B)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_R3B): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# PCM sound driver (common) rules
 $(OBJ_PCM_DRIVER): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DRIVER)
 	$(ASSEMBLING)
 	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
