@@ -118,7 +118,7 @@ CopyrightTmArt:
 	else
 	xdef TmArt
 TmArt:
-		incbin	"copyright_tm_art_je.nem"
+		incbin	"../data/copyright_tm_art_je.nem"
 		even
 	endif
 

@@ -110,7 +110,7 @@ sub_p2_ctrl_tap		equ sub_p2_ctrl_data+1			; Sub CPU player 2 controller tapped b
 ; ------------------------------------------------------------------------------
 
 copyClouds macro
-	ifeq (\2)
+	ifeq \2
 		__src: set cloud_image
 		__len: set CLOUD_IMAGE_SIZE_1
 	else
@@ -118,7 +118,7 @@ copyClouds macro
 		__len: set CLOUD_IMAGE_SIZE_2
 	endif
 	__vram: set CLOUD_IMAGE_VRAM+((\1)*CLOUD_IMAGE_SIZE)
-	ifne (\2)
+	ifne \2
 		__vram: set __vram+CLOUD_IMAGE_SIZE_1
 	endif
 	dma68k __src,__vram,__len,VRAM

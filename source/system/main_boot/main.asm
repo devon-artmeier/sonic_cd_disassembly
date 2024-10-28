@@ -13,9 +13,11 @@
 
 	ifne REGION=JAPAN
 		include	"security_japan.inc"
-	else ifne REGION=USA
+	endif
+	ifne REGION=USA
 		include	"security_usa.inc"
-	else
+	endif
+	ifne REGION=EUROPE
 		include	"security_europe.inc"
 	endif
 

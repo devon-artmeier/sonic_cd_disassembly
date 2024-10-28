@@ -344,12 +344,14 @@ DrawMessageTilemap:
 		dc.w	$201A
 		dc.w	$24-1, 6-1
 		vdpCmd dc.l,$E584,VRAM,WRITE
-	else ifne REGION=USA
+	endif
+	ifne REGION=USA
 		dc.l	UnformattedUsaTilemap
 		dc.w	$20E2
 		dc.w	$1D-1, 8-1
 		vdpCmd dc.l,$E58A,VRAM,WRITE
-	else
+	endif
+	ifne REGION=EUROPE
 		dc.l	UnformattedTilemap
 		dc.w	$201A
 		dc.w	$1D-1, 6-1

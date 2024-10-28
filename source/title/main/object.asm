@@ -107,7 +107,7 @@ SpawnObject:
 ClearObjects:
 	lea	objects,a0					; Clear object data
 	
-	ifle OBJECT_COUNT-8
+	ifne OBJECT_COUNT<=8
 		moveq	#(objects_end-objects)/4-1,d7
 	else
 		move.l	#(objects_end-objects)/4-1,d7

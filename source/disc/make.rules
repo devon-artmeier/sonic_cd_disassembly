@@ -28,7 +28,7 @@ OUT_DISC_FILES      := $(patsubst $(SRC_PATH_DISC_FILES)/%,$(FILES_PATH)/%,$(SRC
 # Dependencies
 # ------------------------------------------------------------------------------
 
-ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+ifneq ($(MAKECMDGOALS),$(filter $(MAKECMDGOALS),clean))
 	-include $(DEPEND_DISC_BOOT)
 endif
 

@@ -6,11 +6,20 @@ JAPAN                := 0
 USA                  := 1
 EUROPE               := 2
 
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+ifndef REGION
+$(error REGION is not set. Valid values are JAPAN, USA, and EUROPE)
+else ifneq ($(REGION),$(filter JAPAN USA EUROPE,$(REGION)))
+$(error $(REGION) is not a valid option for REGION. Valid option are JAPAN, USA, and EUROPE)
+endif
+endif
+
 # ------------------------------------------------------------------------------
 # Folder paths
 # ------------------------------------------------------------------------------
 
-BUILD_PATH           := build
+BUILD_ROOT_PATH      := build
+BUILD_PATH           := build/$(shell echo $(REGION) | tr A-Z a-z)
 FILES_PATH           := $(BUILD_PATH)/files
 MISC_PATH            := $(BUILD_PATH)/misc
 OBJ_PATH             := $(BUILD_PATH)/.obj
@@ -39,7 +48,7 @@ MKISOFS              := mkisofs
 # Flags
 # ------------------------------------------------------------------------------
 
-VASM_FLAGS           := -Fvobj -quiet -ldots -unsshift -I$(INCLUDE_PATH) -DREGION=$(REGION)
+VASM_FLAGS           := -Fvobj -quiet -ldots -unsshift -I$(INCLUDE_PATH) -I$(MISC_PATH) -DREGION=$(REGION)
 VASM_M68K_FLAGS      := $(VASM_FLAGS) -devpac -opt-p=68000 -opt-o3+ -opt-ow-
 VASM_Z80_FLAGS       := $(VASM_FLAGS)
 VLINK_FLAGS          := -b rawbin1 -nowarn=22
@@ -140,7 +149,7 @@ $(OUT_DISC): $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $
 # ------------------------------------------------------------------------------
 
 clean:
-	@$(RM) $(BUILD_PATH)
+	@$(RM) $(BUILD_ROOT_PATH)
 
 # ------------------------------------------------------------------------------
 # Rules files
@@ -165,7 +174,10 @@ $(MISC_PATH): $(BUILD_PATH)
 $(OBJ_PATH): $(BUILD_PATH)
 	@$(call make_dir,$@)
 
-$(BUILD_PATH):
+$(BUILD_PATH): $(BUILD_ROOT_PATH)
+	@$(call make_dir,$@)
+	
+$(BUILD_ROOT_PATH):
 	@$(call make_dir,$@)
 
 # ------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 ; ------------------------------------------------------------------------------
 ; Symbols extracted from
-; build/.obj/source/sound/pcm/main.o
-; build/.obj/pcm.sym
+; build/europe/.obj/source/sound/pcm/main.o
+; build/europe/.obj/pcm.sym
 ; ------------------------------------------------------------------------------
 
 pcm.sound_queue equ $A

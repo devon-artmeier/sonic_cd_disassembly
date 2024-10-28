@@ -80,7 +80,7 @@ VdpRegisters:
 
 	xdef FmDriver
 FmDriver:
-	incbin	"../../../build/misc/z80.bin"
+	incbin	"z80.bin"
 FmDriverEnd:
 	even
 

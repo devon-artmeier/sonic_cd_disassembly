@@ -1,7 +1,7 @@
 ; ------------------------------------------------------------------------------
 ; Symbols extracted from
-; build/.obj/source/system/sub_extension/files.o
-; build/.obj/source/system/sub_extension/main.o
+; build/europe/.obj/source/system/sub_extension/files.o
+; build/europe/.obj/source/system/sub_extension/main.o
 ; ------------------------------------------------------------------------------
 
 FILE_ROUND_11A          equ $0

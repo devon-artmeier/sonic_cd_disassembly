@@ -13,7 +13,11 @@
 	dc.b	"SEGADISCSYSTEM  "				; Disk type ID
 	ifne REGION=JAPAN					; Volume ID
 		dc.b	"SEGAIPSAMP ", 0
-	else
+	endif
+	ifne REGION=USA
+		dc.b	"SEGASONICCD", 0
+	endif
+	ifne REGION=EUROPE
 		dc.b	"SEGASONICCD", 0
 	endif
 	dc.w	$0100						; Volume version
@@ -31,9 +35,11 @@
 	dc.l	$00000000					; SP work RAM size
 	ifne REGION=JAPAN					; Build date
 		dc.b	"08061993"
-	else ifne REGION=USA
+	endif
+	ifne REGION=USA
 		dc.b	"10061993"
-	else
+	endif
+	ifne REGION=EUROPE
 		dc.b	"08271993"
 	endif
 
@@ -45,10 +51,12 @@
 	ifne REGION=JAPAN
 		dc.b	"SEGA MEGA DRIVE "			; Hardware ID
 		dc.b	"(C)SEGA 1993.AUG"			; Release date
-	else ifne REGION=USA
+	endif
+	ifne REGION=USA
 		dc.b	"SEGA GENESIS    "			; Hardware ID
 		dc.b	"(C)SEGA 1993.OCT"			; Release date
-	else
+	endif
+	ifne REGION=EUROPE
 		dc.b	"SEGA MEGA DRIVE "			; Hardware ID
 		dc.b	"(C)SEGA 1993.AUG"			; Release date
 	endif
@@ -56,9 +64,11 @@
 	dc.b	"SONIC THE HEDGEHOG-CD                           "
 	ifne REGION=JAPAN					; Game version
 		dc.b	"GM G-6021  -00  "
-	else ifne REGION=USA
+	endif
+	ifne REGION=USA
 		dc.b	"GM MK-4407 -00  "
-	else
+	endif
+	ifne REGION=EUROPE
 		dc.b	"GM MK-4407-00   "
 	endif
 	dc.b	"J               "				; I/O support
@@ -69,9 +79,11 @@
 	dc.b	"                "
 	ifne REGION=JAPAN					; Region
 		dc.b	"J               "
-	else ifne REGION=USA
+	endif
+	ifne REGION=USA
 		dc.b	"U               "
-	else
+	endif
+	ifne REGION=EUROPE
 		dc.b	"E               "
 	endif
 
@@ -82,7 +94,11 @@
 	section data_version
 	ifne REGION=JAPAN
 		dc.w	$0106
-	else
+	endif
+	ifne REGION=USA
+		dc.w	$0109
+	endif
+	ifne REGION=EUROPE
 		dc.w	$0109
 	endif
 
