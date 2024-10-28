@@ -356,28 +356,6 @@ FadeColorToWhite:
 	rts
 
 ; ------------------------------------------------------------------------------
-; Advance data bitstream
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - Branch to take if no new byte is needed (optional)
-; ------------------------------------------------------------------------------
-
-advanceBitstream macro
-	cmpi.w	#9,d6						; Does a new byte need to be read?
-	ifgt \#							; If not, branch
-		bcc.s	\1
-	else
-		bcc.s	.NoNewByte\@
-	endif
-	
-	addq.w	#8,d6						; Read next byte from bitstream
-	asl.w	#8,d5
-	move.b	(a0)+,d5
-
-.NoNewByte\@:
-	endm
-
-; ------------------------------------------------------------------------------
 ; Decompress Nemesis art into VRAM (Note: VDP write command must be
 ; set beforehand)
 ; ------------------------------------------------------------------------------
@@ -450,8 +428,13 @@ GetNemesisCode:
 	ext.w	d0
 	
 	sub.w	d0,d6						; Advance bitstream read data position
-	advanceBitstream
+	cmpi.w	#9,d6						; Does a new byte need to be read?
+	bcc.s	.NoNewByte					; If not, branch
+	addq.w	#8,d6						; Read next byte from bitstream
+	asl.w	#8,d5
+	move.b	(a0)+,d5
 
+.NoNewByte:
 	move.b	1(a1,d1.w),d1					; Get palette index
 	move.w	d1,d0
 	andi.w	#$F,d1
@@ -481,8 +464,13 @@ NextNemesisPixel:
 
 ReadInlineNemesisData:
 	subq.w	#6,d6						; Advance bitstream read data position
-	advanceBitstream
+	cmpi.w	#9,d6						; Does a new byte need to be read?
+	bcc.s	.NoNewByte					; If not, branch
+	addq.w	#8,d6						; Read next byte from bitstream
+	asl.w	#8,d5
+	move.b	(a0)+,d5
 
+.NoNewByte:
 	subq.w	#7,d6						; Read inline data
 	move.w	d5,d1
 	lsr.w	d6,d1
@@ -490,7 +478,11 @@ ReadInlineNemesisData:
 	andi.w	#$F,d1						; Get palette index
 	andi.w	#$70,d0						; Get repeat count
 	
-	advanceBitstream GetNemesisCodeLength			; Advance bitstream read data position
+	cmpi.w	#9,d6						; Does a new byte need to be read?
+	bcc.s	GetNemesisCodeLength				; If not, branch
+	addq.w	#8,d6						; Read next byte from bitstream
+	asl.w	#8,d5
+	move.b	(a0)+,d5
 	bra.s	GetNemesisCodeLength
 
 ; ------------------------------------------------------------------------------

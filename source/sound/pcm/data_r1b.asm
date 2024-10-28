@@ -3,11 +3,10 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"mcd_sub.inc"
 	include	"variables.inc"
-	include	"data_macros.inc"
-	include	"data_labels.inc"
+	include	"macros.inc"
 	include	"smps2asm.inc"
+	include	"data_labels.inc"
 
 ; ------------------------------------------------------------------------------
 ; Signature

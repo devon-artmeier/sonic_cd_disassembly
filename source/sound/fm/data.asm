@@ -4,43 +4,9 @@
 ; ------------------------------------------------------------------------------
 
 	include	"variables.inc"
+	include	"macros.inc"
 	include	"smps2asm.inc"
-
-; ------------------------------------------------------------------------------
-; Labels
-; ------------------------------------------------------------------------------
-	
-	xdef SongIndex, SfxIndex, SfxPriorities
-	section data_song_index
-SongIndex:
-
-	section data_sfx_index
-SfxIndex:
-
-	section data_sfx_priorities
-SfxPriorities:
-
-; ------------------------------------------------------------------------------
-; Define sound effect
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - ID constant name
-;	\2 - Sound effect label
-;	\3 - Priority
-; ------------------------------------------------------------------------------
-
-__sfx_id    set FM_START
-sfx macro
-	xdef \1
-	section data_sfx_index
-	dw	\2
-	section data_sfx_priorities
-	ifge \3
-		db	\3
-	endif
-	\1:		equ __sfx_id
-	__sfx_id:	set __sfx_id+1
-	endm
+	include	"data_labels.inc"
 
 ; ------------------------------------------------------------------------------
 ; Sound effects

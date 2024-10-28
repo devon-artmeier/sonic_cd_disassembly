@@ -6,24 +6,9 @@
 	include	"mcd_sub.inc"
 	include	"system.inc"
 	include	"system_symbols.inc"
+	include	"macros.inc"
 
 	section code
-
-; ------------------------------------------------------------------------------
-; Define a command
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - ID constant name
-;	\2 - Command name
-; ------------------------------------------------------------------------------
-
-__command_id set 1
-command macro
-	xdef \1
-	dc.w	(\2)-Commands
-	\1:		equ __command_id
-	__command_id:	set __command_id+1
-	endm
 
 ; ------------------------------------------------------------------------------
 ; Command handler

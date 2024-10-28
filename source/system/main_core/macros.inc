@@ -4,29 +4,23 @@
 ; ------------------------------------------------------------------------------
 
 ; ------------------------------------------------------------------------------
-; Labels
+; Stage selection entry
+; ------------------------------------------------------------------------------
+; PARAMETERS:
+;	\1 - ID constant name
+;	\2 - Command ID
+;	\3 - Stage ID
+;	\4 - Time zone
+;	\5 - Good Future flag
 ; ------------------------------------------------------------------------------
 
-	xdef SfxIndex, SongPriorities, SfxPriorities, SongIndex
-	xdef SampleIndex
-	section data_sfx_index
-SfxIndex:
-
-	section data_song_priorities
-SongPriorities:
-	section data_song_priorities_end
-	even
-
-	section data_sfx_priorities
-SfxPriorities:
-	section data_sfx_priorities_end
-	even
-
-	section data_song_index
-SongIndex:
-
-	section data_sample_index
-SampleIndex:
-	dc.l	SAMPLE_COUNT
+__stage_select_id set 0
+selectEntry macro
+	xdef \1
+	dc.w	\2, \3
+	dc.b	\4, \5
+	\1:			equ __stage_select_id
+	__stage_select_id:	set __stage_select_id+1
+	endm
 
 ; ------------------------------------------------------------------------------

@@ -5,6 +5,7 @@
 
 	include	"mcd_sub.inc"
 	include	"system.inc"
+	include	"macros.inc"
 
 ; ------------------------------------------------------------------------------
 ; Load file
@@ -69,22 +70,6 @@ GetFileName:
 	lea	SpxFileNameTable,a0
 	adda.w	d0,a0
 	rts
-	
-; ------------------------------------------------------------------------------
-; Define a file engine function
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - ID constant name
-;	\2 - Function name
-; ------------------------------------------------------------------------------
-
-__func_id set 0
-func macro
-	xdef \1
-	\1:		equ __func_id
-	__func_id:	set __func_id+1
-	dc.w	(\2)-Functions
-	endm
 
 ; ------------------------------------------------------------------------------
 ; File engine function
@@ -143,22 +128,6 @@ InitFileEngine:
 RunFileOperation:
 	movea.l	file.bookmark(a5),a0				; Go to operation bookmark
 	jmp	(a0)
-
-; ------------------------------------------------------------------------------
-; Define a file engine operation
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - ID constant name
-;	\2 - Operation name
-; ------------------------------------------------------------------------------
-
-__oper_id set 0
-oper macro
-	xdef \1
-	\1:		equ __oper_id
-	__oper_id:	set __oper_id+1
-	dc.w	(\2)-Operations
-	endm
 
 ; ------------------------------------------------------------------------------
 ; Handle file engine operation

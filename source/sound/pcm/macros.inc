@@ -44,6 +44,26 @@ sfx macro
 	endm
 	
 ; ------------------------------------------------------------------------------
+; Define command
+; ------------------------------------------------------------------------------
+; PARAMETERS:
+;	\1 - ID constant name
+;	\2 - Command label
+;	\3 - Priority
+; ------------------------------------------------------------------------------
+
+__cmd_id	set PCM_CMD_START
+command macro
+	xdef \1
+	section data_cmd_priorities
+	dc.b	\3
+	section code
+	jmp	\2(pc)
+	\1:		equ __cmd_id
+	__cmd_id:	set __cmd_id+1
+	endm
+	
+; ------------------------------------------------------------------------------
 ; Define sample pointer
 ; ------------------------------------------------------------------------------
 ; PARAMETERS:
@@ -51,7 +71,6 @@ sfx macro
 ;	\2 - Sample metadata label
 ; ------------------------------------------------------------------------------
 
-	xdef __sample_id
 __sample_id	set 0
 sample_ptr macro
 	xdef \1

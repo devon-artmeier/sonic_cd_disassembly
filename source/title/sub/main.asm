@@ -502,20 +502,6 @@ MegaDriveIrq:
 	rts
 
 ; ------------------------------------------------------------------------------
-; Check if a new descriptor field should be read
-; ------------------------------------------------------------------------------
-
-checkNewDescField macro
-	dbf	d4,.NoNewDesc\@					; Loop until we need a new descriptor field
-	move.b	(a0)+,1(sp)					; Read descriptor field
-	move.b	(a0)+,(sp)
-	move.w	(sp),d5
-	moveq	#16-1,d4					; Reset bit counter
-
-.NoNewDesc\@:
-	endm
-
-; ------------------------------------------------------------------------------
 ; Decompress Kosinski data into RAM
 ; ------------------------------------------------------------------------------
 ; PARAMETERS:
@@ -533,7 +519,13 @@ DecompressKosinski:
 GetKosinskiCode:
 	lsr.w	#1,d5						; Should we just copy a new byte?
 	move	sr,d6
-	checkNewDescField
+	dbf	d4,.NoNewDesc					; Loop until we need a new descriptor field
+	move.b	(a0)+,1(sp)					; Read descriptor field
+	move.b	(a0)+,(sp)
+	move.w	(sp),d5
+	moveq	#16-1,d4					; Reset bit counter
+
+.NoNewDesc:
 	move	d6,ccr
 	bcc.s	CopyKosinskiBack				; If not, branch
 
@@ -547,15 +539,33 @@ CopyKosinskiBack:
 	
 	lsr.w	#1,d5						; Should we read a larger copy length value?
 	move	sr,d6
-	checkNewDescField
+	dbf	d4,.NoNewDesc					; Loop until we need a new descriptor field
+	move.b	(a0)+,1(sp)					; Read descriptor field
+	move.b	(a0)+,(sp)
+	move.w	(sp),d5
+	moveq	#16-1,d4					; Reset bit counter
+
+.NoNewDesc:
 	move	d6,ccr			
 	bcs.s	LargeKosinskiCopy				; If so, branch
 
-	lsr.w	#1,d5						; Get copy length
-	checkNewDescField
-	roxl.w	#1,d3
+	lsr.w	#1,d5						; Get copy length bit 1
+	dbf	d4,.NoNewDesc2					; Loop until we need a new descriptor field
+	move.b	(a0)+,1(sp)					; Read descriptor field
+	move.b	(a0)+,(sp)
+	move.w	(sp),d5
+	moveq	#16-1,d4					; Reset bit counter
+
+.NoNewDesc2:
+	roxl.w	#1,d3						; Get copy length bit 0
 	lsr.w	#1,d5
-	checkNewDescField
+	dbf	d4,.NoNewDesc3					; Loop until we need a new descriptor field
+	move.b	(a0)+,1(sp)					; Read descriptor field
+	move.b	(a0)+,(sp)
+	move.w	(sp),d5
+	moveq	#16-1,d4					; Reset bit counter
+
+.NoNewDesc3:
 	roxl.w	#1,d3
 	addq.w	#1,d3
 

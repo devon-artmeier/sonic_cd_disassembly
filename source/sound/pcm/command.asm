@@ -5,28 +5,9 @@
 
 	include	"mcd_sub.inc"
 	include	"variables.inc"
+	include	"macros.inc"
 
 	section code
-	
-; ------------------------------------------------------------------------------
-; Define command
-; ------------------------------------------------------------------------------
-; PARAMETERS:
-;	\1 - ID constant name
-;	\2 - Command label
-;	\3 - Priority
-; ------------------------------------------------------------------------------
-
-__cmd_id	set PCM_CMD_START
-command macro
-	xdef \1
-	section data_cmd_priorities
-	dc.b	\3
-	section code
-	jmp	\2(pc)
-	\1:		equ __cmd_id
-	__cmd_id:	set __cmd_id+1
-	endm
 
 ; ------------------------------------------------------------------------------
 ; Priority table labels

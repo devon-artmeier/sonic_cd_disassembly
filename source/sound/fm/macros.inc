@@ -4,29 +4,25 @@
 ; ------------------------------------------------------------------------------
 
 ; ------------------------------------------------------------------------------
-; Labels
+; Define sound effect
+; ------------------------------------------------------------------------------
+; PARAMETERS:
+;	\1 - ID constant name
+;	\2 - Sound effect label
+;	\3 - Priority
 ; ------------------------------------------------------------------------------
 
-	xdef SfxIndex, SongPriorities, SfxPriorities, SongIndex
-	xdef SampleIndex
+__sfx_id    set FM_START
+sfx macro
+	xdef \1
 	section data_sfx_index
-SfxIndex:
-
-	section data_song_priorities
-SongPriorities:
-	section data_song_priorities_end
-	even
-
+	dw	\2
 	section data_sfx_priorities
-SfxPriorities:
-	section data_sfx_priorities_end
-	even
-
-	section data_song_index
-SongIndex:
-
-	section data_sample_index
-SampleIndex:
-	dc.l	SAMPLE_COUNT
+	ifge \3
+		db	\3
+	endif
+	\1:		equ __sfx_id
+	__sfx_id:	set __sfx_id+1
+	endm
 
 ; ------------------------------------------------------------------------------
