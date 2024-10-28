@@ -25,7 +25,7 @@ SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
                            $(SRC_PATH_BURAM_INIT)/functions.asm \
                            $(SRC_PATH_BURAM_INIT)/backup_ram.asm \
                            $(SRC_PATH_BURAM_INIT)/load_message.asm \
-                           $(SRC_PATH_BURAM_INIT)/data_usa.asm
+                           $(SRC_PATH_BURAM_INIT)/data.asm
 OBJ_BURAM_INIT          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_INIT))
 DEPEND_BURAM_INIT       := $(patsubst %.o,%.d,$(OBJ_BURAM_INIT))
 

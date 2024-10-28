@@ -106,20 +106,20 @@ CopyrightArt:
 	even
 
 	ifne REGION=USA
-	xdef TmArt
-TmArt:
-		incbin	"../data/copyright_tm_art_u.nem"
-		even
+		xdef TmArt
+	TmArt:
+			incbin	"../data/copyright_tm_art_u.nem"
+			even
 
-	xdef CopyrightTmArt
-CopyrightTmArt:
-		incbin	"../data/copyright_art_u.nem"
-		even
+		xdef CopyrightTmArt
+	CopyrightTmArt:
+			incbin	"../data/copyright_art_u.nem"
+			even
 	else
-	xdef TmArt
-TmArt:
-		incbin	"../data/copyright_tm_art_je.nem"
-		even
+		xdef TmArt
+	TmArt:
+			incbin	"../data/copyright_tm_art_je.nem"
+			even
 	endif
 
 ; ------------------------------------------------------------------------------
