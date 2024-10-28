@@ -496,7 +496,7 @@ VRAM_COPY_CMD		equ $000000C0				; VRAM DMA copy
 
 vdpCmd macro
 	__cmd: set (\3\_\4\_CMD)|(((\2)&$3FFF)<<16)|((\2)/$4000)
-	ifeq (\#)-5
+	ifne \#=5
 		\1	#__cmd,\5
 	else
 		\1	__cmd
@@ -516,7 +516,7 @@ vdpCmd macro
 
 vdpCmdLo macro
 	__cmd: set ((\3\_\4\_CMD)&$FFFF)|((\2)/$4000)
-	ifeq (\#)-5
+	ifne \#=5
 		\1	#__cmd,\5
 	else
 		\1	__cmd
@@ -536,7 +536,7 @@ vdpCmdLo macro
 
 vdpCmdHi macro
 	__cmd: set ((\3\_\4\_CMD)>>16)|((\2)&$3FFF)
-	ifeq (\#)-5
+	ifne \#=5
 		\1	#__cmd,\5
 	else
 		\1	__cmd

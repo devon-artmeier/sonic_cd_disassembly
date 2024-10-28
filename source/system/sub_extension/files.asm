@@ -3,6 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
+	include	"regions.inc"
 	include	"macros.inc"
 	
 	section data

@@ -3,6 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
+	include	"regions.inc"
 	include	"cdda_ids.inc"
 	include	"macros.inc"
 

@@ -3,7 +3,7 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_main.inc"
+	include	"include_main.inc
 	include	"variables.inc"
 
 	section data

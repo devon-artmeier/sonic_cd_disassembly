@@ -3,8 +3,10 @@ MEMORY {
 }
 
 SECTIONS {
-	code: {
+	data: {
 		*(data)
+	} > ram
+	code: {
 		. = 0xC000;
 		*(code)
 		. = 0xFBFF;

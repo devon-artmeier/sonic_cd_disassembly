@@ -170,7 +170,7 @@ CartBuramScratch:
 CartBuramStrings:	
 	dcb.b	$C, 0						; Cartridge display strings
 
-	include	"../initial_data.asm"				; Initial data
+	include	"../initial_data.inc"				; Initial data
 
 ; ------------------------------------------------------------------------------
 ; Get type of Backup RAM to use

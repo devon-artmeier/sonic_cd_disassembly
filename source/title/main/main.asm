@@ -65,7 +65,7 @@ Start:
 	lea	MenuArrowArt(pc),a0
 	bsr.w	DecompressNemesisVdp
 	
-	;if REGION=USA						; Load copyright/TM art
+	ifne REGION=USA						; Load copyright/TM art
 		vdpCmd move.l,$DE00,VRAM,WRITE,VDP_CTRL
 		lea	CopyrightTmArt(pc),a0
 		bsr.w	DecompressNemesisVdp
@@ -73,15 +73,15 @@ Start:
 		vdpCmd move.l,$DFC0,VRAM,WRITE,VDP_CTRL
 		lea	TmArt(pc),a0
 		bsr.w	DecompressNemesisVdp
-	;else
-	;	vdpCmd move.l,$DE00,VRAM,WRITE,VDP_CTRL
-	;	lea	CopyrightArt(pc),a0
-	;	bsr.w	DecompressNemesisVdp
-	;	
-	;	vdpCmd move.l,$DF20,VRAM,WRITE,VDP_CTRL
-	;	lea	TmArt(pc),a0
-	;	bsr.w	DecompressNemesisVdp
-	;endif
+	else
+		vdpCmd move.l,$DE00,VRAM,WRITE,VDP_CTRL
+		lea	CopyrightArt(pc),a0
+		bsr.w	DecompressNemesisVdp
+		
+		vdpCmd move.l,$DF20,VRAM,WRITE,VDP_CTRL
+		lea	TmArt(pc),a0
+		bsr.w	DecompressNemesisVdp
+	endif
 	
 	vdpCmd move.l,$F000,VRAM,WRITE,VDP_CTRL			; Load banner art
 	lea	BannerArt(pc),a0
@@ -105,13 +105,13 @@ Start:
 	move.w	#4,vblank_routine				; VSync
 	bsr.w	VSync
 
-	;if REGION=USA
+	ifne REGION=USA
 		move.w	#48-1,d7				; Delay 48 frames
 
 .Delay:
 		bsr.w	VSync
 		dbf	d7,.Delay
-	;endif
+	endif
 
 	move.l	#0,lag_counter					; Enable and reset lag counter
 	jsr	RunObjects(pc)					; Run objects
@@ -159,10 +159,10 @@ Start:
 	lea	ObjCopyright(pc),a2				; Spawn copyright
 	bsr.w	SpawnObject
 	
-	;if REGION<>JAPAN
+	ifne REGION<>JAPAN
 		lea	ObjTm(pc),a2				; Spawn TM symbol
 		bsr.w	SpawnObject
-	;endif
+	endif
 
 ; ------------------------------------------------------------------------------
 
@@ -213,10 +213,10 @@ MainLoop:
 	bra.w	MainLoop					; Loop
 
 .Exit:
-	;if REGION=USA
+	ifne REGION=USA
 		cmpi.b	#4,sub_fail_count			; Is the Sub CPU deemed unreliable?
 		bcc.s	.FadeOut				; If so, branch
-	;endif
+	endif
 	bset	#0,MCD_MAIN_FLAG				; Tell Sub CPU we are finished
 
 .WaitSubCpu:

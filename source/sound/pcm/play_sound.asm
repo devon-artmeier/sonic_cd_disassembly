@@ -37,11 +37,11 @@ ProcessSoundQueue:
 
 	cmpi.b	#PCM_SFX_START,d0				; Is a sound effect queued?
 	bcs.s	.NextSlot					; If not, branch
-	;if BOSS<>0
-	;	cmpi.b	#$BA,d0
-	;else
+	ifne BOSS
+		cmpi.b	#$BA,d0
+	else
 		cmpi.b	#PCM_SFX_END,d0
-	;endif
+	endif
 	bls.w	.SfxId						; If so, branch
 
 	cmpi.b	#PCM_CMD_START,d0				; Is a song queued?
@@ -105,11 +105,11 @@ PlaySoundId:
 
 	cmpi.b	#PCM_SFX_START,d7				; Is it a sound effect?
 	bcs.s	.End						; If not, branch
-	;if BOSS<>0
-	;	cmpi.b	#$BA,d7
-	;else
+	ifne BOSS
+		cmpi.b	#$BA,d7
+	else
 		cmpi.b	#PCM_SFX_END,d7
-	;endif
+	endif
 	bls.w	PlaySfx						; If so, branch
 
 	cmpi.b	#PCM_CMD_START,d7				; Is it a command?

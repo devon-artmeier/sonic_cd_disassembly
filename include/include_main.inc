@@ -4,6 +4,7 @@
 ; ------------------------------------------------------------------------------
 
 	include	"mcd_main.inc"
+	include "regions.inc"
 	include	"system_ids.inc"
 	include	"backup_ram.inc"
 	include	"fm_sound_ids.inc"

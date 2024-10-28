@@ -1,77 +1,159 @@
+# ------------------------------------------------------------------------------
 # Source folder paths
-SRC_PATH_SOUND       := $(SRC_PATH)/sound
-SRC_PATH_FM          := $(SRC_PATH_SOUND)/fm
-SRC_PATH_PCM         := $(SRC_PATH_SOUND)/pcm
+# ------------------------------------------------------------------------------
 
+SRC_PATH_SOUND          := $(SRC_PATH)/sound
+SRC_PATH_FM             := $(SRC_PATH_SOUND)/fm
+SRC_PATH_PCM            := $(SRC_PATH_SOUND)/pcm
+
+# ------------------------------------------------------------------------------
 # Object folder paths
-OBJ_PATH_FM          := $(OBJ_PATH)/$(SRC_PATH_FM)
-OBJ_PATH_PCM         := $(OBJ_PATH)/$(SRC_PATH_PCM)
+# ------------------------------------------------------------------------------
 
+OBJ_PATH_FM             := $(OBJ_PATH)/$(SRC_PATH_FM)
+OBJ_PATH_PCM            := $(OBJ_PATH)/$(SRC_PATH_PCM)
+
+# ------------------------------------------------------------------------------
 # FM sound data files
-SRC_FM_DATA          := $(SRC_PATH_FM)/data.asm
-OBJ_FM_DATA          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DATA))
-DEPEND_FM_DATA       := $(patsubst %.o,%.d,$(OBJ_FM_DATA))
+# ------------------------------------------------------------------------------
 
-SYMBOLS_FM_DATA      := -ip FM_
+SRC_FM_DATA             := $(SRC_PATH_FM)/data.asm
+OBJ_FM_DATA             := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DATA))
+DEPEND_FM_DATA          := $(patsubst %.o,%.d,$(OBJ_FM_DATA))
 
+SYMBOLS_FM_DATA         := -ip FM_
+
+# ------------------------------------------------------------------------------
 # FM sound driver files
-SRC_FM_DRIVER        := $(SRC_PATH_FM)/main.asm \
-                        $(SRC_PATH_FM)/track.asm \
-                        $(SRC_PATH_FM)/instrument.asm \
-                        $(SRC_PATH_FM)/fm_write.asm \
-                        $(SRC_PATH_FM)/play_sound.asm \
-                        $(SRC_PATH_FM)/fm_registers.asm \
-                        $(SRC_PATH_FM)/track_command.asm \
-                        $(SRC_PATH_FM)/info.asm
-OBJ_FM_DRIVER        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
-DEPEND_FM_DRIVER     := $(patsubst %.o,%.d,$(OBJ_FM_DRIVER))
+# ------------------------------------------------------------------------------
 
-SYMBOLS_FM_DRIVER    := -iy z_sound_play \
-                        -iy z_sound_queue
+SRC_FM_DRIVER           := $(SRC_PATH_FM)/main.asm \
+                           $(SRC_PATH_FM)/track.asm \
+                           $(SRC_PATH_FM)/instrument.asm \
+                           $(SRC_PATH_FM)/fm_write.asm \
+                           $(SRC_PATH_FM)/play_sound.asm \
+                           $(SRC_PATH_FM)/fm_registers.asm \
+                           $(SRC_PATH_FM)/track_command.asm \
+                           $(SRC_PATH_FM)/info.asm
+OBJ_FM_DRIVER           := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_FM_DRIVER))
+DEPEND_FM_DRIVER        := $(patsubst %.o,%.d,$(OBJ_FM_DRIVER))
 
+SYMBOLS_FM_DRIVER       := -iy z_sound_play \
+                           -iy z_sound_queue
+
+# ------------------------------------------------------------------------------
 # PCM sound driver files
-SRC_PCM_DRIVER       := $(SRC_PATH_PCM)/main.asm \
-                        $(SRC_PATH_PCM)/track.asm \
-                        $(SRC_PATH_PCM)/sample.asm \
-                        $(SRC_PATH_PCM)/play_sound.asm \
-                        $(SRC_PATH_PCM)/fade.asm \
-                        $(SRC_PATH_PCM)/pause.asm \
-                        $(SRC_PATH_PCM)/tempo.asm \
-                        $(SRC_PATH_PCM)/key_on_off.asm \
-                        $(SRC_PATH_PCM)/command.asm \
-                        $(SRC_PATH_PCM)/reset.asm \
-                        $(SRC_PATH_PCM)/stop_sound.asm \
-                        $(SRC_PATH_PCM)/initialize.asm \
-                        $(SRC_PATH_PCM)/frequencies.asm \
-                        $(SRC_PATH_PCM)/track_command.asm \
-                        $(SRC_PATH_PCM)/info.asm
-OBJ_PCM_DRIVER      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DRIVER))
-DEPEND_PCM_DRIVER   := $(patsubst %.o,%.d,$(OBJ_PCM_DRIVER))
+# ------------------------------------------------------------------------------
 
-SYMBOLS_PCM_DRIVER   = -iy PcmDriver \
-                       -iy PcmDriverOrigin \
-                       -iy RunPcmDriver \
-                       -iy InitPcmDriver \
-                       -iy PcmVariables \
-                       -iy pcm.sound_queue
+SRC_PCM_DRIVER          := $(SRC_PATH_PCM)/main.asm \
+                           $(SRC_PATH_PCM)/track.asm \
+                           $(SRC_PATH_PCM)/sample.asm \
+                           $(SRC_PATH_PCM)/play_sound.asm \
+                           $(SRC_PATH_PCM)/fade.asm \
+                           $(SRC_PATH_PCM)/pause.asm \
+                           $(SRC_PATH_PCM)/tempo.asm \
+                           $(SRC_PATH_PCM)/key_on_off.asm \
+                           $(SRC_PATH_PCM)/command.asm \
+                           $(SRC_PATH_PCM)/reset.asm \
+                           $(SRC_PATH_PCM)/stop_sound.asm \
+                           $(SRC_PATH_PCM)/initialize.asm \
+                           $(SRC_PATH_PCM)/frequencies.asm \
+                           $(SRC_PATH_PCM)/track_command.asm \
+                           $(SRC_PATH_PCM)/info.asm
+OBJ_PCM_DRIVER         := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DRIVER))
+OBJ_PCM_DRIVER_BOSS    := $(patsubst %.asm,$(OBJ_PATH)/%_boss.o,$(SRC_PCM_DRIVER))
+DEPEND_PCM_DRIVER      := $(patsubst %.o,%.d,$(OBJ_PCM_DRIVER))
+DEPEND_PCM_DRIVER_BOSS := $(patsubst %.o,%.d,$(OBJ_PCM_DRIVER_BOSS))
 
-SRC_PCM_DATA_R1B     := $(SRC_PATH_PCM)/data_r1b.asm
-OBJ_PCM_DATA_R1B     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R1B))
-DEPEND_PCM_DATA_R1B  := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R1B))
+SYMBOLS_PCM_DRIVER     = -iy PcmDriver \
+                         -iy PcmDriverOrigin \
+                         -iy RunPcmDriver \
+                         -iy InitPcmDriver \
+                         -iy PcmVariables \
+                         -iy pcm.sound_queue
 
-SRC_PCM_DATA_R3B     := $(SRC_PATH_PCM)/data_r3b.asm
-OBJ_PCM_DATA_R3B     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R3B))
-DEPEND_PCM_DATA_R3B  := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R3B))
+SRC_PCM_DATA_R1        := $(SRC_PATH_PCM)/data_r1.asm
+OBJ_PCM_DATA_R1        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R1))
+DEPEND_PCM_DATA_R1     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R1))
 
-SYMBOLS_PCM_DATA     := -ip PCM_SONG_ \
-                        -ip PCM_SFX_ \
-                        -ip PCM_CMD_
+SRC_PCM_DATA_R3        := $(SRC_PATH_PCM)/data_r3.asm
+OBJ_PCM_DATA_R3        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R3))
+DEPEND_PCM_DATA_R3     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R3))
+
+SRC_PCM_DATA_R4        := $(SRC_PATH_PCM)/data_r4.asm
+OBJ_PCM_DATA_R4        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R4))
+DEPEND_PCM_DATA_R4     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R4))
+
+SRC_PCM_DATA_R5        := $(SRC_PATH_PCM)/data_r5.asm
+OBJ_PCM_DATA_R5        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R5))
+DEPEND_PCM_DATA_R5     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R5))
+
+SRC_PCM_DATA_R6        := $(SRC_PATH_PCM)/data_r6.asm
+OBJ_PCM_DATA_R6        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R6))
+DEPEND_PCM_DATA_R6     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R6))
+
+SRC_PCM_DATA_R7        := $(SRC_PATH_PCM)/data_r7.asm
+OBJ_PCM_DATA_R7        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R7))
+DEPEND_PCM_DATA_R7     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R7))
+
+SRC_PCM_DATA_R8        := $(SRC_PATH_PCM)/data_r8.asm
+OBJ_PCM_DATA_R8        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_R8))
+DEPEND_PCM_DATA_R8     := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_R8))
+
+SRC_PCM_DATA_BOSS       := $(SRC_PATH_PCM)/data_boss.asm
+OBJ_PCM_DATA_BOSS      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_BOSS))
+DEPEND_PCM_DATA_BOSS   := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_BOSS))
+
+SRC_PCM_DATA_FINAL     := $(SRC_PATH_PCM)/data_final.asm
+OBJ_PCM_DATA_FINAL     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_PCM_DATA_FINAL))
+DEPEND_PCM_DATA_FINAL  := $(patsubst %.o,%.d,$(OBJ_PCM_DATA_FINAL))
+
+SYMBOLS_PCM_DATA       := -ip PCM_SONG_ \
+                          -ip PCM_SFX_ \
+                          -ip PCM_CMD_
+
+OUT_PCM_DRIVER         := $(OUT_PCM_DRIVER_R1) \
+                          $(OUT_PCM_DRIVER_R3) \
+                          $(OUT_PCM_DRIVER_R4) \
+                          $(OUT_PCM_DRIVER_R5) \
+                          $(OUT_PCM_DRIVER_R6) \
+                          $(OUT_PCM_DRIVER_R7) \
+                          $(OUT_PCM_DRIVER_R8) \
+                          $(OUT_PCM_DRIVER_BOSS) \
+                          $(OUT_PCM_DRIVER_FINAL)
+
+OBJ_PCM_DATA           := $(OBJ_PCM_DATA_R1) \
+                          $(OBJ_PCM_DATA_R3) \
+                          $(OBJ_PCM_DATA_R4) \
+                          $(OBJ_PCM_DATA_R5) \
+                          $(OBJ_PCM_DATA_R6) \
+                          $(OBJ_PCM_DATA_R7) \
+                          $(OBJ_PCM_DATA_R8) \
+                          $(OBJ_PCM_DATA_BOSS) \
+                          $(OBJ_PCM_DATA_FINAL)
+
+DEPEND_PCM_DATA        := $(DEPEND_PCM_DATA_R1) \
+                          $(DEPEND_PCM_DATA_R3) \
+                          $(DEPEND_PCM_DATA_R4) \
+                          $(DEPEND_PCM_DATA_R5) \
+                          $(DEPEND_PCM_DATA_R6) \
+                          $(DEPEND_PCM_DATA_R7) \
+                          $(DEPEND_PCM_DATA_R8) \
+                          $(DEPEND_PCM_DATA_BOSS) \
+                          $(DEPEND_PCM_DATA_FINAL)
+
+# ------------------------------------------------------------------------------
+# Dependencies
+# ------------------------------------------------------------------------------
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA_R1B) $(DEPEND_PCM_DATA_R3B)
+	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA)
 endif
 
+# ------------------------------------------------------------------------------
 # FM sound driver rules
+# ------------------------------------------------------------------------------
+
 $(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
@@ -86,7 +168,10 @@ $(DEPEND_FM_DRIVER): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # FM data rules
+# ------------------------------------------------------------------------------
+
 $(OBJ_FM_DATA): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_FM_DATA)
 	$(ASSEMBLING)
 	@$(VASM_Z80) $(VASM_Z80_FLAGS) -o $@ $<
@@ -95,50 +180,194 @@ $(DEPEND_FM_DATA): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # PCM sound IDs rules
-$(OUT_PCM_SOUND_IDS): $(OBJ_PCM_DRIVER) $(OUT_PCM_DRIVER_R1B) $(OUT_PCM_DRIVER_R3B)
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_PCM_DATA) $(OBJ_PATH_PCM)/command.o $(OBJ_PCM_DATA_R1B) $(OBJ_PCM_DATA_R3B)
+# ------------------------------------------------------------------------------
 
+$(OUT_PCM_SOUND_IDS): $(OBJ_PCM_DRIVER) $(OUT_PCM_DRIVER)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_PCM_DATA) $(OBJ_PATH_PCM)/command.o $(OBJ_PCM_DATA)
+
+# ------------------------------------------------------------------------------
 # PCM sound driver (R1) rules
-$(OUT_PCM_DRIVER_R1B): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R1B)
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R1): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R1)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
 
-$(OBJ_PCM_DATA_R1B): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R1B)
+$(OBJ_PCM_DATA_R1): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R1)
 	$(ASSEMBLING)
 	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
 
-$(DEPEND_PCM_DATA_R1B): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+$(DEPEND_PCM_DATA_R1): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # PCM sound driver (R3) rules
-$(OUT_PCM_DRIVER_R3B): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R3B)
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R3): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R3)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
 
-$(OBJ_PCM_DATA_R3B): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R3B)
+$(OBJ_PCM_DATA_R3): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R3)
 	$(ASSEMBLING)
 	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
 
-$(DEPEND_PCM_DATA_R3B): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+$(DEPEND_PCM_DATA_R3): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
+# PCM sound driver (R4) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R4): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R4)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_R4): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R4)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_R4): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# PCM sound driver (R5) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R5): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R5)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_R5): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R5)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_R5): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# PCM sound driver (R6) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R6): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R6)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_R6): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R6)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_R6): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# PCM sound driver (R7) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R7): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R7)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_R7): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R7)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_R7): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# PCM sound driver (R8) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_R8): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R8)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_R8): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_R8)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_R8): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# PCM sound driver (boss) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_BOSS): $(OBJ_PCM_DRIVER_BOSS) $(OBJ_PCM_DATA_BOSS)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_BOSS): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_BOSS)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_BOSS): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# PCM sound driver (final boss) rules
+# ------------------------------------------------------------------------------
+
+$(OUT_PCM_DRIVER_FINAL): $(OBJ_PCM_DRIVER_BOSS) $(OBJ_PCM_DATA_FINAL)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/pcm_symbols.inc $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
+
+$(OBJ_PCM_DATA_FINAL): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DATA_FINAL)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_FLAGS) -o $@ $<
+
+$(DEPEND_PCM_DATA_FINAL): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
 # PCM sound driver (common) rules
+# ------------------------------------------------------------------------------
+
 $(OBJ_PCM_DRIVER): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_PCM_DRIVER)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -DBOSS=0 -o $@ $<
 
 $(DEPEND_PCM_DRIVER): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+$(OBJ_PCM_DRIVER_BOSS): $(OBJ_PATH)/%_boss.o: %.asm | $(DEPEND_PCM_DRIVER_BOSS)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -DBOSS=1 -o $@ $<
+
+$(DEPEND_PCM_DRIVER_BOSS): $(OBJ_PATH)/%_boss.d: %.asm | $(OBJ_PATH_PCM)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
 # Create folders
+# ------------------------------------------------------------------------------
+
 $(OBJ_PATH_FM): $(OBJ_PATH)
 	@$(call make_dir,$@)
 
 $(OBJ_PATH_PCM): $(OBJ_PATH)
 	@$(call make_dir,$@)
+
+# ------------------------------------------------------------------------------

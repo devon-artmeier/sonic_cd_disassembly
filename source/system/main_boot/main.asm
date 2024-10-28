@@ -6,7 +6,19 @@
 	include	"include_main.inc"
 
 	section code
-	
+
+; ------------------------------------------------------------------------------
+; Security block
+; ------------------------------------------------------------------------------
+
+	ifne REGION=JAPAN
+		include	"security_japan.inc"
+	else ifne REGION=USA
+		include	"security_usa.inc"
+	else
+		include	"security_europe.inc"
+	endif
+
 ; ------------------------------------------------------------------------------
 ; Bootloader
 ; ------------------------------------------------------------------------------

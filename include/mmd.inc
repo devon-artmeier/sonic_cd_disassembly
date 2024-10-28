@@ -40,7 +40,7 @@ mmd.struct_size		rs.b 0					; Size of structure
 
 mmd macro
 	dc.b	\1, 0
-	ifeq (\2)-WORD_RAM_2M
+	ifne (\2)=WORD_RAM_2M
 		dc.l	0
 		dc.w	0
 	else

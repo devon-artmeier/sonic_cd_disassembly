@@ -21,11 +21,11 @@ ObjMenu:
 	move.b	#%1,obj.flags(a0)				; Set flags
 	move.w	#83,obj.x(a0)					; Set X position
 	move.w	#180,obj.y(a0)					; Set Y position
-	;if REGION=USA						; Activate timer
+	ifne REGION=USA						; Activate timer
 		move.w	#$3FC,timer
-	;else
-	;	move.w	#$1E0,timer
-	;endif
+	else
+		move.w	#$1E0,timer
+	endif
 
 ; ------------------------------------------------------------------------------
 ; Check start button

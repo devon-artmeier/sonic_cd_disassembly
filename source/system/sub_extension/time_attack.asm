@@ -4,6 +4,7 @@
 ; ------------------------------------------------------------------------------
 
 	include	"mcd_sub.inc"
+	include	"regions.inc"
 	include	"system.inc"
 	include	"system_symbols.inc"
 
@@ -22,11 +23,11 @@ LoadTimeAttack:
 	bsr.w	GiveWordRamAccess
 
 	bsr.w	ResetCddaVolume					; Play time attack song
-	;if REGION=USA
+	ifne REGION=USA
 		lea	DaGardenSong(pc),a0
-	;else
-	;	lea	TimeAttackSong(pc),a0
-	;endif
+	else
+		lea	TimeAttackSong(pc),a0
+	endif
 	move.w	#MSCPLAYR,d0
 	jsr	_CDBIOS
 	rts

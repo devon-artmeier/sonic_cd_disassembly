@@ -5,6 +5,8 @@ MEMORY {
 SECTIONS {
 	code: {
 		*(code)
+	} > ram
+	data: {
 		*(data)
 	} > ram
 }

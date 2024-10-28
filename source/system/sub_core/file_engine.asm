@@ -4,6 +4,7 @@
 ; ------------------------------------------------------------------------------
 
 	include	"mcd_sub.inc"
+	include	"regions.inc"
 	include	"system.inc"
 	include	"macros.inc"
 

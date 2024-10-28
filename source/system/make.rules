@@ -1,4 +1,7 @@
+# ------------------------------------------------------------------------------
 # Source folder paths
+# ------------------------------------------------------------------------------
+
 SRC_PATH_SYSTEM    := $(SRC_PATH)/system
 SRC_PATH_SUB_CORE  := $(SRC_PATH_SYSTEM)/sub_core
 SRC_PATH_SUB_EXT   := $(SRC_PATH_SYSTEM)/sub_extension
@@ -6,14 +9,20 @@ SRC_PATH_MAIN_BOOT := $(SRC_PATH_SYSTEM)/main_boot
 SRC_PATH_MAIN_CORE := $(SRC_PATH_SYSTEM)/main_core
 SRC_PATH_MD_INIT   := $(SRC_PATH_SYSTEM)/md_initialize
 
+# ------------------------------------------------------------------------------
 # Object folder paths
+# ------------------------------------------------------------------------------
+
 OBJ_PATH_SUB_CORE  := $(OBJ_PATH)/$(SRC_PATH_SUB_CORE)
 OBJ_PATH_SUB_EXT   := $(OBJ_PATH)/$(SRC_PATH_SUB_EXT)
 OBJ_PATH_MAIN_BOOT := $(OBJ_PATH)/$(SRC_PATH_MAIN_BOOT)
 OBJ_PATH_MAIN_CORE := $(OBJ_PATH)/$(SRC_PATH_MAIN_CORE)
 OBJ_PATH_MD_INIT   := $(OBJ_PATH)/$(SRC_PATH_MD_INIT)
 
+# ------------------------------------------------------------------------------
 # Sub CPU core files
+# ------------------------------------------------------------------------------
+
 SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/main.asm \
                       $(SRC_PATH_SUB_CORE)/temp_save_data.asm \
                       $(SRC_PATH_SUB_CORE)/file_engine.asm
@@ -26,7 +35,10 @@ SYMBOLS_SUB_CORE   := -iy TempSaveData \
                       -iy GetFileName \
                       -iy FileFunction
 
+# ------------------------------------------------------------------------------
 # Sub CPU extension files
+# ------------------------------------------------------------------------------
+
 SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/files.asm \
                       $(SRC_PATH_SUB_EXT)/main.asm \
                       $(SRC_PATH_SUB_EXT)/pencil_test.asm \
@@ -58,13 +70,18 @@ SYMBOLS_SUB_EXT    := -ip FILE_ \
                       -xp FILE_STATUS_ \
                       -xy FILE_NAME_SIZE
 
+# ------------------------------------------------------------------------------
 # Main CPU bootloader files
-SRC_MAIN_BOOT      := $(SRC_PATH_MAIN_BOOT)/security_usa.asm \
-                      $(SRC_PATH_MAIN_BOOT)/boot.asm
+# ------------------------------------------------------------------------------
+
+SRC_MAIN_BOOT      := $(SRC_PATH_MAIN_BOOT)/main.asm
 OBJ_MAIN_BOOT      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_BOOT))
 DEPEND_MAIN_BOOT   := $(patsubst %.o,%.d,$(OBJ_MAIN_BOOT))
 
+# ------------------------------------------------------------------------------
 # Main CPU core files
+# ------------------------------------------------------------------------------
+
 SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
                       $(SRC_PATH_MAIN_CORE)/best_staff_times.asm \
                       $(SRC_PATH_MAIN_CORE)/backup_ram_manager.asm \
@@ -80,17 +97,27 @@ SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
 OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
 DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
 
+# ------------------------------------------------------------------------------
 # Mega Drive initialization files
+# ------------------------------------------------------------------------------
+
 SRC_MD_INIT        := $(SRC_PATH_MD_INIT)/main.asm \
                       $(SRC_PATH_MD_INIT)/io.asm
 OBJ_MD_INIT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MD_INIT))
 DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
 
+# ------------------------------------------------------------------------------
+# Dependencies
+# ------------------------------------------------------------------------------
+
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 	-include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE) $(DEPEND_MD_INIT)
 endif
 
+# ------------------------------------------------------------------------------
 # Mega Drive initialization core rules
+# ------------------------------------------------------------------------------
+
 $(OUT_MD_INIT): $(OBJ_MD_INIT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_md_initialize.link -o $@ $^
@@ -103,7 +130,10 @@ $(DEPEND_MD_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MD_INIT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Main CPU core rules
+# ------------------------------------------------------------------------------
+
 $(OUT_MAIN_CORE): $(OBJ_MAIN_CORE)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_core.link -o $@ $^
@@ -116,7 +146,10 @@ $(DEPEND_MAIN_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_CORE)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Main CPU bootloader rules
+# ------------------------------------------------------------------------------
+
 $(OUT_MAIN_BOOT): $(OBJ_MAIN_BOOT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_boot.link -o $@ $^
@@ -129,7 +162,10 @@ $(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 	
+# ------------------------------------------------------------------------------
 # Sub CPU extension rules
+# ------------------------------------------------------------------------------
+
 $(OUT_SUB_EXT): $(OBJ_SUB_EXT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
@@ -143,7 +179,10 @@ $(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_EXT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Sub CPU core rules
+# ------------------------------------------------------------------------------
+
 $(OUT_SUB_CORE): $(OBJ_SUB_CORE)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile $(OBJ_PATH)/sp.sym -o $@ $^
@@ -157,7 +196,10 @@ $(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_CORE)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Create folders
+# ------------------------------------------------------------------------------
+
 $(OBJ_PATH_SUB_CORE): $(OBJ_PATH)
 	@$(call make_dir,$@)
 
@@ -172,3 +214,5 @@ $(OBJ_PATH_MAIN_CORE): $(OBJ_PATH)
 
 $(OBJ_PATH_MD_INIT): $(OBJ_PATH)
 	@$(call make_dir,$@)
+
+# ------------------------------------------------------------------------------

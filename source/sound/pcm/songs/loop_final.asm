@@ -14,7 +14,7 @@ FinalBossLoop_Header:
 
 FinalBossLoop_PCM1:
 	smpsPan		$F0
-	smpsSetvoice	sLoopR
+	smpsSetvoice	sLoopRight
 	smpsAlterNote	$27
 	dc.b	nB1, $7F, smpsNoAttack, $24
 	smpsCDDALoop
@@ -22,7 +22,7 @@ FinalBossLoop_PCM1:
 
 FinalBossLoop_PCM2:
 	smpsPan		$0F
-	smpsSetvoice	sLoopL
+	smpsSetvoice	sLoopLeft
 	smpsAlterNote	$27
 	dc.b	nB1, $7F, smpsNoAttack, $24
 	smpsStop

@@ -8,11 +8,11 @@
 ; ------------------------------------------------------------------------------
 
 ; Objects
-;	if REGION<>JAPAN					; Object count
+	ifne REGION<>JAPAN					; Object count
 OBJECT_COUNT		equ 10
-;	else
-;OBJECT_COUNT		equ 8
-;	endif
+	else
+OBJECT_COUNT		equ 8
+	endif
 
 ; Cloud image VRAM
 CLOUD_IMAGE_VRAM	equ $0020				; VRAM address

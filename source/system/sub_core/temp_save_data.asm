@@ -4,6 +4,7 @@
 ; ------------------------------------------------------------------------------
 
 	include	"mcd_sub.inc"
+	include	"regions.inc"
 	include	"system.inc"
 	include	"backup_ram.inc"
 
@@ -15,6 +16,6 @@
 
 	xdef TempSaveData
 TempSaveData:
-	include	"../../backup_ram/initial_data.asm"
+	include	"../../backup_ram/initial_data.inc"
 
 ; ------------------------------------------------------------------------------

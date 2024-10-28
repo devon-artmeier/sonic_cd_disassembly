@@ -1,14 +1,23 @@
+# ------------------------------------------------------------------------------
 # Source folder paths
+# ------------------------------------------------------------------------------
+
 SRC_PATH_BURAM          := $(SRC_PATH)/backup_ram
 SRC_PATH_BURAM_CORE     := $(SRC_PATH_BURAM)/core
 SRC_PATH_BURAM_INIT     := $(SRC_PATH_BURAM)/initialize
 SRC_PATH_BURAM_SUB      := $(SRC_PATH_BURAM)/sub
 
+# ------------------------------------------------------------------------------
 # Object folder paths
+# ------------------------------------------------------------------------------
+
 OBJ_PATH_BURAM_INIT     := $(OBJ_PATH)/$(SRC_PATH_BURAM_INIT)
 OBJ_PATH_BURAM_SUB      := $(OBJ_PATH)/$(SRC_PATH_BURAM_SUB)
 
+# ------------------------------------------------------------------------------
 # Initialization files
+# ------------------------------------------------------------------------------
+
 SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
                            $(SRC_PATH_BURAM_INIT)/interrupt.asm \
                            $(SRC_PATH_BURAM_INIT)/message.asm \
@@ -20,18 +29,28 @@ SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
 OBJ_BURAM_INIT          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_INIT))
 DEPEND_BURAM_INIT       := $(patsubst %.o,%.d,$(OBJ_BURAM_INIT))
 
+# ------------------------------------------------------------------------------
 # Sub CPU program files
+# ------------------------------------------------------------------------------
+
 SRC_BURAM_SUB           := $(SRC_PATH_BURAM_SUB)/main.asm \
                            $(SRC_PATH_BURAM_SUB)/functions.asm \
                            $(SRC_PATH_BURAM_SUB)/backup_ram.asm
 OBJ_BURAM_SUB           := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_SUB))
 DEPEND_BURAM_SUB        := $(patsubst %.o,%.d,$(OBJ_BURAM_SUB))
 
+# ------------------------------------------------------------------------------
+# Dependencies
+# ------------------------------------------------------------------------------
+
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 	-include $(DEPEND_BURAM_INIT) $(DEPEND_BURAM_SUB)
 endif
 
+# ------------------------------------------------------------------------------
 # Initialization rules
+# ------------------------------------------------------------------------------
+
 $(OUT_BURAM_INIT): $(OBJ_BURAM_INIT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_initialize.link -o $@ $^
@@ -44,7 +63,10 @@ $(DEPEND_BURAM_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_INIT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Sub CPU program rules
+# ------------------------------------------------------------------------------
+
 $(OUT_BURAM_SUB): $(OBJ_BURAM_SUB)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_sub.link -o $@ $^
@@ -57,9 +79,14 @@ $(DEPEND_BURAM_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_SUB)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Create folders
+# ------------------------------------------------------------------------------
+
 $(OBJ_PATH_BURAM_INIT): $(OBJ_PATH)
 	@$(call make_dir,$@)
 
 $(OBJ_PATH_BURAM_SUB): $(OBJ_PATH)
 	@$(call make_dir,$@)
+
+# ------------------------------------------------------------------------------

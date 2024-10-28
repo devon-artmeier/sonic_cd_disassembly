@@ -44,10 +44,10 @@ LoadMessageArt:
 	dc.l	EggmanArt
 	vdpCmd dc.l,$340,VRAM,WRITE				; Message art
 	dc.l	MessageArt
-	;if REGION=USA
+	ifne REGION=USA
 		vdpCmd dc.l,$1C40,VRAM,WRITE			; Message art (extension)
 		dc.l	MessageUsaArt
-	;endif
+	endif
 
 ; ------------------------------------------------------------------------------
 ; Decompress Nemesis art into VRAM (Note: VDP write command must be
@@ -325,13 +325,13 @@ DrawMessageTilemap:
 
 	dc.l	DataCorruptTilemap
 	dc.w	$201A
-	;if REGION=JAPAN
-	;	dc.w	$24-1, 6-1
-	;	vdpCmd dc.l,$E584,VRAM,WRITE
-	;else
+	ifne REGION=JAPAN
+		dc.w	$24-1, 6-1
+		vdpCmd dc.l,$E584,VRAM,WRITE
+	else
 		dc.w	$1D-1, 6-1
 		vdpCmd dc.l,$E58A,VRAM,WRITE
-	;endif
+	endif
 	
 	; Internal Backup RAM unformatted
 	dc.l	EggmanTilemap
@@ -339,62 +339,62 @@ DrawMessageTilemap:
 	dc.w	$A-1, 6-1
 	vdpCmd dc.l,$C31E,VRAM,WRITE
 
-	;if REGION=JAPAN
-	;	dc.l	UnformattedTilemap
-	;	dc.w	$201A
-	;	dc.w	$24-1, 6-1
-	;	vdpCmd dc.l,$E584,VRAM,WRITE
-	;elseif REGION=USA
+	ifne REGION=JAPAN
+		dc.l	UnformattedTilemap
+		dc.w	$201A
+		dc.w	$24-1, 6-1
+		vdpCmd dc.l,$E584,VRAM,WRITE
+	else ifne REGION=USA
 		dc.l	UnformattedUsaTilemap
 		dc.w	$20E2
 		dc.w	$1D-1, 8-1
 		vdpCmd dc.l,$E58A,VRAM,WRITE
-	;else
-	;	dc.l	UnformattedTilemap
-	;	dc.w	$201A
-	;	dc.w	$1D-1, 6-1
-	;	vdpCmd dc.l,$E58A,VRAM,WRITE
-	;endif
+	else
+		dc.l	UnformattedTilemap
+		dc.w	$201A
+		dc.w	$1D-1, 6-1
+		vdpCmd dc.l,$E58A,VRAM,WRITE
+	endif
 	
 	; Cartridge Backup RAM unformatted
 	dc.l	EggmanTilemap
 	dc.w	1
 	dc.w	9, 5
-	;if REGION=JAPAN
-	;	vdpCmd dc.l,$C21E,VRAM,WRITE
-	;else
+	ifne REGION=JAPAN
+		vdpCmd dc.l,$C21E,VRAM,WRITE
+	else
 		vdpCmd dc.l,$C29E,VRAM,WRITE
-	;endif
+	endif
 
 	dc.l	CartUnformattedTilemap
 	dc.w	$201A
-	;if REGION=JAPAN
-	;	dc.w	$24-1, $A-1
-	;	vdpCmd dc.l,$E484,VRAM,WRITE
-	;else
+	ifne REGION=JAPAN
+		dc.w	$24-1, $A-1
+		vdpCmd dc.l,$E484,VRAM,WRITE
+	else
 		dc.w	$1D-1, 8-1
 		vdpCmd dc.l,$E50A,VRAM,WRITE
-	;endif
+	endif
 	
 	; Backup RAM full
 	dc.l	EggmanTilemap
 	dc.w	1
 	dc.w	9, 5
-	;if REGION=JAPAN
-	;	vdpCmd dc.l,$C29E,VRAM,WRITE
-	;else
+	ifne REGION=JAPAN
+		vdpCmd dc.l,$C29E,VRAM,WRITE
+	else
 		vdpCmd dc.l,$C31E,VRAM,WRITE
-	;endif
+	endif
 
 	dc.l	BuramFullTilemap
 	dc.w	$201A
-	;if REGION=JAPAN
-	;	dc.w	$24-1, 8-1
-	;	vdpCmd dc.l,$E504,VRAM,WRITE
-	;else
+	ifne REGION=JAPAN
+		dc.w	$24-1, 8-1
+		vdpCmd dc.l,$E504,VRAM,WRITE
+	else
 		dc.w	$1D-1, 6-1
 		vdpCmd dc.l,$E58A,VRAM,WRITE
-	;endif
+	endif
 
 ; ------------------------------------------------------------------------------
 ; Decompress Enigma tilemap data into RAM

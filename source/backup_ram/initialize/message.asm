@@ -87,11 +87,11 @@ ShowMessage:
 	move.l	d0,(a6)
 	move.l	d0,(a6)
 
-	;if REGION=USA						; Load art
+	ifne REGION=USA						; Load art
 		move.l	#$00010203,d0
-	;else
-	;	move.l	#$00000102,d0
-	;endif
+	else
+		move.l	#$00000102,d0
+	endif
 	jsr	LoadMessageArt
 
 	move.l	(sp)+,d0					; Restore message ID

@@ -1,15 +1,24 @@
+# ------------------------------------------------------------------------------
 # Source folder paths
+# ------------------------------------------------------------------------------
+
 SRC_PATH_TITLE          := $(SRC_PATH)/title
 SRC_PATH_TITLE_MAIN     := $(SRC_PATH_TITLE)/main
 SRC_PATH_TITLE_OBJECTS  := $(SRC_PATH_TITLE_MAIN)/objects
 SRC_PATH_TITLE_SUB      := $(SRC_PATH_TITLE)/sub
 
+# ------------------------------------------------------------------------------
 # Object folder paths
+# ------------------------------------------------------------------------------
+
 OBJ_PATH_TITLE_MAIN     := $(OBJ_PATH)/$(SRC_PATH_TITLE_MAIN)
 OBJ_PATH_TITLE_OBJECTS  := $(OBJ_PATH)/$(SRC_PATH_TITLE_OBJECTS)
 OBJ_PATH_TITLE_SUB      := $(OBJ_PATH)/$(SRC_PATH_TITLE_SUB)
 
+# ------------------------------------------------------------------------------
 # Main CPU program files
+# ------------------------------------------------------------------------------
+
 SRC_TITLE_MAIN          := $(SRC_PATH_TITLE_MAIN)/main.asm \
                            $(SRC_PATH_TITLE_MAIN)/io.asm \
                            $(SRC_PATH_TITLE_MAIN)/functions.asm \
@@ -24,17 +33,27 @@ SRC_TITLE_MAIN          := $(SRC_PATH_TITLE_MAIN)/main.asm \
 OBJ_TITLE_MAIN          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_MAIN))
 DEPEND_TITLE_MAIN       := $(patsubst %.o,%.d,$(OBJ_TITLE_MAIN))
 
+# ------------------------------------------------------------------------------
 # Sub CPU program files
+# ------------------------------------------------------------------------------
+
 SRC_TITLE_SUB      := $(SRC_PATH_TITLE_SUB)/main.asm \
                       $(SRC_PATH_TITLE_SUB)/data.asm
 OBJ_TITLE_SUB      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_SUB))
 DEPEND_TITLE_SUB   := $(patsubst %.o,%.d,$(OBJ_TITLE_SUB))
 
+# ------------------------------------------------------------------------------
+# Dependencies
+# ------------------------------------------------------------------------------
+
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 	-include $(DEPEND_TITLE_MAIN) $(DEPEND_TITLE_SUB)
 endif
 
+# ------------------------------------------------------------------------------
 # Main CPU program rules
+# ------------------------------------------------------------------------------
+
 $(OUT_TITLE_MAIN): $(OBJ_TITLE_MAIN)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_TITLE)/link_main.link -o $@ $^
@@ -47,7 +66,10 @@ $(DEPEND_TITLE_MAIN): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_MAIN) $(OBJ_PATH
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Sub CPU program rules
+# ------------------------------------------------------------------------------
+
 $(OUT_TITLE_SUB): $(OBJ_TITLE_SUB)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_TITLE)/link_sub.link -o $@ $^
@@ -60,7 +82,10 @@ $(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
+# ------------------------------------------------------------------------------
 # Create folders
+# ------------------------------------------------------------------------------
+
 $(OBJ_PATH_TITLE_MAIN): $(OBJ_PATH)
 	@$(call make_dir,$@)
 
@@ -69,3 +94,5 @@ $(OBJ_PATH_TITLE_OBJECTS): $(OBJ_PATH)
 
 $(OBJ_PATH_TITLE_SUB): $(OBJ_PATH)
 	@$(call make_dir,$@)
+
+# ------------------------------------------------------------------------------

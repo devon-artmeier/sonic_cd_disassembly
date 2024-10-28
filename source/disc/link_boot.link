@@ -3,17 +3,17 @@ MEMORY {
 }
 
 SECTIONS {
-	code: {
+	data: {
 		FILL8(0x20);
-		*(disc_header)
+		*(data_header)
 		. = 0x100;
-		*(disc_game_header)
+		*(data_game_header)
 		. = 0x200;
 		FILL8(0x00);
-		*(disc_ip)
+		*(data_ip)
 		. = 0xFFE;
-		*(disc_version)
+		*(data_version)
 		. = 0x1000;
-		*(disc_sp)
+		*(data_sp)
 	} > disc
 }

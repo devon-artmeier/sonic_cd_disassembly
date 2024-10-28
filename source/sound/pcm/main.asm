@@ -48,9 +48,9 @@ PcmVariables:
 
 UpdateDriver:
 	jsr	GetPointers(pc)					; Get driver pointers
-	;if BOSS<>0
-	;	addq.b	#1,pcm.unk_counter(a5)			; Increment unknown counter
-	;endif
+	ifne BOSS
+		addq.b	#1,pcm.unk_counter(a5)			; Increment unknown counter
+	endif
 	jsr	ProcessSoundQueue(pc)				; Process sound queue
 	jsr	PlaySoundId(pc)					; Play sound from queue
 	jsr	HandlePause(pc)					; Handle pausing

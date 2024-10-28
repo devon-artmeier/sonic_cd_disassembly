@@ -4,7 +4,6 @@
 ; ------------------------------------------------------------------------------
 
 	include	"include_main.inc"
-	include	"variables.inc"
 
 	section data
 
