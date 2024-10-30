@@ -16,7 +16,7 @@
 
 ## Building
 
-Make sure the required tools are built and can be called from the root of this disassembly. When running the Makefile, you must set which region to build like either of the following:
+Make sure the required tools are built and can be called from the root of this disassembly. When running the Makefile, you must set which region to build like one of the following:
 
 ~~~
 make REGION=JAPAN
