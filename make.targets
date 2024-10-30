@@ -5,6 +5,12 @@
 BUILD_ROOT_PATH := build
 
 # ------------------------------------------------------------------------------
+# Flags
+# ------------------------------------------------------------------------------
+
+MAKEFLAGS       += --no-print-directory
+
+# ------------------------------------------------------------------------------
 # Exports
 # ------------------------------------------------------------------------------
 
@@ -24,30 +30,30 @@ export BUILD_ROOT_PATH
 # ------------------------------------------------------------------------------
 
 all:
-	@$(MAKE) -f make.rules REGION=JAPAN
-	@$(MAKE) -f make.rules REGION=USA
-	@$(MAKE) -f make.rules REGION=EUROPE
+	@$(MAKE) -f make.rules REGION=JAPAN REGION_FOLDER=japan
+	@$(MAKE) -f make.rules REGION=USA REGION_FOLDER=usa
+	@$(MAKE) -f make.rules REGION=EUROPE REGION_FOLDER=europe
 
 # ------------------------------------------------------------------------------
 # Compile for Japanese Sega CD
 # ------------------------------------------------------------------------------
 
 japan:
-	@$(MAKE) -f make.rules REGION=JAPAN
+	@$(MAKE) -f make.rules REGION=japan REGION_FOLDER=japan
 
 # ------------------------------------------------------------------------------
 # Compile for American Sega CD
 # ------------------------------------------------------------------------------
 
 usa:
-	@$(MAKE) -f make.rules REGION=USA
+	@$(MAKE) -f make.rules REGION=USA REGION_FOLDER=usa
 
 # ------------------------------------------------------------------------------
 # Compile for European Sega CD
 # ------------------------------------------------------------------------------
 
 europe:
-	@$(MAKE) -f make.rules REGION=EUROPE
+	@$(MAKE) -f make.rules REGION=EUROPE REGION_FOLDER=europe
 
 # ------------------------------------------------------------------------------
 # Clean

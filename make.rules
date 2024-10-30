@@ -12,11 +12,15 @@ else ifneq ($(REGION),$(filter JAPAN USA EUROPE,$(REGION)))
 $(error $(REGION) is not a valid option for REGION. Valid option are JAPAN, USA, and EUROPE)
 endif
 
+ifndef REGION_FOLDER
+$(error REGION_FOLDER is not set.)
+endif
+
 # ------------------------------------------------------------------------------
 # Folder paths
 # ------------------------------------------------------------------------------
 
-BUILD_PATH           := build/$(REGION)
+BUILD_PATH           := build/$(REGION_FOLDER)
 FILES_PATH           := $(BUILD_PATH)/files
 MISC_PATH            := $(BUILD_PATH)/misc
 OBJ_PATH             := $(BUILD_PATH)/.obj
