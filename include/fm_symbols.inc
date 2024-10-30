@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Symbols extracted from
-; build/europe/.obj/source/sound/fm/main.o
+; build/usa/.obj/source/sound/fm/main.o
 ; ------------------------------------------------------------------------------
 
 z_sound_play    equ $1C09

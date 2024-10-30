@@ -1,15 +1,15 @@
 ; ------------------------------------------------------------------------------
 ; Symbols extracted from
-; build/europe/.obj/source/sound/pcm/command.o
-; build/europe/.obj/source/sound/pcm/data_r1.o
-; build/europe/.obj/source/sound/pcm/data_r3.o
-; build/europe/.obj/source/sound/pcm/data_r4.o
-; build/europe/.obj/source/sound/pcm/data_r5.o
-; build/europe/.obj/source/sound/pcm/data_r6.o
-; build/europe/.obj/source/sound/pcm/data_r7.o
-; build/europe/.obj/source/sound/pcm/data_r8.o
-; build/europe/.obj/source/sound/pcm/data_boss.o
-; build/europe/.obj/source/sound/pcm/data_final.o
+; build/usa/.obj/source/sound/pcm/command.o
+; build/usa/.obj/source/sound/pcm/data_r1.o
+; build/usa/.obj/source/sound/pcm/data_r3.o
+; build/usa/.obj/source/sound/pcm/data_r4.o
+; build/usa/.obj/source/sound/pcm/data_r5.o
+; build/usa/.obj/source/sound/pcm/data_r6.o
+; build/usa/.obj/source/sound/pcm/data_r7.o
+; build/usa/.obj/source/sound/pcm/data_r8.o
+; build/usa/.obj/source/sound/pcm/data_boss.o
+; build/usa/.obj/source/sound/pcm/data_final.o
 ; ------------------------------------------------------------------------------
 
 PCM_SONG_START          equ $81

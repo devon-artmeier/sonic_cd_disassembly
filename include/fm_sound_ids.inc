@@ -1,6 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Symbols extracted from
-; build/europe/.obj/source/sound/fm/data.o
+; build/usa/.obj/source/sound/fm/data.o
 ; ------------------------------------------------------------------------------
 
 FM_START        equ $90

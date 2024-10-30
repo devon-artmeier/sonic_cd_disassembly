@@ -32,6 +32,8 @@ SRC_PATH             := source
 
 OUT_DISC             := $(BUILD_PATH)/sonic_cd.iso
 OUT_DISC_BOOT        := $(MISC_PATH)/disc_header.bin
+OUT_DISC_IP          := $(MISC_PATH)/ip.bin
+OUT_DISC_SP          := $(MISC_PATH)/sp.bin
 
 # ------------------------------------------------------------------------------
 # Tools
@@ -43,6 +45,7 @@ VLINK                := vlink
 EXTRACT_SYM          := extract_asm_symbols
 MAKE_DEPEND          := make_asm_depend
 MKISOFS              := mkisofs
+SCD_FILE_TOOL        := sonic_cd_file_tool
 
 # ------------------------------------------------------------------------------
 # Flags
@@ -57,6 +60,7 @@ MAKE_DEPEND_FLAGS    := -i $(INCLUDE_PATH) -r
 MKISOFS_FLAGS        := -quiet -abstract "ABS.TXT" -biblio "BIB.TXT" -copyright "CPY.TXT" -A "SEGA ENTERPRISES" \
                         -V "SONIC_CD___" -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid "MEGA_CD" \
 		        -G "$(OUT_DISC_BOOT)" -iso-level 1 -pad
+SCD_FILE_TOOL_FLAGS  := -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches
 
 # ------------------------------------------------------------------------------
 # Make directory
@@ -93,9 +97,9 @@ OUT_PCM_DRIVER_R8    := $(FILES_PATH)/SNCBNK8B.BIN
 OUT_PCM_DRIVER_BOSS  := $(FILES_PATH)/SNCBNKB1.BIN
 OUT_PCM_DRIVER_FINAL := $(FILES_PATH)/SNCBNKB2.BIN
 OUT_PCM_SOUND_IDS    := $(INCLUDE_PATH)/pcm_sound_ids.inc
-OUT_SUB_CORE         := $(MISC_PATH)/sp.bin
+OUT_MAIN_BOOT        := $(OUT_DISC_IP)
+OUT_SUB_CORE         := $(OUT_DISC_SP)
 OUT_SUB_EXT          := $(FILES_PATH)/SPX___.BIN
-OUT_MAIN_BOOT        := $(MISC_PATH)/ip.bin
 OUT_MAIN_CORE        := $(FILES_PATH)/IPX___.MMD
 OUT_MD_INIT          := $(FILES_PATH)/MDINIT.MMD
 OUT_BURAM_INIT       := $(FILES_PATH)/BRAMINIT.MMD
@@ -142,6 +146,7 @@ all: $(OUT_DISC)
 
 $(OUT_DISC): $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $(OUT_DISC_BOOT)
 	$(BUILDING_DISC)
+	@$(SCD_FILE_TOOL) $(SCD_FILE_TOOL_FLAGS) $(FILES_PATH)
 	@$(MKISOFS) $(MKISOFS_FLAGS) -o $@ $(FILES_PATH)
 
 # ------------------------------------------------------------------------------
