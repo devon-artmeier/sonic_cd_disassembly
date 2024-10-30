@@ -18,16 +18,16 @@
 
 Windows users can use the binaries in the tools/win32 folder and the provided batch files to build (including make, which was obtained from [GnuWin](https://gnuwin32.sourceforge.net/packages/make.htm)).
 
-Otherwise, make sure the required tools are built and can be called from the root of this disassembly, and when running the Makefile, you must set which region to build like one of the following:
+Otherwise, make sure the required tools are built and can be called from the root of this disassembly. You can choose to build a specific region with one of the following:
 
 ~~~
-make REGION=JAPAN
+make japan
 ~~~
 ~~~
-make REGION=USA
+make usa
 ~~~
 ~~~
-make REGION=EUROPE
+make europe
 ~~~
 
 To clean, you just run:
