@@ -80,7 +80,7 @@ $(OBJ_TITLE_SUB): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_TITLE_SUB)
 
 $(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
 	$(MAKING_DEPENDS)
-	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+	$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # ------------------------------------------------------------------------------
 # Create folders

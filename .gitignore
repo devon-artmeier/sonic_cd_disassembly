@@ -2,9 +2,3 @@ build/
 *.o
 *.lst
 *.sym
-include/fm_sound_ids.inc
-include/fm_symbols.inc
-include/pcm_sound_ids.inc
-include/pcm_symbols.inc
-include/system_ids.inc
-include/system_symbols.inc

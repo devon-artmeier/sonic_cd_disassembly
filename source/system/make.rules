@@ -161,6 +161,13 @@ $(OBJ_MAIN_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MAIN_BOOT)
 $(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# Sub CPU extension symbols rules
+# ------------------------------------------------------------------------------
+
+$(OUT_SYSTEM_IDS): $(OUT_SUB_EXT)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/files.o $(OBJ_PATH_SUB_EXT)/main.o
 	
 # ------------------------------------------------------------------------------
 # Sub CPU extension rules
@@ -169,7 +176,6 @@ $(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
 $(OUT_SUB_EXT): $(OBJ_SUB_EXT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_ids.inc $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/files.o $(OBJ_PATH_SUB_EXT)/main.o
 
 $(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_EXT)
 	$(ASSEMBLING)
@@ -180,13 +186,19 @@ $(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_EXT)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # ------------------------------------------------------------------------------
+# Sub CPU core symbols rules
+# ------------------------------------------------------------------------------
+
+$(OUT_SYSTEM_SYMBOLS): $(OUT_SUB_CORE)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(MISC_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
+
+# ------------------------------------------------------------------------------
 # Sub CPU core rules
 # ------------------------------------------------------------------------------
 
 $(OUT_SUB_CORE): $(OBJ_SUB_CORE)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile $(OBJ_PATH)/sp.sym -o $@ $^
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(INCLUDE_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
 
 $(OBJ_SUB_CORE): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_CORE)
 	$(ASSEMBLING)

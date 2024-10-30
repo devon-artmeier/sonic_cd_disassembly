@@ -56,7 +56,7 @@ VASM_M68K_FLAGS      := $(VASM_FLAGS) -devpac -opt-p=68000 -opt-o3+ -opt-ow-
 VASM_Z80_FLAGS       := $(VASM_FLAGS)
 VLINK_FLAGS          := -b rawbin1 -nowarn=22
 EXTRACT_SYM_FLAGS    := -m asm -v u64
-MAKE_DEPEND_FLAGS    := -i $(INCLUDE_PATH) -r
+MAKE_DEPEND_FLAGS    := -i $(INCLUDE_PATH) -i $(MISC_PATH) -r
 MKISOFS_FLAGS        := -quiet -abstract "ABS.TXT" -biblio "BIB.TXT" -copyright "CPY.TXT" -A "SEGA ENTERPRISES" \
                         -V "SONIC_CD___" -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid "MEGA_CD" \
 		        -G "$(OUT_DISC_BOOT)" -iso-level 1 -pad
@@ -87,6 +87,8 @@ BUILDING_DISC        = @echo "Building   \"$@\""
 # ------------------------------------------------------------------------------
 
 OUT_FM_DRIVER        := $(MISC_PATH)/z80.bin
+OUT_FM_SOUND_IDS     := $(MISC_PATH)/fm_sound_ids.inc
+OUT_FM_SYMBOLS       := $(MISC_PATH)/fm_symbols.inc
 OUT_PCM_DRIVER_R1    := $(FILES_PATH)/SNCBNK1B.BIN
 OUT_PCM_DRIVER_R3    := $(FILES_PATH)/SNCBNK3B.BIN
 OUT_PCM_DRIVER_R4    := $(FILES_PATH)/SNCBNK4B.BIN
@@ -96,10 +98,13 @@ OUT_PCM_DRIVER_R7    := $(FILES_PATH)/SNCBNK7B.BIN
 OUT_PCM_DRIVER_R8    := $(FILES_PATH)/SNCBNK8B.BIN
 OUT_PCM_DRIVER_BOSS  := $(FILES_PATH)/SNCBNKB1.BIN
 OUT_PCM_DRIVER_FINAL := $(FILES_PATH)/SNCBNKB2.BIN
-OUT_PCM_SOUND_IDS    := $(INCLUDE_PATH)/pcm_sound_ids.inc
+OUT_PCM_SOUND_IDS    := $(MISC_PATH)/pcm_sound_ids.inc
+OUT_PCM_SYMBOLS      := $(MISC_PATH)/pcm_symbols.inc
 OUT_MAIN_BOOT        := $(OUT_DISC_IP)
 OUT_SUB_CORE         := $(OUT_DISC_SP)
+OUT_SYSTEM_SYMBOLS   := $(MISC_PATH)/system_symbols.inc
 OUT_SUB_EXT          := $(FILES_PATH)/SPX___.BIN
+OUT_SYSTEM_IDS       := $(MISC_PATH)/system_ids.inc
 OUT_MAIN_CORE        := $(FILES_PATH)/IPX___.MMD
 OUT_MD_INIT          := $(FILES_PATH)/MDINIT.MMD
 OUT_BURAM_INIT       := $(FILES_PATH)/BRAMINIT.MMD
@@ -108,6 +113,8 @@ OUT_TITLE_MAIN       := $(FILES_PATH)/TITLEM.MMD
 OUT_TITLE_SUB        := $(FILES_PATH)/TITLES.BIN
 
 OUT_FILES            := $(OUT_FM_DRIVER) \
+                        $(OUT_FM_SOUND_IDS) \
+                        $(OUT_FM_SYMBOLS) \
                         $(OUT_PCM_DRIVER_R1) \
                         $(OUT_PCM_DRIVER_R3) \
                         $(OUT_PCM_DRIVER_R4) \
@@ -118,8 +125,11 @@ OUT_FILES            := $(OUT_FM_DRIVER) \
                         $(OUT_PCM_DRIVER_BOSS) \
                         $(OUT_PCM_DRIVER_FINAL) \
                         $(OUT_PCM_SOUND_IDS) \
+			$(OUT_PCM_SYMBOLS) \
                         $(OUT_SUB_CORE) \
+			$(OUT_SYSTEM_SYMBOLS) \
                         $(OUT_SUB_EXT) \
+			$(OUT_SYSTEM_IDS) \
 		        $(OUT_MAIN_BOOT) \
 		        $(OUT_MAIN_CORE) \
 		        $(OUT_MD_INIT) \
