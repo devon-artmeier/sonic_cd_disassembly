@@ -5,18 +5,20 @@
 ## Requirements
 
 * make
-* [vasm](http://sun.hasenbraten.de/vasm/)
+* [vasm](http://sun.hasenbraten.de/vasm)
   * M68k CPU, Motorola syntax
   * Z80 CPU, old style syntax
-* [vlink](http://sun.hasenbraten.de/vlink/)
+* [vlink](http://sun.hasenbraten.de/vlink)
 * [extract_asm_symbols](https://github.com/devon-artmeier/extract_asm_symbols)
 * [make_asm_depend](https://github.com/devon-artmeier/make_asm_depend)
 * [sonic_cd_file_tool](https://github.com/devon-artmeier/sonic_cd_file_tool)
-* mkisofs (from [cdrtools](https://sourceforge.net/projects/cdrtools/))
+* mkisofs (from [cdrtools](https://sourceforge.net/projects/cdrtools))
 
 ## Building
 
-Make sure the required tools are built and can be called from the root of this disassembly. On Windows, you can use the batch files to run the Makefile with the configuration you want. Otherwise, when running the Makefile, you must set which region to build like one of the following:
+Windows users can use the binaries in the tools/win32 folder and the provided batch files to build (including make, which was obtained from [GnuWin](https://gnuwin32.sourceforge.net/packages/make.htm)).
+
+Otherwise, make sure the required tools are built and can be called from the root of this disassembly, and when running the Makefile, you must set which region to build like one of the following:
 
 ~~~
 make REGION=JAPAN
