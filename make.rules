@@ -144,7 +144,7 @@ all: $(OUT_DISC)
 # Disc image rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DISC): $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $(OUT_DISC_BOOT)
+$(OUT_DISC): $(BUILD_ROOT_PATH) $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $(OUT_DISC_BOOT)
 	$(BUILDING_DISC)
 	@$(SCD_FILE_TOOL) $(SCD_FILE_TOOL_FLAGS) $(FILES_PATH)
 	@$(MKISOFS) $(MKISOFS_FLAGS) -o $@ $(FILES_PATH)
