@@ -16,7 +16,7 @@
 
 ## Building
 
-Make sure the required tools are built and can be called from the root of this disassembly. When running the Makefile, you must set which region to build like one of the following:
+Make sure the required tools are built and can be called from the root of this disassembly. On Windows, you can use the batch files to run the Makefile with the configuration you want. Otherwise, when running the Makefile, you must set which region to build like one of the following:
 
 ~~~
 make REGION=JAPAN
@@ -26,6 +26,12 @@ make REGION=USA
 ~~~
 ~~~
 make REGION=EUROPE
+~~~
+
+To clean, you just run:
+
+~~~
+make clean
 ~~~
 
 ## Special Thanks
