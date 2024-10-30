@@ -18,6 +18,7 @@ OBJ_PATH_BURAM_SUB      := $(OBJ_PATH)/$(SRC_PATH_BURAM_SUB)
 # Initialization files
 # ------------------------------------------------------------------------------
 
+ifeq ($(REGION),USA)
 SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
                            $(SRC_PATH_BURAM_INIT)/interrupt.asm \
                            $(SRC_PATH_BURAM_INIT)/message.asm \
@@ -26,6 +27,16 @@ SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
                            $(SRC_PATH_BURAM_INIT)/backup_ram.asm \
                            $(SRC_PATH_BURAM_INIT)/load_message.asm \
                            $(SRC_PATH_BURAM_INIT)/data.asm
+else
+SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
+                           $(SRC_PATH_BURAM_INIT)/message.asm \
+                           $(SRC_PATH_BURAM_INIT)/interrupt.asm \
+                           $(SRC_PATH_BURAM_INIT)/io.asm \
+                           $(SRC_PATH_BURAM_INIT)/functions.asm \
+                           $(SRC_PATH_BURAM_INIT)/backup_ram.asm \
+                           $(SRC_PATH_BURAM_INIT)/load_message.asm \
+                           $(SRC_PATH_BURAM_INIT)/data.asm
+endif
 OBJ_BURAM_INIT          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_INIT))
 DEPEND_BURAM_INIT       := $(patsubst %.o,%.d,$(OBJ_BURAM_INIT))
 

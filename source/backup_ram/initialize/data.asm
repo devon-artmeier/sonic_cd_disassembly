@@ -32,8 +32,8 @@ EggmanTilemap:
 		incbin	"data/data_corrupt_japan_tilemap.eni"
 		even
 		
-		xdef Unformatted
-	Unformatted:
+		xdef UnformattedTilemap
+	UnformattedTilemap:
 		incbin	"data/unformatted_japan_tilemap.eni"
 		even
 
