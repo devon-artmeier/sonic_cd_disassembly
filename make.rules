@@ -170,6 +170,7 @@ include $(SRC_PATH)/disc/make.rules
 # Create folders
 # ------------------------------------------------------------------------------
 
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 $(FILES_PATH): $(BUILD_PATH)
 	@$(call make_dir,$@)
 	
@@ -184,5 +185,6 @@ $(BUILD_PATH): $(BUILD_ROOT_PATH)
 	
 $(BUILD_ROOT_PATH):
 	@$(call make_dir,$@)
+endif
 
 # ------------------------------------------------------------------------------
