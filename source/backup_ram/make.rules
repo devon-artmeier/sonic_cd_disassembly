@@ -55,7 +55,7 @@ DEPEND_BURAM_SUB        := $(patsubst %.o,%.d,$(OBJ_BURAM_SUB))
 # ------------------------------------------------------------------------------
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_BURAM_INIT) $(DEPEND_BURAM_SUB)
+-include $(DEPEND_BURAM_INIT) $(DEPEND_BURAM_SUB)
 endif
 
 # ------------------------------------------------------------------------------

@@ -154,17 +154,17 @@ $(OUT_DISC): $(BUILD_ROOT_PATH) $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_P
 # ------------------------------------------------------------------------------
 
 clean:
-	@$(RM) $(BUILD_ROOT_PATH)
+	@$(RM) "$(BUILD_ROOT_PATH)"
 
 # ------------------------------------------------------------------------------
 # Rules files
 # ------------------------------------------------------------------------------
 
-        include $(SRC_PATH)/sound/make.rules
-        include $(SRC_PATH)/system/make.rules
-        include $(SRC_PATH)/backup_ram/make.rules
-        include $(SRC_PATH)/title/make.rules
-        include $(SRC_PATH)/disc/make.rules
+include $(SRC_PATH)/sound/make.rules
+include $(SRC_PATH)/system/make.rules
+include $(SRC_PATH)/backup_ram/make.rules
+include $(SRC_PATH)/title/make.rules
+include $(SRC_PATH)/disc/make.rules
 
 # ------------------------------------------------------------------------------
 # Create folders

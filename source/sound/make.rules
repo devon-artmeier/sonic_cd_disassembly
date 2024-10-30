@@ -147,7 +147,7 @@ DEPEND_PCM_DATA        := $(DEPEND_PCM_DATA_R1) \
 # ------------------------------------------------------------------------------
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA)
+-include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA)
 endif
 
 # ------------------------------------------------------------------------------

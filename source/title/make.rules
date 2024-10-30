@@ -37,17 +37,17 @@ DEPEND_TITLE_MAIN       := $(patsubst %.o,%.d,$(OBJ_TITLE_MAIN))
 # Sub CPU program files
 # ------------------------------------------------------------------------------
 
-SRC_TITLE_SUB      := $(SRC_PATH_TITLE_SUB)/main.asm \
-                      $(SRC_PATH_TITLE_SUB)/data.asm
-OBJ_TITLE_SUB      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_SUB))
-DEPEND_TITLE_SUB   := $(patsubst %.o,%.d,$(OBJ_TITLE_SUB))
+SRC_TITLE_SUB           := $(SRC_PATH_TITLE_SUB)/main.asm \
+                           $(SRC_PATH_TITLE_SUB)/data.asm
+OBJ_TITLE_SUB           := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_SUB))
+DEPEND_TITLE_SUB        := $(patsubst %.o,%.d,$(OBJ_TITLE_SUB))
 
 # ------------------------------------------------------------------------------
 # Dependencies
 # ------------------------------------------------------------------------------
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_TITLE_MAIN) $(DEPEND_TITLE_SUB)
+-include $(DEPEND_TITLE_MAIN) $(DEPEND_TITLE_SUB)
 endif
 
 # ------------------------------------------------------------------------------

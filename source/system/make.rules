@@ -111,7 +111,7 @@ DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
 # ------------------------------------------------------------------------------
 
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-	-include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE) $(DEPEND_MD_INIT)
+-include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE) $(DEPEND_MD_INIT)
 endif
 
 # ------------------------------------------------------------------------------
