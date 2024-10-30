@@ -54,7 +54,7 @@ $(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
 
 $(OUT_DISC_FILES): $(FILES_PATH)/%: $(SRC_PATH_DISC_FILES)/%
 	$(COPYING)
-	@$(COPY) $< $@
+	@$(COPY) "$<" "$@"
 
 # ------------------------------------------------------------------------------
 # Create folders
