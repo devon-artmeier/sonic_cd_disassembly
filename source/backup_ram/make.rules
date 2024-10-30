@@ -94,10 +94,10 @@ $(DEPEND_BURAM_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_SUB)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_BURAM_INIT): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_BURAM_INIT): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_BURAM_SUB): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_BURAM_SUB): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

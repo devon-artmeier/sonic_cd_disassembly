@@ -6,20 +6,17 @@ JAPAN                := 0
 USA                  := 1
 EUROPE               := 2
 
-ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 ifndef REGION
 $(error REGION is not set. Valid values are JAPAN, USA, and EUROPE)
 else ifneq ($(REGION),$(filter JAPAN USA EUROPE,$(REGION)))
 $(error $(REGION) is not a valid option for REGION. Valid option are JAPAN, USA, and EUROPE)
-endif
 endif
 
 # ------------------------------------------------------------------------------
 # Folder paths
 # ------------------------------------------------------------------------------
 
-BUILD_ROOT_PATH      := build
-BUILD_PATH           := build/$(shell echo $(REGION) | tr A-Z a-z)
+BUILD_PATH           := build/$(REGION)
 FILES_PATH           := $(BUILD_PATH)/files
 MISC_PATH            := $(BUILD_PATH)/misc
 OBJ_PATH             := $(BUILD_PATH)/.obj
@@ -57,30 +54,20 @@ VASM_Z80_FLAGS       := $(VASM_FLAGS)
 VLINK_FLAGS          := -b rawbin1 -nowarn=22
 EXTRACT_SYM_FLAGS    := -m asm -v u64
 MAKE_DEPEND_FLAGS    := -i $(INCLUDE_PATH) -i $(MISC_PATH) -r
-MKISOFS_FLAGS        := -quiet -abstract "ABS.TXT" -biblio "BIB.TXT" -copyright "CPY.TXT" -A "SEGA ENTERPRISES" \
-                        -V "SONIC_CD___" -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid "MEGA_CD" \
-		        -G "$(OUT_DISC_BOOT)" -iso-level 1 -pad
+MKISOFS_FLAGS        := -quiet -abstract ABS.TXT -biblio BIB.TXT -copyright CPY.TXT -A "SEGA ENTERPRISES" \
+                        -V SONIC_CD___ -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid MEGA_CD \
+		        -G $(OUT_DISC_BOOT) -iso-level 1 -pad
 SCD_FILE_TOOL_FLAGS  := -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches
-
-# ------------------------------------------------------------------------------
-# Make directory
-# ------------------------------------------------------------------------------
-
-define make_dir
-	if [ ! -d "$(1)" ]; then \
-		$(MKDIR) "$(1)"; \
-	fi
-endef
 
 # ------------------------------------------------------------------------------
 # Messages
 # ------------------------------------------------------------------------------
 
-COPYING              = @echo "Copying    \"$@\""
-ASSEMBLING           = @echo "Assembling \"$<\""
-LINKING              = @echo "Linking    \"$@\""
-MAKING_DEPENDS       = @echo "Generating \"$@\""
-BUILDING_DISC        = @echo "Building   \"$@\""
+COPYING              = @echo Copying    "$@"
+ASSEMBLING           = @echo Assembling "$<"
+LINKING              = @echo Linking    "$@"
+MAKING_DEPENDS       = @echo Generating "$@"
+BUILDING_DISC        = @echo Building   "$@"
 
 # ------------------------------------------------------------------------------
 # Output files
@@ -142,7 +129,7 @@ OUT_FILES            := $(OUT_FM_DRIVER) \
 # Reserved rules
 # ------------------------------------------------------------------------------
 
-.PHONY: all clean
+.PHONY: all
 
 # ------------------------------------------------------------------------------
 # Compile everything together
@@ -154,17 +141,10 @@ all: $(OUT_DISC)
 # Disc image rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DISC): $(BUILD_ROOT_PATH) $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $(OUT_DISC_BOOT)
+$(OUT_DISC): | $(BUILD_ROOT_PATH) $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH) $(OUT_FILES) $(OUT_DISC_BOOT)
 	$(BUILDING_DISC)
 	@$(SCD_FILE_TOOL) $(SCD_FILE_TOOL_FLAGS) $(FILES_PATH)
 	@$(MKISOFS) $(MKISOFS_FLAGS) -o $@ $(FILES_PATH)
-
-# ------------------------------------------------------------------------------
-# Clean
-# ------------------------------------------------------------------------------
-
-clean:
-	@$(RM) "$(BUILD_ROOT_PATH)"
 
 # ------------------------------------------------------------------------------
 # Rules files
@@ -180,21 +160,19 @@ include $(SRC_PATH)/disc/make.rules
 # Create folders
 # ------------------------------------------------------------------------------
 
-ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
-$(FILES_PATH): $(BUILD_PATH)
-	@$(call make_dir,$@)
+$(FILES_PATH): | $(BUILD_PATH)
+	@$(MKDIR) "$@"
 	
-$(MISC_PATH): $(BUILD_PATH)
-	@$(call make_dir,$@)
+$(MISC_PATH): | $(BUILD_PATH)
+	@$(MKDIR) "$@"
 	
-$(OBJ_PATH): $(BUILD_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH): | $(BUILD_PATH)
+	@$(MKDIR) "$@"
 
-$(BUILD_PATH): $(BUILD_ROOT_PATH)
-	@$(call make_dir,$@)
+$(BUILD_PATH): | $(BUILD_ROOT_PATH)
+	@$(MKDIR) "$@"
 	
 $(BUILD_ROOT_PATH):
-	@$(call make_dir,$@)
-endif
+	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

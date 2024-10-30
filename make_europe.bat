@@ -1,4 +1,4 @@
 @echo off
 SET PATH=%PATH%;.\tools\win32
-make REGION=EUROPE
+make -f Makefile.Win32 europe
 pause

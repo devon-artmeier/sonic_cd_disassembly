@@ -366,10 +366,10 @@ $(DEPEND_PCM_DRIVER_BOSS): $(OBJ_PATH)/%_boss.d: %.asm | $(OBJ_PATH_PCM)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_FM): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_FM): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_PCM): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_PCM): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

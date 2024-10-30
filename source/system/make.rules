@@ -212,19 +212,19 @@ $(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_CORE)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_SUB_CORE): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_SUB_CORE): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_SUB_EXT): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_SUB_EXT): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_MAIN_BOOT): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_MAIN_BOOT): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_MAIN_CORE): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_MAIN_CORE): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_MD_INIT): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_MD_INIT): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

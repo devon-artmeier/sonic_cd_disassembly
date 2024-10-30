@@ -21,7 +21,7 @@ SRC_DISC_BOOT       := $(SRC_PATH_DISC_BOOT)/header.asm \
 OBJ_DISC_BOOT       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DISC_BOOT))
 DEPEND_DISC_BOOT    := $(patsubst %.o,%.d,$(OBJ_DISC_BOOT))
 
-SRC_DISC_FILES      := $(shell find $(SRC_PATH_DISC_FILES) -name "*.*")
+SRC_DISC_FILES      := $(wildcard $(SRC_PATH_DISC_FILES)/*.*)
 OUT_DISC_FILES      := $(patsubst $(SRC_PATH_DISC_FILES)/%,$(FILES_PATH)/%,$(SRC_DISC_FILES))
 
 # ------------------------------------------------------------------------------
@@ -52,15 +52,15 @@ $(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
 # Files rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DISC_FILES): $(FILES_PATH)/%: $(SRC_PATH_DISC_FILES)/%
+$(OUT_DISC_FILES):
 	$(COPYING)
-	@$(COPY) "$<" "$@"
+	@$(COPY) "$(SRC_PATH_DISC_FILES)" "$(FILES_PATH)" > nul
 
 # ------------------------------------------------------------------------------
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_DISC_BOOT): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_DISC_BOOT): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

@@ -80,19 +80,19 @@ $(OBJ_TITLE_SUB): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_TITLE_SUB)
 
 $(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
 	$(MAKING_DEPENDS)
-	$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # ------------------------------------------------------------------------------
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_TITLE_MAIN): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_TITLE_MAIN): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_TITLE_OBJECTS): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_TITLE_OBJECTS): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
-$(OBJ_PATH_TITLE_SUB): $(OBJ_PATH)
-	@$(call make_dir,$@)
+$(OBJ_PATH_TITLE_SUB): | $(OBJ_PATH)
+	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------
