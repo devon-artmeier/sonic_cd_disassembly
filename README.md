@@ -14,6 +14,20 @@
 * [sonic_cd_file_tool](https://github.com/devon-artmeier/sonic_cd_file_tool)
 * mkisofs (from [cdrtools](https://sourceforge.net/projects/cdrtools/))
 
+## Building
+
+Make sure the required tools are built and can be called from the root of this disassembly. When running the Makefile, you must set which region to build like either of the following:
+
+~~~
+make REGION=JAPAN
+~~~
+~~~
+make REGION=USA
+~~~
+~~~
+make REGION=EUROPE
+~~~
+
 ## Special Thanks
 
 Special thanks to flamewing and TheStoneBanana for helping out and contributing, especially for R11A in the disassembly's infancy stages back in 2015.
