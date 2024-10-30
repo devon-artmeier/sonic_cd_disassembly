@@ -10,7 +10,7 @@
   * Z80 CPU, old style syntax
 * [vlink](http://sun.hasenbraten.de/vlink/)
 * [extract_asm_symbols](https://github.com/devon-artmeier/extract_asm_symbols)
-* [make_asm_depend](https://github.com/devon-artmeier/make_asm_dependencies)
+* [make_asm_depend](https://github.com/devon-artmeier/make_asm_depend)
 * [sonic_cd_file_tool](https://github.com/devon-artmeier/sonic_cd_file_tool)
 * mkisofs (from [cdrtools](https://sourceforge.net/projects/cdrtools/))
 
