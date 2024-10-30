@@ -1,0 +1,9 @@
+[submodule "tools/sonic_cd_file_tool"]
+	path = tools/sonic_cd_file_tool
+	url = https://github.com/devon-artmeier/sonic_cd_file_tool.git
+[submodule "tools/make_asm_depend"]
+	path = tools/make_asm_depend
+	url = https://github.com/devon-artmeier/make_asm_depend.git
+[submodule "tools/extract_asm_symbols"]
+	path = tools/extract_asm_symbols
+	url = https://github.com/devon-artmeier/extract_asm_symbols.git
