@@ -21,24 +21,24 @@ SRC_DISC_BOOT       := $(SRC_PATH_DISC_BOOT)/header.asm \
 OBJ_DISC_BOOT       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DISC_BOOT))
 DEPEND_DISC_BOOT    := $(patsubst %.o,%.d,$(OBJ_DISC_BOOT))
 
-SRC_DISC_FILES      := $(wildcard $(SRC_PATH_DISC_FILES)/*.*)
-OUT_DISC_FILES      := $(patsubst $(SRC_PATH_DISC_FILES)/%,$(FILES_PATH)/%,$(SRC_DISC_FILES))
-
 # ------------------------------------------------------------------------------
 # Dependencies
 # ------------------------------------------------------------------------------
 
-ifneq ($(MAKECMDGOALS),$(filter $(MAKECMDGOALS),clean))
 -include $(DEPEND_DISC_BOOT)
-endif
 
 # ------------------------------------------------------------------------------
 # Boot rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DISC_BOOT): $(OBJ_DISC_BOOT) | $(OUT_DISC_FILES)
+$(OUT_DISC_BOOT): $(OBJ_DISC_BOOT)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DISC)/link_boot.link -o $@ $^
+ifeq ($(OS),Windows_NT)
+	@xcopy /q /y /v "$(SRC_PATH_DISC_FILES)" "$(FILES_PATH)" > nul
+else
+	@cp -a "$(SRC_PATH_DISC_FILES)/." "$(FILES_PATH)" > /dev/null
+endif
 
 $(OBJ_DISC_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DISC_BOOT)
 	$(ASSEMBLING)
@@ -47,14 +47,6 @@ $(OBJ_DISC_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DISC_BOOT)
 $(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
-
-# ------------------------------------------------------------------------------
-# Files rules
-# ------------------------------------------------------------------------------
-
-$(OUT_DISC_FILES):
-	$(COPYING)
-	@$(COPY) "$(SRC_PATH_DISC_FILES)" "$(FILES_PATH)" > nul
 
 # ------------------------------------------------------------------------------
 # Create folders

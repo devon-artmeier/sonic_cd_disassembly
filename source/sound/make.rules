@@ -146,9 +146,7 @@ DEPEND_PCM_DATA        := $(DEPEND_PCM_DATA_R1) \
 # Dependencies
 # ------------------------------------------------------------------------------
 
-ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 -include $(DEPEND_FM_DATA) $(DEPEND_FM_DRIVER) $(DEPEND_PCM_DATA)
-endif
 
 # ------------------------------------------------------------------------------
 # FM sound driver symbols rules

@@ -46,9 +46,7 @@ DEPEND_TITLE_SUB        := $(patsubst %.o,%.d,$(OBJ_TITLE_SUB))
 # Dependencies
 # ------------------------------------------------------------------------------
 
-ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 -include $(DEPEND_TITLE_MAIN) $(DEPEND_TITLE_SUB)
-endif
 
 # ------------------------------------------------------------------------------
 # Main CPU program rules
