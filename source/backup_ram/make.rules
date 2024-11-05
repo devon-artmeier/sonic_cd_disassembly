@@ -11,6 +11,7 @@ SRC_PATH_BURAM_SUB      := $(SRC_PATH_BURAM)/sub
 # Object folder paths
 # ------------------------------------------------------------------------------
 
+OBJ_PATH_BURAM          := $(OBJ_PATH)/$(SRC_PATH_BURAM)
 OBJ_PATH_BURAM_INIT     := $(OBJ_PATH)/$(SRC_PATH_BURAM_INIT)
 OBJ_PATH_BURAM_SUB      := $(OBJ_PATH)/$(SRC_PATH_BURAM_SUB)
 
@@ -92,10 +93,13 @@ $(DEPEND_BURAM_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_SUB)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_BURAM_INIT): | $(OBJ_PATH)
+$(OBJ_PATH_BURAM_INIT): | $(OBJ_PATH_BURAM)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_BURAM_SUB): | $(OBJ_PATH)
+$(OBJ_PATH_BURAM_SUB): | $(OBJ_PATH_BURAM)
+	@$(MKDIR) "$@"
+
+$(OBJ_PATH_BURAM): | $(OBJ_PATH)
 	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

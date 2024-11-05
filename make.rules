@@ -102,6 +102,9 @@ OUT_BURAM_INIT       := $(FILES_PATH)/BRAMINIT.MMD
 OUT_BURAM_SUB        := $(FILES_PATH)/BRAMSUB.BIN
 OUT_TITLE_MAIN       := $(FILES_PATH)/TITLEM.MMD
 OUT_TITLE_SUB        := $(FILES_PATH)/TITLES.BIN
+OUT_DA_GARDEN_MAIN   := $(FILES_PATH)/PLANET_M.MMD
+OUT_DA_GARDEN_SUB    := $(FILES_PATH)/PLANET_S.BIN
+OUT_DA_GARDEN_TITLES := $(FILES_PATH)/PLANET_D.BIN
 
 OUT_FILES            := $(OUT_FM_DRIVER) \
                         $(OUT_FM_SOUND_IDS) \
@@ -127,7 +130,10 @@ OUT_FILES            := $(OUT_FM_DRIVER) \
 		        $(OUT_BURAM_INIT) \
 		        $(OUT_BURAM_SUB) \
 		        $(OUT_TITLE_MAIN) \
-		        $(OUT_TITLE_SUB)
+		        $(OUT_TITLE_SUB) \
+		        $(OUT_DA_GARDEN_MAIN) \
+		        $(OUT_DA_GARDEN_SUB) \
+		        $(OUT_DA_GARDEN_TITLES)
 
 # ------------------------------------------------------------------------------
 # Reserved rules
@@ -158,6 +164,7 @@ include $(SRC_PATH)/sound/make.rules
 include $(SRC_PATH)/system/make.rules
 include $(SRC_PATH)/backup_ram/make.rules
 include $(SRC_PATH)/title/make.rules
+include $(SRC_PATH)/da_garden/make.rules
 include $(SRC_PATH)/disc/make.rules
 
 # ------------------------------------------------------------------------------

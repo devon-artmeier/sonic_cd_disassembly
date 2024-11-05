@@ -13,6 +13,7 @@ SRC_PATH_MD_INIT   := $(SRC_PATH_SYSTEM)/md_initialize
 # Object folder paths
 # ------------------------------------------------------------------------------
 
+OBJ_PATH_SYSTEM    := $(OBJ_PATH)/$(SRC_PATH_SYSTEM)
 OBJ_PATH_SUB_CORE  := $(OBJ_PATH)/$(SRC_PATH_SUB_CORE)
 OBJ_PATH_SUB_EXT   := $(OBJ_PATH)/$(SRC_PATH_SUB_EXT)
 OBJ_PATH_MAIN_BOOT := $(OBJ_PATH)/$(SRC_PATH_MAIN_BOOT)
@@ -210,19 +211,22 @@ $(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_CORE)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_SUB_CORE): | $(OBJ_PATH)
+$(OBJ_PATH_SUB_CORE): | $(OBJ_PATH_SYSTEM)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_SUB_EXT): | $(OBJ_PATH)
+$(OBJ_PATH_SUB_EXT): | $(OBJ_PATH_SYSTEM)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_MAIN_BOOT): | $(OBJ_PATH)
+$(OBJ_PATH_MAIN_BOOT): | $(OBJ_PATH_SYSTEM)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_MAIN_CORE): | $(OBJ_PATH)
+$(OBJ_PATH_MAIN_CORE): | $(OBJ_PATH_SYSTEM)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_MD_INIT): | $(OBJ_PATH)
+$(OBJ_PATH_MD_INIT): | $(OBJ_PATH_SYSTEM)
+	@$(MKDIR) "$@"
+
+$(OBJ_PATH_SYSTEM): | $(OBJ_PATH)
 	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

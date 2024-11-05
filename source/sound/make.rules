@@ -10,6 +10,7 @@ SRC_PATH_PCM            := $(SRC_PATH_SOUND)/pcm
 # Object folder paths
 # ------------------------------------------------------------------------------
 
+OBJ_PATH_SOUND          := $(OBJ_PATH)/$(SRC_PATH_SOUND)
 OBJ_PATH_FM             := $(OBJ_PATH)/$(SRC_PATH_FM)
 OBJ_PATH_PCM            := $(OBJ_PATH)/$(SRC_PATH_PCM)
 
@@ -364,10 +365,13 @@ $(DEPEND_PCM_DRIVER_BOSS): $(OBJ_PATH)/%_boss.d: %.asm | $(OBJ_PATH_PCM)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_FM): | $(OBJ_PATH)
+$(OBJ_PATH_FM): | $(OBJ_PATH_SOUND)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_PCM): | $(OBJ_PATH)
+$(OBJ_PATH_PCM): | $(OBJ_PATH_SOUND)
+	@$(MKDIR) "$@"
+
+$(OBJ_PATH_SOUND): | $(OBJ_PATH)
 	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

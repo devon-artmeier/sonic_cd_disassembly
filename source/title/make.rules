@@ -11,6 +11,7 @@ SRC_PATH_TITLE_SUB      := $(SRC_PATH_TITLE)/sub
 # Object folder paths
 # ------------------------------------------------------------------------------
 
+OBJ_PATH_TITLE          := $(OBJ_PATH)/$(SRC_PATH_TITLE)
 OBJ_PATH_TITLE_MAIN     := $(OBJ_PATH)/$(SRC_PATH_TITLE_MAIN)
 OBJ_PATH_TITLE_OBJECTS  := $(OBJ_PATH)/$(SRC_PATH_TITLE_OBJECTS)
 OBJ_PATH_TITLE_SUB      := $(OBJ_PATH)/$(SRC_PATH_TITLE_SUB)
@@ -84,13 +85,16 @@ $(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_TITLE_MAIN): | $(OBJ_PATH)
+$(OBJ_PATH_TITLE_MAIN): | $(OBJ_PATH_TITLE)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_TITLE_OBJECTS): | $(OBJ_PATH)
+$(OBJ_PATH_TITLE_OBJECTS): | $(OBJ_PATH_TITLE)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_TITLE_SUB): | $(OBJ_PATH)
+$(OBJ_PATH_TITLE_SUB): | $(OBJ_PATH_TITLE)
+	@$(MKDIR) "$@"
+
+$(OBJ_PATH_TITLE): | $(OBJ_PATH)
 	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------

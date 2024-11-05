@@ -10,6 +10,7 @@ SRC_PATH_DISC_FILES := $(SRC_PATH_DISC)/files
 # Object folder paths
 # ------------------------------------------------------------------------------
 
+OBJ_PATH_DISC       := $(OBJ_PATH)/$(SRC_PATH_DISC)
 OBJ_PATH_DISC_BOOT  := $(OBJ_PATH)/$(SRC_PATH_DISC_BOOT)
 
 # ------------------------------------------------------------------------------
@@ -52,7 +53,10 @@ $(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_DISC_BOOT): | $(OBJ_PATH)
+$(OBJ_PATH_DISC_BOOT): | $(OBJ_PATH_DISC)
+	@$(MKDIR) "$@"
+
+$(OBJ_PATH_DISC): | $(OBJ_PATH)
 	@$(MKDIR) "$@"
 
 # ------------------------------------------------------------------------------
