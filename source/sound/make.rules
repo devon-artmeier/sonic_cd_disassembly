@@ -153,17 +153,17 @@ DEPEND_PCM_DATA        := $(DEPEND_PCM_DATA_R1) \
 # FM sound driver symbols rules
 # ------------------------------------------------------------------------------
 
-$(OUT_FM_SOUND_IDS): $(OUT_FM_DRIVER)
+$(OUT_FM_SOUND_IDS): $(OUT_FM_DRIVER) | $(MISC_PATH)
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_FM_DATA) $(OBJ_PATH_FM)/data.o
 
-$(OUT_FM_SYMBOLS): $(OUT_FM_DRIVER)
+$(OUT_FM_SYMBOLS): $(OUT_FM_DRIVER) | $(MISC_PATH)
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_FM_DRIVER) $(OBJ_PATH_FM)/main.o
 
 # ------------------------------------------------------------------------------
 # FM sound driver rules
 # ------------------------------------------------------------------------------
 
-$(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER)
+$(OUT_FM_DRIVER): $(OBJ_FM_DATA) $(OBJ_FM_DRIVER) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_fm.link -o $@ $^
 
@@ -191,17 +191,17 @@ $(DEPEND_FM_DATA): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_FM)
 # PCM sound driver symbols rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_SOUND_IDS): $(OUT_PCM_DRIVER)
+$(OUT_PCM_SOUND_IDS): $(OUT_PCM_DRIVER) | $(MISC_PATH)
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_PCM_DATA) $(OBJ_PATH_PCM)/command.o $(OBJ_PCM_DATA)
 
-$(OUT_PCM_SYMBOLS): $(OUT_PCM_DRIVER)
+$(OUT_PCM_SYMBOLS): $(OUT_PCM_DRIVER) | $(MISC_PATH)
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_PCM_DRIVER) $(OBJ_PATH_PCM)/main.o $(OBJ_PATH)/pcm.sym
 
 # ------------------------------------------------------------------------------
 # PCM sound driver (R1) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R1): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R1)
+$(OUT_PCM_DRIVER_R1): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R1) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -217,7 +217,7 @@ $(DEPEND_PCM_DATA_R1): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (R3) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R3): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R3)
+$(OUT_PCM_DRIVER_R3): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R3) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -233,7 +233,7 @@ $(DEPEND_PCM_DATA_R3): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (R4) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R4): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R4)
+$(OUT_PCM_DRIVER_R4): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R4) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -249,7 +249,7 @@ $(DEPEND_PCM_DATA_R4): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (R5) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R5): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R5)
+$(OUT_PCM_DRIVER_R5): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R5) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -265,7 +265,7 @@ $(DEPEND_PCM_DATA_R5): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (R6) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R6): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R6)
+$(OUT_PCM_DRIVER_R6): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R6) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -281,7 +281,7 @@ $(DEPEND_PCM_DATA_R6): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (R7) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R7): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R7)
+$(OUT_PCM_DRIVER_R7): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R7) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -297,7 +297,7 @@ $(DEPEND_PCM_DATA_R7): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (R8) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_R8): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R8)
+$(OUT_PCM_DRIVER_R8): $(OBJ_PCM_DRIVER) $(OBJ_PCM_DATA_R8) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -313,7 +313,7 @@ $(DEPEND_PCM_DATA_R8): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (boss) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_BOSS): $(OBJ_PCM_DRIVER_BOSS) $(OBJ_PCM_DATA_BOSS)
+$(OUT_PCM_DRIVER_BOSS): $(OBJ_PCM_DRIVER_BOSS) $(OBJ_PCM_DATA_BOSS) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 
@@ -329,7 +329,7 @@ $(DEPEND_PCM_DATA_BOSS): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_PCM)
 # PCM sound driver (final boss) rules
 # ------------------------------------------------------------------------------
 
-$(OUT_PCM_DRIVER_FINAL): $(OBJ_PCM_DRIVER_BOSS) $(OBJ_PCM_DATA_FINAL)
+$(OUT_PCM_DRIVER_FINAL): $(OBJ_PCM_DRIVER_BOSS) $(OBJ_PCM_DATA_FINAL) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SOUND)/link_pcm.link -symfile $(OBJ_PATH)/pcm.sym -o $@ $^
 

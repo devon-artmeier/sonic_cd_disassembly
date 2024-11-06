@@ -18,7 +18,8 @@ OBJ_PATH_DA_GARDEN_SUB      := $(OBJ_PATH)/$(SRC_PATH_DA_GARDEN_SUB)
 # Main CPU program files
 # ------------------------------------------------------------------------------
 
-SRC_DA_GARDEN_MAIN          := $(SRC_PATH_DA_GARDEN_MAIN)/main.asm
+SRC_DA_GARDEN_MAIN          := $(SRC_PATH_DA_GARDEN_MAIN)/main.asm \
+                               $(SRC_PATH_DA_GARDEN_MAIN)/object.asm
 OBJ_DA_GARDEN_MAIN          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_MAIN))
 DEPEND_DA_GARDEN_MAIN       := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_MAIN))
 
@@ -48,7 +49,7 @@ DEPEND_DA_GARDEN_TITLES     := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_TITLES))
 # Main CPU program rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DA_GARDEN_MAIN): $(OBJ_DA_GARDEN_MAIN)
+$(OUT_DA_GARDEN_MAIN): $(OBJ_DA_GARDEN_MAIN) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_main.link -o $@ $^
 
@@ -64,7 +65,7 @@ $(DEPEND_DA_GARDEN_MAIN): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN_MAIN)
 # Sub CPU program rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DA_GARDEN_SUB): $(OBJ_DA_GARDEN_SUB)
+$(OUT_DA_GARDEN_SUB): $(OBJ_DA_GARDEN_SUB) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_sub.link -o $@ $^
 
@@ -80,7 +81,7 @@ $(DEPEND_DA_GARDEN_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN_SUB)
 # Track titles rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DA_GARDEN_TITLES): $(OBJ_DA_GARDEN_TITLES)
+$(OUT_DA_GARDEN_TITLES): $(OBJ_DA_GARDEN_TITLES) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_track_titles.link -o $@ $^
 

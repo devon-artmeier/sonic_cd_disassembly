@@ -14,8 +14,8 @@
 ; Sonic object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjSonic
-ObjSonic:
+	xdef SonicObject
+SonicObject:
 	move.l	#SonicSprites,obj.sprites(a0)			; Set mappings
 	move.w	#$E000|($6D00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%11,obj.flags(a0)				; Set flags
@@ -75,11 +75,11 @@ ObjSonic:
 
 	bset	#7,title_mode					; Mark Sonic as turned around
 	
-	lea	ObjSonicArm(pc),a2				; Spawn Sonic's arm
+	lea	SonicArmObject(pc),a2				; Spawn Sonic's arm
 	bsr.w	SpawnObject
 	move.w	a0,arm.parent(a1)
 
-	lea	ObjBanner,a2					; Spawn banner
+	lea	BannerObject,a2					; Spawn banner
 	bsr.w	SpawnObject
 	
 	addq.b	#1,obj.sprite_frame(a0)				; Set next sprite frame
@@ -123,8 +123,8 @@ SonicSprites:
 ; Sonic's arm object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjSonicArm
-ObjSonicArm:
+	xdef SonicArmObject
+SonicArmObject:
 	move.l	#SonicSprites,obj.sprites(a0)			; Set mappings
 	move.w	#$E000|($6D00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%11,obj.flags(a0)				; Set flags

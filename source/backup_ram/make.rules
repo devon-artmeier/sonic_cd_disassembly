@@ -61,7 +61,7 @@ DEPEND_BURAM_SUB        := $(patsubst %.o,%.d,$(OBJ_BURAM_SUB))
 # Initialization rules
 # ------------------------------------------------------------------------------
 
-$(OUT_BURAM_INIT): $(OBJ_BURAM_INIT)
+$(OUT_BURAM_INIT): $(OBJ_BURAM_INIT) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_initialize.link -o $@ $^
 
@@ -77,7 +77,7 @@ $(DEPEND_BURAM_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_BURAM_INIT)
 # Sub CPU program rules
 # ------------------------------------------------------------------------------
 
-$(OUT_BURAM_SUB): $(OBJ_BURAM_SUB)
+$(OUT_BURAM_SUB): $(OBJ_BURAM_SUB) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_BURAM)/link_sub.link -o $@ $^
 

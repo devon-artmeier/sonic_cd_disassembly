@@ -117,7 +117,7 @@ DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
 # Mega Drive initialization core rules
 # ------------------------------------------------------------------------------
 
-$(OUT_MD_INIT): $(OBJ_MD_INIT)
+$(OUT_MD_INIT): $(OBJ_MD_INIT) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_md_initialize.link -o $@ $^
 
@@ -133,7 +133,7 @@ $(DEPEND_MD_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MD_INIT)
 # Main CPU core rules
 # ------------------------------------------------------------------------------
 
-$(OUT_MAIN_CORE): $(OBJ_MAIN_CORE)
+$(OUT_MAIN_CORE): $(OBJ_MAIN_CORE) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_core.link -o $@ $^
 
@@ -149,7 +149,7 @@ $(DEPEND_MAIN_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_CORE)
 # Main CPU bootloader rules
 # ------------------------------------------------------------------------------
 
-$(OUT_MAIN_BOOT): $(OBJ_MAIN_BOOT)
+$(OUT_MAIN_BOOT): $(OBJ_MAIN_BOOT) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_boot.link -o $@ $^
 
@@ -165,14 +165,14 @@ $(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
 # Sub CPU extension symbols rules
 # ------------------------------------------------------------------------------
 
-$(OUT_SYSTEM_IDS): $(OUT_SUB_EXT)
+$(OUT_SYSTEM_IDS): $(OUT_SUB_EXT) | $(MISC_PATH)
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/files.o $(OBJ_PATH_SUB_EXT)/main.o
 	
 # ------------------------------------------------------------------------------
 # Sub CPU extension rules
 # ------------------------------------------------------------------------------
 
-$(OUT_SUB_EXT): $(OBJ_SUB_EXT)
+$(OUT_SUB_EXT): $(OBJ_SUB_EXT) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
 
@@ -188,14 +188,14 @@ $(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_EXT)
 # Sub CPU core symbols rules
 # ------------------------------------------------------------------------------
 
-$(OUT_SYSTEM_SYMBOLS): $(OUT_SUB_CORE)
+$(OUT_SYSTEM_SYMBOLS): $(OUT_SUB_CORE) | $(MISC_PATH)
 	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(MISC_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
 
 # ------------------------------------------------------------------------------
 # Sub CPU core rules
 # ------------------------------------------------------------------------------
 
-$(OUT_SUB_CORE): $(OBJ_SUB_CORE)
+$(OUT_SUB_CORE): $(OBJ_SUB_CORE) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile $(OBJ_PATH)/sp.sym -o $@ $^
 

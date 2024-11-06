@@ -13,8 +13,8 @@
 ; Copyright object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjCopyright
-ObjCopyright:
+	xdef CopyrightObject
+CopyrightObject:
 	move.l	#CopyrightSprites,obj.sprites(a0)		; Set mappings
 	move.w	#$E000|($DE00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
@@ -50,8 +50,8 @@ CopyrightSprites:
 ; Trademark symbol object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjTm
-ObjTm:
+	xdef TmObject
+TmObject:
 	move.l	#TmSprites,obj.sprites(a0)			; Set mappings
 	ifne REGION=USA						; Set sprite tile ID
 		move.w	#$E000|($DFC0/$20),obj.sprite_tile(a0)

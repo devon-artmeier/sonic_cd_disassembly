@@ -14,8 +14,8 @@
 ; Planet object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjPlanet
-ObjPlanet:
+	xdef PlanetObject
+PlanetObject:
 	bsr.w	BookmarkObject					; Set bookmark
 	
 	move.l	a0,-(sp)					; Load planet art	

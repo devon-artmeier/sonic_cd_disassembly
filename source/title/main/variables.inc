@@ -28,8 +28,8 @@ obj.addr		rs.w 1					; Address
 obj.active		rs.b 1					; Active flag
 obj.flags		rs.b 1					; Flags
 obj.sprite_tile		rs.w 1					; Base sprite tile
-obj.sprites		rs.l 1					; Mappings
-obj.sprite_frame	rs.b 1					; Mappings frame
+obj.sprites		rs.l 1					; Sprite data address
+obj.sprite_frame	rs.b 1					; Sprite frame
 			rs.b 1
 obj.x			rs.l 1					; X position
 obj.y			rs.l 1					; Y position
@@ -40,7 +40,7 @@ obj.struct_size		rs.b 0					; Size of structure
 ; Variables
 ; ------------------------------------------------------------------------------
 
-	rsset	WORK_RAM+$FF00A000
+	rsset WORK_RAM+$FF00A000
 VARIABLES		rs.b 0					; Start of variables
 cloud_image		rs.b CLOUD_IMAGE_SIZE			; Clouds image buffer
 hscroll			rs.b $380				; Horizontal scroll buffer

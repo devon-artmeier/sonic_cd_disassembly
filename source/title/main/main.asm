@@ -91,7 +91,7 @@ Start:
 	lea	SonicArt(pc),a0
 	bsr.w	DecompressNemesisVdp
 
-	lea	ObjSonic(pc),a2					; Spawn Sonic
+	lea	SonicObject(pc),a2				; Spawn Sonic
 	bsr.w	SpawnObject
 	
 	vdpCmd move.l,$BC20,VRAM,WRITE,VDP_CTRL			; Load solid tiles
@@ -150,17 +150,17 @@ Start:
 	move.w	#(0<<9)|($30-1),palette_fade_params
 	bsr.w	FadeFromWhite2
 
-	lea	ObjPlanet(pc),a2				; Spawn background planet
+	lea	PlanetObject(pc),a2				; Spawn background planet
 	bsr.w	SpawnObject
 	
-	lea	ObjMenu,a2					; Spawn menu
+	lea	MenuObject,a2					; Spawn menu
 	bsr.w	SpawnObject
 	
-	lea	ObjCopyright(pc),a2				; Spawn copyright
+	lea	CopyrightObject(pc),a2				; Spawn copyright
 	bsr.w	SpawnObject
 	
 	ifne REGION<>JAPAN
-		lea	ObjTm(pc),a2				; Spawn TM symbol
+		lea	TmObject(pc),a2				; Spawn TM symbol
 		bsr.w	SpawnObject
 	endif
 

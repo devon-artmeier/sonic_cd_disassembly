@@ -32,7 +32,7 @@ DEPEND_DISC_BOOT    := $(patsubst %.o,%.d,$(OBJ_DISC_BOOT))
 # Boot rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DISC_BOOT): $(OBJ_DISC_BOOT)
+$(OUT_DISC_BOOT): $(OBJ_DISC_BOOT) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DISC)/link_boot.link -o $@ $^
 ifeq ($(OS),Windows_NT)

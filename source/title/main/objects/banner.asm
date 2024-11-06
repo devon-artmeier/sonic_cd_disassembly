@@ -13,8 +13,8 @@
 ; Banner object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjBanner
-ObjBanner:
+	xdef BannerObject
+BannerObject:
 	move.l	#BannerSprites,obj.sprites(a0)			; Set mappings
 	move.w	#$A000|($F000/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%11,obj.flags(a0)				; Set flags

@@ -14,8 +14,8 @@
 ; Menu object
 ; ------------------------------------------------------------------------------
 
-	xdef ObjMenu
-ObjMenu:
+	xdef MenuObject
+MenuObject:
 	move.l	#MenuSprites,obj.sprites(a0)			; Set mappings
 	move.w	#$A000|($D800/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
@@ -103,11 +103,11 @@ PressStart:
 .NoVisualMode:
 	move.b	#$FF,(a2)					; Add stop flag
 
-	lea	ObjMenuArrow(pc),a2				; Spawn left menu arrow
+	lea	MenuArrowObject(pc),a2				; Spawn left menu arrow
 	bsr.w	SpawnObject
 	move.w	a0,arrow.parent(a1)
 	
-	lea	ObjMenuArrow(pc),a2				; Spawn right menu arrow
+	lea	MenuArrowObject(pc),a2				; Spawn right menu arrow
 	bsr.w	SpawnObject
 	move.w	a0,arrow.parent(a1)
 	move.b	#1,arrow.id(a1)
@@ -561,8 +561,8 @@ MenuSprites:
 ; Menu arrow
 ; ------------------------------------------------------------------------------
 
-	xdef ObjMenuArrow
-ObjMenuArrow:
+	xdef MenuArrowObject
+MenuArrowObject:
 	move.l	#MenuArrowSprites,obj.sprites(a0)		; Set mappings
 	move.w	#$A000|($DC00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
