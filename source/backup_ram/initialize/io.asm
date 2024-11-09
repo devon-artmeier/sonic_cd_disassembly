@@ -133,7 +133,7 @@ InitMegaDrive:
 ; ------------------------------------------------------------------------------
 
 Palette:
-	incbin	"source/backup_ram/initialize/data/palette.pal"
+	incbin	"data/palette.pal"
 PaletteEnd:
 	even
 

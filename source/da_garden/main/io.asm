@@ -8,7 +8,7 @@
 	include	"variables.inc"
 
 	section code
-
+	
 ; ------------------------------------------------------------------------------
 ; Initialize the Mega Drive hardware
 ; ------------------------------------------------------------------------------
@@ -30,28 +30,63 @@ InitMegaDrive:
 	move.b	d0,IO_CTRL_2
 	move.b	d0,IO_CTRL_3
 	move.b	#$C0,IO_DATA_1
+	
+	bra.s	.SkipZ80					; Skip the Z80 stuff
+	
+	resetZ80Off						; Set Z80 reset off
+	bsr.w	StopZ80						; Stop the Z80
+	
+	lea	Z80_RAM,a1					; Load Z80 code
+	move.b	#$F3,(a1)+					; DI
+	move.b	#$F3,(a1)+					; DI
+	move.b	#$C3,(a1)+					; JP $0000
+	move.b	#0,(a1)+
+	move.b	#0,(a1)+
+	
+	resetZ80On						; Set Z80 reset on
+	resetZ80Off						; Set Z80 reset off
 
-	jsr	StopZ80(pc)					; Stop the Z80
+.SkipZ80:
+	bsr.w	StopZ80						; Stop the Z80
 
 	vramFill 0,$10000,0					; Clear VRAM
 
-	lea	InitPalette(pc),a0				; Load palette
-	lea	palette,a1
-	moveq	#(InitPaletteEnd-InitPalette)/4-1,d7
+	vdpCmd move.l,$C000,VRAM,WRITE,VDP_CTRL			; Reset plane A
+	move.w	#$1000/2-1,d7
 
-.LoadPalette:
-	move.l	(a0)+,d0
-	move.l	d0,(a1)+
-	dbf	d7,.LoadPalette
+.ResetPlaneA:
+	move.w	#$E6FF,VDP_DATA
+	dbf	d7,.ResetPlaneA
 
-	vdpCmd move.l,0,VSRAM,WRITE,VDP_CTRL			; Clear VSRAM
-	move.l	#0,VDP_DATA
+	vdpCmd move.l,$E000,VRAM,WRITE,VDP_CTRL			; Reset plane B
+	move.w	#$1000/2-1,d7
 
-	jsr	StartZ80(pc)					; Start the Z80
+.ResetPlaneB:
+	move.w	#$6FE,VDP_DATA
+	dbf	d7,.ResetPlaneB
+	
+	vdpCmd move.l,0,CRAM,WRITE,VDP_CTRL			; Clear CRAM
+	lea	InitPalette(pc),a0
+	moveq	#0,d0
+	moveq	#$80/4-1,d7
+	
+.ClearCram:
+	move.l	d0,VDP_DATA
+	dbf	d7,.ClearCram
+
+	vdpCmd move.l,0,VSRAM,WRITE,VDP_CTRL			; Reset VSRAM
+	move.l	#$FFE0,VDP_DATA
+
+	bsr.w	StartZ80					; Start the Z80
 	move.w	#$8134,ipx_vdp_reg_81				; Reset IPX VDP register 1 cache
 	rts
 
 ; ------------------------------------------------------------------------------
+
+InitPalette:
+	incbin	"../data/palette.pal"
+InitPaletteEnd:
+	even
 
 VdpRegisters:
 	dc.b	%00000100					; No H-BLANK interrupt
@@ -59,13 +94,13 @@ VdpRegisters:
 	dc.b	$C000/$400					; Plane A location
 	dc.b	0						; Window location
 	dc.b	$E000/$2000					; Plane B location
-	dc.b	$D400/$200					; Sprite table location
+	dc.b	$EC00/$200					; Sprite table location
 	dc.b	0						; Reserved
 	dc.b	0						; BG color line 0 color 0
 	dc.b	0						; Reserved
 	dc.b	0						; Reserved
 	dc.b	0						; H-BLANK interrupt counter 0
-	dc.b	%00000011					; Scroll by line
+	dc.b	%00000000					; Scroll by screen
 	dc.b	%00000000					; H32
 	dc.b	$D000/$400					; Horizontal scroll table lcation
 	dc.b	0						; Reserved
@@ -74,20 +109,7 @@ VdpRegisters:
 	dc.b	0						; Window horizontal position 0
 	dc.b	0						; Window vertical position 0
 	even
-
-InitPalette:
-	incbin	"../data/palette_initial.pal"
-InitPaletteEnd:
-
-; ------------------------------------------------------------------------------
-; Palette
-; ------------------------------------------------------------------------------
-
-	xdef TitlePalette
-TitlePalette:
-	incbin	"../data/palette.pal"
-	even
-
+	
 ; ------------------------------------------------------------------------------
 ; Stop the Z80
 ; ------------------------------------------------------------------------------
@@ -95,7 +117,6 @@ TitlePalette:
 	xdef StopZ80
 StopZ80:
 	move	sr,saved_sr					; Save status register
-	move	#$2700,sr					; Disable interrupts
 	getZ80Bus						; Get Z80 bus access
 	rts
 
@@ -110,44 +131,34 @@ StartZ80:
 	rts
 
 ; ------------------------------------------------------------------------------
-; Get cloud image
+; Read controller data
 ; ------------------------------------------------------------------------------
 
-	xdef GetCloudImage
-GetCloudImage:
-	lea	WORD_RAM_2M+CLOUD_IMAGE_BUFFER,a1		; Rendered image in Word RAM
-	lea	cloud_image,a2					; Destination buffer
-	move.w	#(CLOUD_IMAGE_SIZE/$800)-1,d7			; Number of $800 byte chunks to copy
+	xdef ReadController
+ReadController:
+	lea	sub_p2_ctrl_data,a0				; Controller data buffer
+	lea	IO_DATA_1,a1					; Controller port 1
+	
+	move.b	#0,(a1)						; TH = 0
+	tst.w	(a0)						; Delay
+	move.b	(a1),d0						; Read start and A buttons
+	lsl.b	#2,d0
+	andi.b	#$C0,d0
+	
+	move.b	#$40,(a1)					; TH = 1
+	tst.w	(a0)						; Delay
+	move.b	(a1),d1						; Read B, C, and D-pad buttons
+	andi.b	#$3F,d1
 
-.CopyChunks:
-	rept	$800/$80					; Copy $800 bytes
-		bsr.s	Copy128
-	endr
-	dbf	d7,.CopyChunks					; Loop until chunks are copied
-	rts
+	or.b	d1,d0						; Combine button data
+	not.b	d0						; Flip bits
+	move.b	d0,d1						; Make copy
 
-; ------------------------------------------------------------------------------
-; Copy 128 bytes from a source to a destination buffer
-; ------------------------------------------------------------------------------
-; PARAMAETERS:
-;	a1.l - Pointer to source
-;	a2.l - Pointer to destination buffer
-; RETURNS:
-;	a2.l - Pointer to source buffer, advanced by $80 bytes
-;	a2.l - Pointer to destination buffer, advanced by $80 bytes
-; ------------------------------------------------------------------------------
-
-	xdef Copy128
-Copy128:
-	movem.l	(a1)+,d0-d5/a3-a4				; Copy bytes
-	movem.l	d0-d5/a3-a4,(a2)
-	movem.l	(a1)+,d0-d5/a3-a4
-	movem.l	d0-d5/a3-a4,$20(a2)
-	movem.l	(a1)+,d0-d5/a3-a4
-	movem.l	d0-d5/a3-a4,$40(a2)
-	movem.l	(a1)+,d0-d5/a3-a4
-	movem.l	d0-d5/a3-a4,$60(a2)
-	lea	$80(a2),a2
+	move.b	(a0),d2						; Mask out tapped buttons
+	eor.b	d2,d0
+	move.b	d1,(a0)+					; Store pressed buttons
+	and.b	d1,d0						; store tapped buttons
+	move.b	d0,(a0)+
 	rts
 
 ; ------------------------------------------------------------------------------

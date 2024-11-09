@@ -21,9 +21,14 @@ OBJ_PATH_DA_GARDEN_SUB      := $(OBJ_PATH)/$(SRC_PATH_DA_GARDEN_SUB)
 # ------------------------------------------------------------------------------
 
 SRC_DA_GARDEN_MAIN          := $(SRC_PATH_DA_GARDEN_MAIN)/main.asm \
+                               $(SRC_PATH_DA_GARDEN_MAIN)/communication.asm \
+                               $(SRC_PATH_DA_GARDEN_MAIN)/kosinski.asm \
                                $(SRC_PATH_DA_GARDEN_MAIN)/object_core.asm \
+                               $(SRC_PATH_DA_GARDEN_MAIN)/functions.asm \
+                               $(SRC_PATH_DA_GARDEN_MAIN)/io.asm \
                                $(SRC_PATH_DA_GARDEN_MAIN)/object_spawn.asm \
                                $(SRC_PATH_DA_GARDEN_MAIN)/object_functions.asm \
+                               $(SRC_PATH_DA_GARDEN_MAIN)/palette_fade.asm \
                                $(SRC_PATH_DA_GARDEN_OBJECTS)/flicky.asm \
                                $(SRC_PATH_DA_GARDEN_OBJECTS)/star.asm \
                                $(SRC_PATH_DA_GARDEN_OBJECTS)/ufo.asm \
