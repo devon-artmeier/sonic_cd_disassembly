@@ -15,7 +15,7 @@
 
 	xdef CopyrightObject
 CopyrightObject:
-	move.l	#CopyrightSprites,obj.sprites(a0)		; Set mappings
+	move.l	#CopyrightSprites,obj.sprites(a0)		; Set sprites
 	move.w	#$E000|($DE00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
 	ifne REGION=USA
@@ -52,7 +52,7 @@ CopyrightSprites:
 
 	xdef TmObject
 TmObject:
-	move.l	#TmSprites,obj.sprites(a0)			; Set mappings
+	move.l	#TmSprites,obj.sprites(a0)			; Set sprites
 	ifne REGION=USA						; Set sprite tile ID
 		move.w	#$E000|($DFC0/$20),obj.sprite_tile(a0)
 	else

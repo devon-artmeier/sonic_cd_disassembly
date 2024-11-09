@@ -130,7 +130,7 @@ OUT_FILES            := $(OUT_FM_DRIVER) \
 		        $(OUT_BURAM_INIT) \
 		        $(OUT_BURAM_SUB) \
 		        $(OUT_TITLE_MAIN) \
-		        $(OUT_TITLE_SUB)
+		        $(OUT_TITLE_SUB) \
 #		        $(OUT_DA_GARDEN_MAIN) \
 #		        $(OUT_DA_GARDEN_SUB) \
 #		        $(OUT_DA_GARDEN_TITLES)

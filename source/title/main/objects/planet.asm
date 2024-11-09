@@ -24,7 +24,7 @@ PlanetObject:
 	bsr.w	DecompressNemesisVdp
 	movea.l	(sp)+,a0
 	
-	move.l	#PlanetSprites,obj.sprites(a0)			; Set mappings
+	move.l	#PlanetSprites,obj.sprites(a0)			; Set sprites
 	move.w	#$6000|($8040/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
 	move.w	#226,obj.x(a0)					; Set X position

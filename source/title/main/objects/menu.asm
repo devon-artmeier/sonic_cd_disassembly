@@ -16,7 +16,7 @@
 
 	xdef MenuObject
 MenuObject:
-	move.l	#MenuSprites,obj.sprites(a0)			; Set mappings
+	move.l	#MenuSprites,obj.sprites(a0)			; Set sprites
 	move.w	#$A000|($D800/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
 	move.w	#83,obj.x(a0)					; Set X position
@@ -563,7 +563,7 @@ MenuSprites:
 
 	xdef MenuArrowObject
 MenuArrowObject:
-	move.l	#MenuArrowSprites,obj.sprites(a0)		; Set mappings
+	move.l	#MenuArrowSprites,obj.sprites(a0)		; Set sprites
 	move.w	#$A000|($DC00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%1,obj.flags(a0)				; Set flags
 	move.w	#181,obj.y(a0)					; Set Y position

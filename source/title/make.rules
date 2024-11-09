@@ -85,10 +85,10 @@ $(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_TITLE_MAIN): | $(OBJ_PATH_TITLE)
+$(OBJ_PATH_TITLE_OBJECTS): | $(OBJ_PATH_TITLE_MAIN)
 	@$(MKDIR) "$@"
 
-$(OBJ_PATH_TITLE_OBJECTS): | $(OBJ_PATH_TITLE)
+$(OBJ_PATH_TITLE_MAIN): | $(OBJ_PATH_TITLE)
 	@$(MKDIR) "$@"
 
 $(OBJ_PATH_TITLE_SUB): | $(OBJ_PATH_TITLE)

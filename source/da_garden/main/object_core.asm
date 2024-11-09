@@ -58,7 +58,7 @@ CheckObjectsLoaded:
 
 	xdef UpdateObjects
 UpdateObjects:
-	bsr.w	UpdateObjSpawns					; Update object spawns
+	bsr.w	CheckObjectSpawn				; Check object spawning
 	lea	objects,a0					; Run objects
 	bsr.s	RunObjects
 	bsr.w	DrawObjects					; Draw objects
@@ -172,7 +172,7 @@ DrawObjects:
 	tst.w	obj.id(a0)					; Is this object slot occupied?
 	beq.w	.NextObject					; If not, branch
 	
-	movea.l	obj.sprites(a0),a2				; Get mappings
+	movea.l	obj.sprites(a0),a2				; Get sprites
 	bsr.w	AnimateObject					; Animation sprite
 	
 	move.w	obj.anim_frame(a0),d0				; Get sprite data

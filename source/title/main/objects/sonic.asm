@@ -16,7 +16,7 @@
 
 	xdef SonicObject
 SonicObject:
-	move.l	#SonicSprites,obj.sprites(a0)			; Set mappings
+	move.l	#SonicSprites,obj.sprites(a0)			; Set sprites
 	move.w	#$E000|($6D00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%11,obj.flags(a0)				; Set flags
 	move.w	#91,obj.x(a0)					; Set X position
@@ -125,7 +125,7 @@ SonicSprites:
 
 	xdef SonicArmObject
 SonicArmObject:
-	move.l	#SonicSprites,obj.sprites(a0)			; Set mappings
+	move.l	#SonicSprites,obj.sprites(a0)			; Set sprites
 	move.w	#$E000|($6D00/$20),obj.sprite_tile(a0)		; Set sprite tile ID
 	move.b	#%11,obj.flags(a0)				; Set flags
 	move.w	#140,obj.x(a0)					; Set X position
