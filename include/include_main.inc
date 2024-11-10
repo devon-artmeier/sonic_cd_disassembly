@@ -8,7 +8,7 @@
 	include	"system_ids.inc"
 	include	"backup_ram.inc"
 	include	"fm_sound_ids.inc"
-	include	"fm_driver.inc"
+	include	"fm_symbols.inc"
 	include	"mmd.inc"
 	include	"game_variables.inc"
 	include	"da_garden.inc"

@@ -267,7 +267,7 @@ FlushSoundQueue:
 	tst.b	fm_queue_1					; Is the 1st sound queue set?
 	beq.s	.CheckQueue3					; If not, branch
 	
-	move.b	fm_queue_1,z_fm_sound_play			; Queue sound in driver
+	move.b	fm_queue_1,Z80_RAM+z_sound_play			; Queue sound in driver
 	move.b	#0,fm_queue_1					; Clear 1st sound queue
 	bra.s	.End						; Exit
 
@@ -275,7 +275,7 @@ FlushSoundQueue:
 	tst.b	fm_queue_2					; Is the 2nd sound queue set?
 	beq.s	.End						; If not, branch
 	
-	move.b	fm_queue_2,z_fm_sound_play			; Queue sound in driver
+	move.b	fm_queue_2,Z80_RAM+z_sound_play			; Queue sound in driver
 	move.b	#0,fm_queue_2					; Clear 2nd sound queue
 
 .End:

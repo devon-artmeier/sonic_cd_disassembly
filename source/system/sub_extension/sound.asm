@@ -8,9 +8,13 @@
 	include	"system.inc"
 	include	"system_symbols.inc"
 	include	"pcm_sound_ids.inc"
-	include	"pcm_driver.inc"
+	include	"pcm_symbols.inc"
 
 	section code
+
+; ------------------------------------------------------------------------------
+
+PcmSoundQueue		equ PcmVariables+pcm.sound_queue	; PCM sound queue
 
 ; ------------------------------------------------------------------------------
 ; Play "Future" voice clip

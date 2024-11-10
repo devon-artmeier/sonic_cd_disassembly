@@ -84,7 +84,7 @@ RunMmd:
 	move.b	d0,mmd_return_code				; Set return code
 
 	bsr.w	StopZ80						; Stop FM sound
-	move.b	#FM_CMD_STOP,z_fm_sound_queue_1
+	move.b	#FM_CMD_STOP,Z80_RAM+z_sound_queue
 	bsr.w	StartZ80
 
 	move.b	#0,ipx_vsync					; Clear VSync flag

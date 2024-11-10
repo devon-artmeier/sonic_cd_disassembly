@@ -119,7 +119,7 @@ VBlankNoClouds:
 VBlankFinish:
 	tst.b	fm_sound_queue					; Is there a sound queued?
 	beq.s	.NoSound					; If not, branch
-	move.b	fm_sound_queue,z_fm_sound_queue_1		; Queue sound in driver
+	move.b	fm_sound_queue,Z80_RAM+z_sound_queue		; Queue sound in driver
 	clr.b	fm_sound_queue					; Clear sound queue
 
 .NoSound:

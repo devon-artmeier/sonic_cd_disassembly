@@ -7,7 +7,7 @@
 	include	"regions.inc"
 	include	"system.inc"
 	include	"system_symbols.inc"
-	include	"pcm_driver.inc"
+	include	"pcm_symbols.inc"
 
 	section code
 
