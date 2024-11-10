@@ -189,7 +189,7 @@ $(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_EXT)
 # ------------------------------------------------------------------------------
 
 $(OUT_SYSTEM_SYMBOLS): $(OUT_SUB_CORE) | $(MISC_PATH)
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $(MISC_PATH)/system_symbols.inc $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
 
 # ------------------------------------------------------------------------------
 # Sub CPU core rules

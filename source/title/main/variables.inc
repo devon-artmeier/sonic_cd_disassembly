@@ -45,7 +45,7 @@ VARIABLES		rs.b 0					; Start of variables
 cloud_image		rs.b CLOUD_IMAGE_SIZE			; Clouds image buffer
 hscroll			rs.b $380				; Horizontal scroll buffer
 			rs.b $80
-sprites			rs.b 80*8				; Sprite buffer
+sprites			rs.b $280				; Sprite buffer
 water_scroll		rs.b $100				; Scroll buffer
 			rs.b $B80
 
@@ -87,7 +87,7 @@ enable_display		rs.b 1					; Enable display flag
 			rs.b $19
 vblank_routine		rs.w 1					; V-BLANK routine ID
 timer			rs.w 1					; Timer
-frame_count		rs.w 1					; V-BLANK interrupt counter
+frame_count		rs.w 1					; Frame count
 saved_sr		rs.w 1					; Saved status register
 sprite_count		rs.b 1					; Sprite count
 			rs.b 1
@@ -95,7 +95,7 @@ cur_sprite_slot		rs.l 1					; Current sprite slot
 			rs.b $B2
 VARIABLES_SIZE		equ __RS-VARIABLES			; Size of variables area
 
-lag_counter		rs.l 1					; Lag counter
+lag_count		rs.l 1					; Lag count
 
 sub_p2_ctrl_data	equ MCD_MAIN_COMM_14			; Sub CPU player 2 controller data
 sub_p2_ctrl_hold	equ sub_p2_ctrl_data			; Sub CPU player 2 controller held buttons data

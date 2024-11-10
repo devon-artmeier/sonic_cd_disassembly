@@ -3,50 +3,54 @@
 ; By Devon Artmeier
 ; ------------------------------------------------------------------------------
 
-	include	"include_main.inc"
-	include	"../common.inc"
-	include	"variables.inc"
-
-	section data
-
+; ------------------------------------------------------------------------------
+; Palette cycles
 ; ------------------------------------------------------------------------------
 
+	xdef PaletteCycleIndex
 PaletteCycleIndex:
-	dc.l	PaletteCycleA, PaletteCycleBgAC
-	dc.l	PaletteCycleC, PaletteCycleBgAC
-	dc.l	PaletteCycleD, PaletteCycleBgD
+	dc.l	PaletteCycleA, BgPaletteCycleAC
+	dc.l	PaletteCycleC, BgPaletteCycleAC
+	dc.l	PaletteCycleD, BgPaletteCycleD
 
 ; ------------------------------------------------------------------------------
+; Sprite palette cycles
+; ------------------------------------------------------------------------------
 
+	xdef SpritePaletteCycleIndex
 SpritePaletteCycleIndex:
 	dc.w	SpritePaletteCycle0-SpritePaletteCycleIndex
 	dc.w	SpritePaletteCycle1-SpritePaletteCycleIndex
 
 ; ------------------------------------------------------------------------------
 
+	xdef SpritePaletteCycle0
 SpritePaletteCycle0:
-	incbin	"DA Garden/Data/Palette.bin", $40, $20
+	incbin	"../data/palette.pal", $40, $20
 	even
 
 SpritePaletteCycle1:
-	incbin	"DA Garden/Data/Palette.bin", $40, $18
+	incbin	"../data/palette.pal", $40, $18
 	dc.w	$EEE, $EE
-	incbin	"DA Garden/Data/Palette.bin", $5C, 4
+	incbin	"../data/palette.pal", $5C, 4
 	even
 
 ; ------------------------------------------------------------------------------
+; Palettes
+; ------------------------------------------------------------------------------
 
+	xdef MenuPalette
 MenuPalette:
-	incbin	"DA Garden/Data/Palette.bin", $60, $20
+	incbin	"../data/palette.pal", $60, $20
+	even
+
+	xdef DaGardenPalette
+DaGardenPalette:
+	incbin	"../data/palette.pal"
 	even
 
 ; ------------------------------------------------------------------------------
-
-DaGardenPalette:
-	incbin	"DA Garden/Data/Palette.bin"
-DaGardenPaletteEnd:
-	even
-
+; Present
 ; ------------------------------------------------------------------------------
 	
 PaletteCycleA:
@@ -135,6 +139,8 @@ PaletteCycleA:
 	dc.w	0, $6E0, $A4, $400, $40, $2A4, $E60, $840, $606, $200, $E08, $A04, $400, $200, $C06, 0
 
 ; ------------------------------------------------------------------------------
+; Good future palette cycles
+; ------------------------------------------------------------------------------
 
 PaletteCycleC:
 	dc.w	.Cycle0-PaletteCycleC
@@ -221,6 +227,8 @@ PaletteCycleC:
 .Cycle16:
 	dc.w	0, $6E0, $EE, $200, $20, $22, $62, $20, $26, 2, $864, $840, $620, $400, $202, 0
 
+; ------------------------------------------------------------------------------
+; Bad future palette cycles
 ; ------------------------------------------------------------------------------
 
 PaletteCycleD:
@@ -309,40 +317,42 @@ PaletteCycleD:
 	dc.w	0, $88, $44, $200, $20, $22, 8, 4, $402, $22, $40, $202, 2, 0, $4A, 0
 
 ; ------------------------------------------------------------------------------
+; Present/good future background palette cycles
+; ------------------------------------------------------------------------------
 
-PaletteCycleBgAC:
-	dc.w	.Cycle0-PaletteCycleBgAC
-	dc.w	.Cycle1-PaletteCycleBgAC
-	dc.w	.Cycle2-PaletteCycleBgAC
-	dc.w	.Cycle3-PaletteCycleBgAC
-	dc.w	.Cycle4-PaletteCycleBgAC
-	dc.w	.Cycle5-PaletteCycleBgAC
-	dc.w	.Cycle6-PaletteCycleBgAC
-	dc.w	.Cycle7-PaletteCycleBgAC
-	dc.w	.Cycle8-PaletteCycleBgAC
-	dc.w	.Cycle9-PaletteCycleBgAC
-	dc.w	.Cycle10-PaletteCycleBgAC
-	dc.w	.Cycle11-PaletteCycleBgAC
-	dc.w	.Cycle12-PaletteCycleBgAC
-	dc.w	.Cycle13-PaletteCycleBgAC
-	dc.w	.Cycle14-PaletteCycleBgAC
-	dc.w	.Cycle15-PaletteCycleBgAC
-	dc.w	.Cycle16-PaletteCycleBgAC
-	dc.w	.Cycle15-PaletteCycleBgAC
-	dc.w	.Cycle14-PaletteCycleBgAC
-	dc.w	.Cycle13-PaletteCycleBgAC
-	dc.w	.Cycle12-PaletteCycleBgAC
-	dc.w	.Cycle11-PaletteCycleBgAC
-	dc.w	.Cycle10-PaletteCycleBgAC
-	dc.w	.Cycle9-PaletteCycleBgAC
-	dc.w	.Cycle8-PaletteCycleBgAC
-	dc.w	.Cycle7-PaletteCycleBgAC
-	dc.w	.Cycle6-PaletteCycleBgAC
-	dc.w	.Cycle5-PaletteCycleBgAC
-	dc.w	.Cycle4-PaletteCycleBgAC
-	dc.w	.Cycle3-PaletteCycleBgAC
-	dc.w	.Cycle2-PaletteCycleBgAC
-	dc.w	.Cycle1-PaletteCycleBgAC
+BgPaletteCycleAC:
+	dc.w	.Cycle0-BgPaletteCycleAC
+	dc.w	.Cycle1-BgPaletteCycleAC
+	dc.w	.Cycle2-BgPaletteCycleAC
+	dc.w	.Cycle3-BgPaletteCycleAC
+	dc.w	.Cycle4-BgPaletteCycleAC
+	dc.w	.Cycle5-BgPaletteCycleAC
+	dc.w	.Cycle6-BgPaletteCycleAC
+	dc.w	.Cycle7-BgPaletteCycleAC
+	dc.w	.Cycle8-BgPaletteCycleAC
+	dc.w	.Cycle9-BgPaletteCycleAC
+	dc.w	.Cycle10-BgPaletteCycleAC
+	dc.w	.Cycle11-BgPaletteCycleAC
+	dc.w	.Cycle12-BgPaletteCycleAC
+	dc.w	.Cycle13-BgPaletteCycleAC
+	dc.w	.Cycle14-BgPaletteCycleAC
+	dc.w	.Cycle15-BgPaletteCycleAC
+	dc.w	.Cycle16-BgPaletteCycleAC
+	dc.w	.Cycle15-BgPaletteCycleAC
+	dc.w	.Cycle14-BgPaletteCycleAC
+	dc.w	.Cycle13-BgPaletteCycleAC
+	dc.w	.Cycle12-BgPaletteCycleAC
+	dc.w	.Cycle11-BgPaletteCycleAC
+	dc.w	.Cycle10-BgPaletteCycleAC
+	dc.w	.Cycle9-BgPaletteCycleAC
+	dc.w	.Cycle8-BgPaletteCycleAC
+	dc.w	.Cycle7-BgPaletteCycleAC
+	dc.w	.Cycle6-BgPaletteCycleAC
+	dc.w	.Cycle5-BgPaletteCycleAC
+	dc.w	.Cycle4-BgPaletteCycleAC
+	dc.w	.Cycle3-BgPaletteCycleAC
+	dc.w	.Cycle2-BgPaletteCycleAC
+	dc.w	.Cycle1-BgPaletteCycleAC
 	
 .Cycle0:
 	dc.w	0, $E86, $EA8, $ECA, $ECC, $E64, $E64, $E64, $E64, $ECC, $ECC, $ECC, $ECC, $E64, $FFFF, $FFFF
@@ -396,40 +406,42 @@ PaletteCycleBgAC:
 	dc.w	0, 0, 0, 0, 0, $800, $E40, $EA0, $EEE, $800, $E40, $EA0, $EEE, 0, $FFF, $FFF
 
 ; ------------------------------------------------------------------------------
+; Bad future background palette cycles
+; ------------------------------------------------------------------------------
 
-PaletteCycleBgD:
-	dc.w	.Cycle0-PaletteCycleBgD
-	dc.w	.Cycle1-PaletteCycleBgD
-	dc.w	.Cycle2-PaletteCycleBgD
-	dc.w	.Cycle3-PaletteCycleBgD
-	dc.w	.Cycle4-PaletteCycleBgD
-	dc.w	.Cycle5-PaletteCycleBgD
-	dc.w	.Cycle6-PaletteCycleBgD
-	dc.w	.Cycle7-PaletteCycleBgD
-	dc.w	.Cycle8-PaletteCycleBgD
-	dc.w	.Cycle9-PaletteCycleBgD
-	dc.w	.Cycle10-PaletteCycleBgD
-	dc.w	.Cycle11-PaletteCycleBgD
-	dc.w	.Cycle12-PaletteCycleBgD
-	dc.w	.Cycle13-PaletteCycleBgD
-	dc.w	.Cycle14-PaletteCycleBgD
-	dc.w	.Cycle15-PaletteCycleBgD
-	dc.w	.Cycle16-PaletteCycleBgD
-	dc.w	.Cycle15-PaletteCycleBgD
-	dc.w	.Cycle14-PaletteCycleBgD
-	dc.w	.Cycle13-PaletteCycleBgD
-	dc.w	.Cycle12-PaletteCycleBgD
-	dc.w	.Cycle11-PaletteCycleBgD
-	dc.w	.Cycle10-PaletteCycleBgD
-	dc.w	.Cycle9-PaletteCycleBgD
-	dc.w	.Cycle8-PaletteCycleBgD
-	dc.w	.Cycle7-PaletteCycleBgD
-	dc.w	.Cycle6-PaletteCycleBgD
-	dc.w	.Cycle5-PaletteCycleBgD
-	dc.w	.Cycle4-PaletteCycleBgD
-	dc.w	.Cycle3-PaletteCycleBgD
-	dc.w	.Cycle2-PaletteCycleBgD
-	dc.w	.Cycle1-PaletteCycleBgD
+BgPaletteCycleD:
+	dc.w	.Cycle0-BgPaletteCycleD
+	dc.w	.Cycle1-BgPaletteCycleD
+	dc.w	.Cycle2-BgPaletteCycleD
+	dc.w	.Cycle3-BgPaletteCycleD
+	dc.w	.Cycle4-BgPaletteCycleD
+	dc.w	.Cycle5-BgPaletteCycleD
+	dc.w	.Cycle6-BgPaletteCycleD
+	dc.w	.Cycle7-BgPaletteCycleD
+	dc.w	.Cycle8-BgPaletteCycleD
+	dc.w	.Cycle9-BgPaletteCycleD
+	dc.w	.Cycle10-BgPaletteCycleD
+	dc.w	.Cycle11-BgPaletteCycleD
+	dc.w	.Cycle12-BgPaletteCycleD
+	dc.w	.Cycle13-BgPaletteCycleD
+	dc.w	.Cycle14-BgPaletteCycleD
+	dc.w	.Cycle15-BgPaletteCycleD
+	dc.w	.Cycle16-BgPaletteCycleD
+	dc.w	.Cycle15-BgPaletteCycleD
+	dc.w	.Cycle14-BgPaletteCycleD
+	dc.w	.Cycle13-BgPaletteCycleD
+	dc.w	.Cycle12-BgPaletteCycleD
+	dc.w	.Cycle11-BgPaletteCycleD
+	dc.w	.Cycle10-BgPaletteCycleD
+	dc.w	.Cycle9-BgPaletteCycleD
+	dc.w	.Cycle8-BgPaletteCycleD
+	dc.w	.Cycle7-BgPaletteCycleD
+	dc.w	.Cycle6-BgPaletteCycleD
+	dc.w	.Cycle5-BgPaletteCycleD
+	dc.w	.Cycle4-BgPaletteCycleD
+	dc.w	.Cycle3-BgPaletteCycleD
+	dc.w	.Cycle2-BgPaletteCycleD
+	dc.w	.Cycle1-BgPaletteCycleD
 	
 .Cycle0:
 	dc.w	0, $AC, $8A, $68, $46, $8A, $8A, $8A, $8A, $46, $46, $46, $46, $8A, $FFF, $FFF
@@ -483,8 +495,11 @@ PaletteCycleBgD:
 	dc.w	0, 2, 0, 0, 0, 6, 8, $4E, $EE, 6, 8, $4E, $EE, 0, $FFF, $FFF
 
 ; ------------------------------------------------------------------------------
+; Palette cycle times
+; ------------------------------------------------------------------------------
 
-PalCycleTimes:
+	xdef PaletteCycleTimes
+PaletteCycleTimes:
 	dc.w	780
 	dc.w	4
 	dc.w	6

@@ -1,5 +1,5 @@
 MEMORY {
-	ram: org = 0, len = 0x40000
+	ram: org = 0x12C00, len = 0x2D400
 }
 
 SECTIONS {

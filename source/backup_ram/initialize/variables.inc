@@ -17,7 +17,7 @@ vblank_routine		rs.w 1					; V-BLANK routine ID
 timer			rs.w 1					; Timer
 frame_count		rs.w 1					; Frame count
 saved_sr		rs.w 1					; Saved status register
-lag_count		rs.l 1					; Lag frame count
+lag_count		rs.l 1					; Lag count
 rng_seed		rs.l 1					; Random number generator seed
 			rs.b $2EEE
 VARIABLES_SIZE		equ __RS-VARIABLES			; Size of variables area

@@ -26,7 +26,10 @@ SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
                            $(SRC_PATH_BURAM_INIT)/io.asm \
                            $(SRC_PATH_BURAM_INIT)/functions.asm \
                            $(SRC_PATH_BURAM_INIT)/backup_ram.asm \
-                           $(SRC_PATH_BURAM_INIT)/load_message.asm \
+                           $(SRC_PATH_BURAM_INIT)/load_art.asm \
+                           $(SRC_PATH_BURAM_INIT)/nemesis.asm \
+                           $(SRC_PATH_BURAM_INIT)/load_tilemap.asm \
+                           $(SRC_PATH_BURAM_INIT)/enigma.asm \
                            $(SRC_PATH_BURAM_INIT)/data.asm
 else
 SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
@@ -35,7 +38,10 @@ SRC_BURAM_INIT          := $(SRC_PATH_BURAM_INIT)/main.asm \
                            $(SRC_PATH_BURAM_INIT)/io.asm \
                            $(SRC_PATH_BURAM_INIT)/functions.asm \
                            $(SRC_PATH_BURAM_INIT)/backup_ram.asm \
-                           $(SRC_PATH_BURAM_INIT)/load_message.asm \
+                           $(SRC_PATH_BURAM_INIT)/load_art.asm \
+                           $(SRC_PATH_BURAM_INIT)/nemesis.asm \
+                           $(SRC_PATH_BURAM_INIT)/load_tilemap.asm \
+                           $(SRC_PATH_BURAM_INIT)/enigma.asm \
                            $(SRC_PATH_BURAM_INIT)/data.asm
 endif
 OBJ_BURAM_INIT          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_BURAM_INIT))

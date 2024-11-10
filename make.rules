@@ -2,9 +2,9 @@
 # Regions
 # ------------------------------------------------------------------------------
 
-JAPAN                := 0
-USA                  := 1
-EUROPE               := 2
+JAPAN                 := 0
+USA                   := 1
+EUROPE                := 2
 
 ifndef REGION
 $(error REGION is not set. Valid values are JAPAN, USA, and EUROPE)
@@ -20,120 +20,123 @@ endif
 # Folder paths
 # ------------------------------------------------------------------------------
 
-BUILD_PATH           := build/$(REGION_FOLDER)
-FILES_PATH           := $(BUILD_PATH)/files
-MISC_PATH            := $(BUILD_PATH)/misc
-OBJ_PATH             := $(BUILD_PATH)/.obj
-INCLUDE_PATH         := include
-SRC_PATH             := source
+BUILD_PATH            := build/$(REGION_FOLDER)
+FILES_PATH            := $(BUILD_PATH)/files
+MISC_PATH             := $(BUILD_PATH)/misc
+OBJ_PATH              := $(BUILD_PATH)/.obj
+INCLUDE_PATH          := include
+SRC_PATH              := source
 
 # ------------------------------------------------------------------------------
 # Disc files
 # ------------------------------------------------------------------------------
 
-OUT_DISC             := $(BUILD_PATH)/sonic_cd.iso
-OUT_DISC_BOOT        := $(MISC_PATH)/disc_header.bin
-OUT_DISC_IP          := $(MISC_PATH)/ip.bin
-OUT_DISC_SP          := $(MISC_PATH)/sp.bin
+OUT_DISC              := $(BUILD_PATH)/sonic_cd.iso
+OUT_DISC_BOOT         := $(MISC_PATH)/disc_header.bin
+OUT_DISC_IP           := $(MISC_PATH)/ip.bin
+OUT_DISC_SP           := $(MISC_PATH)/sp.bin
 
 # ------------------------------------------------------------------------------
 # Tools
 # ------------------------------------------------------------------------------
 
-VASM_M68K            := vasmm68k_mot
-VASM_Z80             := vasmz80_oldstyle
-VLINK                := vlink
-EXTRACT_SYM          := extract_asm_symbols
-MAKE_DEPEND          := make_asm_depend
-MKISOFS              := mkisofs
-SCD_FILE_TOOL        := sonic_cd_file_tool
+VASM_M68K             := vasmm68k_mot
+VASM_Z80              := vasmz80_oldstyle
+VLINK                 := vlink
+EXTRACT_SYM           := extract_asm_symbols
+MAKE_DEPEND           := make_asm_depend
+MKISOFS               := mkisofs
+SCD_FILE_TOOL         := sonic_cd_file_tool
 
 # ------------------------------------------------------------------------------
 # Flags
 # ------------------------------------------------------------------------------
 
-VASM_FLAGS           := -Fvobj -quiet -ldots -unsshift -I$(INCLUDE_PATH) -I$(MISC_PATH) -DREGION=$(REGION)
-VASM_M68K_FLAGS      := $(VASM_FLAGS) -devpac -opt-p=68000 -opt-o3+ -opt-ow-
-VASM_Z80_FLAGS       := $(VASM_FLAGS)
-VLINK_FLAGS          := -b rawbin1 -nowarn=22
-EXTRACT_SYM_FLAGS    := -m asm -v u64
-MAKE_DEPEND_FLAGS    := -i $(INCLUDE_PATH) -i $(MISC_PATH) -r
-MKISOFS_FLAGS        := -quiet -abstract ABS.TXT -biblio BIB.TXT -copyright CPY.TXT -A "SEGA ENTERPRISES" \
-                        -V SONIC_CD___ -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid MEGA_CD \
-		        -G $(OUT_DISC_BOOT) -iso-level 1 -pad
-SCD_FILE_TOOL_FLAGS  := -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches
+VASM_FLAGS            := -Fvobj -quiet -ldots -unsshift -I$(INCLUDE_PATH) -I$(MISC_PATH) -DREGION=$(REGION)
+VASM_M68K_FLAGS       := $(VASM_FLAGS) -m68000 -devpac -opt-p=68000 -opt-o3+ -opt-ow-
+VASM_M68K_FLAGS_ALT   := $(VASM_FLAGS) -m68000
+VASM_Z80_FLAGS        := $(VASM_FLAGS)
+VLINK_FLAGS           := -b rawbin1 -nowarn=22
+EXTRACT_SYM_FLAGS     := -m asm -v u64
+MAKE_DEPEND_FLAGS     := -i $(INCLUDE_PATH) -i $(MISC_PATH) -r
+MKISOFS_FLAGS         := -quiet -abstract ABS.TXT -biblio BIB.TXT -copyright CPY.TXT -A "SEGA ENTERPRISES" \
+                         -V SONIC_CD___ -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid MEGA_CD \
+		         -G $(OUT_DISC_BOOT) -iso-level 1 -pad
+SCD_FILE_TOOL_FLAGS   := -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches
 
 # ------------------------------------------------------------------------------
 # Messages
 # ------------------------------------------------------------------------------
 
-COPYING              = @echo Copying    "$@"
-ASSEMBLING           = @echo Assembling "$<"
-LINKING              = @echo Linking    "$@"
-MAKING_DEPENDS       = @echo Generating "$@"
-BUILDING_DISC        = @echo Building   "$@"
+COPYING               = @echo Copying    "$@"
+ASSEMBLING            = @echo Assembling "$<"
+LINKING               = @echo Linking    "$@"
+MAKING_DEPENDS        = @echo Generating "$@"
+BUILDING_DISC         = @echo Building   "$@"
 
 # ------------------------------------------------------------------------------
 # Output files
 # ------------------------------------------------------------------------------
 
-OUT_FM_DRIVER        := $(MISC_PATH)/z80.bin
-OUT_FM_SOUND_IDS     := $(MISC_PATH)/fm_sound_ids.inc
-OUT_FM_SYMBOLS       := $(MISC_PATH)/fm_symbols.inc
-OUT_PCM_DRIVER_R1    := $(FILES_PATH)/SNCBNK1B.BIN
-OUT_PCM_DRIVER_R3    := $(FILES_PATH)/SNCBNK3B.BIN
-OUT_PCM_DRIVER_R4    := $(FILES_PATH)/SNCBNK4B.BIN
-OUT_PCM_DRIVER_R5    := $(FILES_PATH)/SNCBNK5B.BIN
-OUT_PCM_DRIVER_R6    := $(FILES_PATH)/SNCBNK6B.BIN
-OUT_PCM_DRIVER_R7    := $(FILES_PATH)/SNCBNK7B.BIN
-OUT_PCM_DRIVER_R8    := $(FILES_PATH)/SNCBNK8B.BIN
-OUT_PCM_DRIVER_BOSS  := $(FILES_PATH)/SNCBNKB1.BIN
-OUT_PCM_DRIVER_FINAL := $(FILES_PATH)/SNCBNKB2.BIN
-OUT_PCM_SOUND_IDS    := $(MISC_PATH)/pcm_sound_ids.inc
-OUT_PCM_SYMBOLS      := $(MISC_PATH)/pcm_symbols.inc
-OUT_MAIN_BOOT        := $(OUT_DISC_IP)
-OUT_SUB_CORE         := $(OUT_DISC_SP)
-OUT_SYSTEM_SYMBOLS   := $(MISC_PATH)/system_symbols.inc
-OUT_SUB_EXT          := $(FILES_PATH)/SPX___.BIN
-OUT_SYSTEM_IDS       := $(MISC_PATH)/system_ids.inc
-OUT_MAIN_CORE        := $(FILES_PATH)/IPX___.MMD
-OUT_MD_INIT          := $(FILES_PATH)/MDINIT.MMD
-OUT_BURAM_INIT       := $(FILES_PATH)/BRAMINIT.MMD
-OUT_BURAM_SUB        := $(FILES_PATH)/BRAMSUB.BIN
-OUT_TITLE_MAIN       := $(FILES_PATH)/TITLEM.MMD
-OUT_TITLE_SUB        := $(FILES_PATH)/TITLES.BIN
-OUT_DA_GARDEN_MAIN   := $(FILES_PATH)/PLANET_M.MMD
-OUT_DA_GARDEN_SUB    := $(FILES_PATH)/PLANET_S.BIN
-OUT_DA_GARDEN_TITLES := $(FILES_PATH)/PLANET_D.BIN
+OUT_FM_DRIVER         := $(MISC_PATH)/z80.bin
+OUT_FM_SOUND_IDS      := $(MISC_PATH)/fm_sound_ids.inc
+OUT_FM_SYMBOLS        := $(MISC_PATH)/fm_symbols.inc
+OUT_PCM_DRIVER_R1     := $(FILES_PATH)/SNCBNK1B.BIN
+OUT_PCM_DRIVER_R3     := $(FILES_PATH)/SNCBNK3B.BIN
+OUT_PCM_DRIVER_R4     := $(FILES_PATH)/SNCBNK4B.BIN
+OUT_PCM_DRIVER_R5     := $(FILES_PATH)/SNCBNK5B.BIN
+OUT_PCM_DRIVER_R6     := $(FILES_PATH)/SNCBNK6B.BIN
+OUT_PCM_DRIVER_R7     := $(FILES_PATH)/SNCBNK7B.BIN
+OUT_PCM_DRIVER_R8     := $(FILES_PATH)/SNCBNK8B.BIN
+OUT_PCM_DRIVER_BOSS   := $(FILES_PATH)/SNCBNKB1.BIN
+OUT_PCM_DRIVER_FINAL  := $(FILES_PATH)/SNCBNKB2.BIN
+OUT_PCM_SOUND_IDS     := $(MISC_PATH)/pcm_sound_ids.inc
+OUT_PCM_SYMBOLS       := $(MISC_PATH)/pcm_symbols.inc
+OUT_DA_GARDEN_TITLES  := $(FILES_PATH)/PLANET_D.BIN
+OUT_DA_GARDEN_SYMBOLS := $(MISC_PATH)/da_garden.inc
+OUT_MAIN_BOOT         := $(OUT_DISC_IP)
+OUT_SUB_CORE          := $(OUT_DISC_SP)
+OUT_SYSTEM_SYMBOLS    := $(MISC_PATH)/system_symbols.inc
+OUT_SUB_EXT           := $(FILES_PATH)/SPX___.BIN
+OUT_SYSTEM_IDS        := $(MISC_PATH)/system_ids.inc
+OUT_MAIN_CORE         := $(FILES_PATH)/IPX___.MMD
+OUT_MD_INIT           := $(FILES_PATH)/MDINIT.MMD
+OUT_BURAM_INIT        := $(FILES_PATH)/BRAMINIT.MMD
+OUT_BURAM_SUB         := $(FILES_PATH)/BRAMSUB.BIN
+OUT_TITLE_MAIN        := $(FILES_PATH)/TITLEM.MMD
+OUT_TITLE_SUB         := $(FILES_PATH)/TITLES.BIN
+OUT_DA_GARDEN_MAIN    := $(FILES_PATH)/PLANET_M.MMD
+OUT_DA_GARDEN_SUB     := $(FILES_PATH)/PLANET_S.BIN
 
-OUT_FILES            := $(OUT_FM_DRIVER) \
-                        $(OUT_FM_SOUND_IDS) \
-                        $(OUT_FM_SYMBOLS) \
-                        $(OUT_PCM_DRIVER_R1) \
-                        $(OUT_PCM_DRIVER_R3) \
-                        $(OUT_PCM_DRIVER_R4) \
-                        $(OUT_PCM_DRIVER_R5) \
-                        $(OUT_PCM_DRIVER_R6) \
-                        $(OUT_PCM_DRIVER_R7) \
-                        $(OUT_PCM_DRIVER_R8) \
-                        $(OUT_PCM_DRIVER_BOSS) \
-                        $(OUT_PCM_DRIVER_FINAL) \
-                        $(OUT_PCM_SOUND_IDS) \
-			$(OUT_PCM_SYMBOLS) \
-                        $(OUT_SUB_CORE) \
-			$(OUT_SYSTEM_SYMBOLS) \
-                        $(OUT_SUB_EXT) \
-			$(OUT_SYSTEM_IDS) \
-		        $(OUT_MAIN_BOOT) \
-		        $(OUT_MAIN_CORE) \
-		        $(OUT_MD_INIT) \
-		        $(OUT_BURAM_INIT) \
-		        $(OUT_BURAM_SUB) \
-		        $(OUT_TITLE_MAIN) \
-		        $(OUT_TITLE_SUB) \
-#		        $(OUT_DA_GARDEN_MAIN) \
-#		        $(OUT_DA_GARDEN_SUB) \
-#		        $(OUT_DA_GARDEN_TITLES)
+OUT_FILES             := $(OUT_FM_DRIVER) \
+                         $(OUT_FM_SOUND_IDS) \
+                         $(OUT_FM_SYMBOLS) \
+                         $(OUT_PCM_DRIVER_R1) \
+                         $(OUT_PCM_DRIVER_R3) \
+                         $(OUT_PCM_DRIVER_R4) \
+                         $(OUT_PCM_DRIVER_R5) \
+                         $(OUT_PCM_DRIVER_R6) \
+                         $(OUT_PCM_DRIVER_R7) \
+                         $(OUT_PCM_DRIVER_R8) \
+                         $(OUT_PCM_DRIVER_BOSS) \
+                         $(OUT_PCM_DRIVER_FINAL) \
+                         $(OUT_PCM_SOUND_IDS) \
+                         $(OUT_PCM_SYMBOLS) \
+                         $(OUT_DA_GARDEN_TITLES) \
+                         $(OUT_DA_GARDEN_SYMBOLS) \
+                         $(OUT_SUB_CORE) \
+                         $(OUT_SYSTEM_SYMBOLS) \
+                         $(OUT_SUB_EXT) \
+                         $(OUT_SYSTEM_IDS) \
+                         $(OUT_MAIN_BOOT) \
+                         $(OUT_MAIN_CORE) \
+                         $(OUT_MD_INIT) \
+                         $(OUT_BURAM_INIT) \
+                         $(OUT_BURAM_SUB) \
+                         $(OUT_TITLE_MAIN) \
+                         $(OUT_TITLE_SUB) \
+                         $(OUT_DA_GARDEN_MAIN) \
+#                         $(OUT_DA_GARDEN_SUB)
 
 # ------------------------------------------------------------------------------
 # Reserved rules

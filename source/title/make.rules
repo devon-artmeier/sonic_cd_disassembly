@@ -21,6 +21,10 @@ OBJ_PATH_TITLE_SUB      := $(OBJ_PATH)/$(SRC_PATH_TITLE_SUB)
 # ------------------------------------------------------------------------------
 
 SRC_TITLE_MAIN          := $(SRC_PATH_TITLE_MAIN)/main.asm \
+                           $(SRC_PATH_TITLE_MAIN)/interrupt.asm \
+                           $(SRC_PATH_TITLE_MAIN)/scroll.asm \
+                           $(SRC_PATH_TITLE_MAIN)/controller.asm \
+                           $(SRC_PATH_TITLE_MAIN)/draw.asm \
                            $(SRC_PATH_TITLE_MAIN)/communication.asm \
                            $(SRC_PATH_TITLE_MAIN)/io.asm \
                            $(SRC_PATH_TITLE_MAIN)/palette_fade.asm \
@@ -42,7 +46,8 @@ DEPEND_TITLE_MAIN       := $(patsubst %.o,%.d,$(OBJ_TITLE_MAIN))
 
 SRC_TITLE_SUB           := $(SRC_PATH_TITLE_SUB)/main.asm \
                            $(SRC_PATH_TITLE_SUB)/clouds.asm \
-                           $(SRC_PATH_TITLE_SUB)/irq.asm \
+                           $(SRC_PATH_TITLE_SUB)/interrupt.asm \
+                           $(SRC_PATH_TITLE_SUB)/kosinski.asm \
                            $(SRC_PATH_TITLE_SUB)/load_data.asm \
                            $(SRC_PATH_TITLE_SUB)/data.asm
 OBJ_TITLE_SUB           := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_SUB))

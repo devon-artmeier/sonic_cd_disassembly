@@ -66,7 +66,7 @@ track.struct_size	rs.b 0					; Size of structure
 VARIABLES		rs.b 0					; Start of variables
 kos_buffer		rs.b 0					; Kosinski decompression buffer
 planet_image		rs.b $5800				; Planet image buffer
-sprites			rs.b 80*8				; Sprtie buffer
+sprites			rs.b $280				; Sprtie buffer
 			rs.b $80
 nem_code_table		rs.b $200				; Nemesis decompression code table
 palette			rs.w $40				; Palette buffer
@@ -106,10 +106,10 @@ vsync_flag		rs.b 1					; VSync flag
 			rs.b 4
 vblank_routine		rs.w 1					; V-BLANK routine ID
 timer			rs.w 1					; Timer
-frame_count		rs.w 1					; V-BLANK counter
+frame_count		rs.w 1					; Frame count
 saved_sr		rs.w 1					; Saved status register
 rng_seed		rs.l 1					; RNG seed
-lag_counter		rs.l 1					; Lag counter
+lag_count		rs.l 1					; Lag count
 vsync_flag_2		rs.b 1					; VSync flag 2 (not functional)
 			rs.b 1
 track_time_zone		rs.w 1					; Track time zone
@@ -123,5 +123,28 @@ VARIABLES_SIZE		equ __RS-VARIABLES			; Size of variables area
 sub_p2_ctrl_data	equ MCD_MAIN_COMM_14			; Controller data
 sub_p2_ctrl_hold	equ sub_p2_ctrl_data			; Controller held buttons data
 sub_p2_ctrl_tap		equ sub_p2_ctrl_data+1			; Controller tapped buttons data
+
+; ------------------------------------------------------------------------------
+; Copy planet image to VRAM
+; -------------------------------------------------------------------------
+; PARAMETERS:
+;	\1 - Buffer ID
+;	\2 - Buffer part
+; ------------------------------------------------------------------------------
+
+copyPlanet macro
+	ifeq \2
+		__src: set planet_image
+		__len: set PLANET_IMAGE_SIZE_1
+	else
+		__src: set planet_image+PLANET_IMAGE_SIZE_1
+		__len: set PLANET_IMAGE_SIZE_2
+	endif
+	__vram: set PLANET_IMAGE_VRAM+((\1)*PLANET_IMAGE_SIZE)
+	ifne \2
+		__vram: set __vram+PLANET_IMAGE_SIZE_1
+	endif
+	dma68k __src,__vram,__len,VRAM
+	endm
 
 ; ------------------------------------------------------------------------------

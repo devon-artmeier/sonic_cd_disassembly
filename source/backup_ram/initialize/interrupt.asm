@@ -63,7 +63,7 @@ VBlankIrq:
 ; ------------------------------------------------------------------------------
 
 .Lag:
-	addq.l	#1,lag_count					; Increment lag counter
+	addq.l	#1,lag_count					; Increment lag count
 	move.b	vblank_routine+1,lag_count			; Set highest byte to V-BLANK routine ID
 	jsr	ReadController(pc)				; Read controller data
 
