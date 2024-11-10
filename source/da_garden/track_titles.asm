@@ -41,7 +41,7 @@ FinalTrackArt:
 
 	xdef GameOverTrackArt
 GameOverTrackArt:
-	incbin	"data/track_game_over_Art.nem"
+	incbin	"data/track_game_over_art.nem"
 	even
 
 	xdef InvincibleTrackArt

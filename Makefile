@@ -1,9 +1,17 @@
 # ------------------------------------------------------------------------------
-# Folder paths
+# Definitions
 # ------------------------------------------------------------------------------
 
 BUILD_ROOT_PATH := build
+
+ifeq ($(OS),Windows_NT)
+NULL            := nul 2> nul
+else
+NULL            := /dev/null
+endif
+
 export BUILD_ROOT_PATH
+export NULL
 
 # ------------------------------------------------------------------------------
 # Reserved rules
@@ -47,9 +55,7 @@ europe:
 
 clean:
 ifneq ($(wildcard $(BUILD_ROOT_PATH)),)
-	@$(if ,$(shell which sh) \
-		sh -c 'rm -rf $(BUILD_ROOT_PATH)', \
-		rmdir /s /q "$(subst /,\,$(BUILD_ROOT_PATH))")
+	@sh -c 'rm -rf $(BUILD_ROOT_PATH)' > $(NULL) || rmdir /s /q "$(subst /,\,$(BUILD_ROOT_PATH))"
 endif
 
 # ------------------------------------------------------------------------------

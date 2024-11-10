@@ -3,9 +3,7 @@
 # ------------------------------------------------------------------------------
 
 define mkdir
-        @$(if ,$(shell which sh) \
-                sh -c 'mkdir -p "$(1)"', \
-                mkdir "$(subst /,\,$(1))")
+	@sh -c 'mkdir -p "$(1)"' > $(NULL) || mkdir "$(subst /,\,$(1))"
 endef
 
 # ------------------------------------------------------------------------------
@@ -164,9 +162,7 @@ all: $(OUT_DISC)
 
 $(OUT_DISC): $(OUT_FILES) $(OUT_DISC_BOOT) | $(FILES_PATH) $(MISC_PATH)
 	$(BUILDING_DISC)
-	@$(if ,$(shell which sh) \
-		cp -a "$(SRC_PATH)/disc/files/." "$(FILES_PATH)", \
-		copy /b /y /v "$(subst /,\,$(SRC_PATH)/disc/files)" "$(subst /,\,$(FILES_PATH))" >NUL)
+	@sh -c 'cp -a "$(SRC_PATH)/disc/files/." "$(FILES_PATH)"' > $(NULL) || copy /b /y /v "$(subst /,\,$(SRC_PATH)/disc/files)" "$(subst /,\,$(FILES_PATH))" > $(NULL)
 	@$(SCD_FILE_TOOL) -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches $(FILES_PATH)
 	@$(MKISOFS) $(MKISOFS_FLAGS) -G $(OUT_DISC_BOOT) -o $@ $(FILES_PATH)
 
