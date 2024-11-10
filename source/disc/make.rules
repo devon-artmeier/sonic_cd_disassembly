@@ -1,17 +1,11 @@
 # ------------------------------------------------------------------------------
-# Source folder paths
+# Folder paths
 # ------------------------------------------------------------------------------
 
 SRC_PATH_DISC       := $(SRC_PATH)/disc
 SRC_PATH_DISC_BOOT  := $(SRC_PATH_DISC)/boot
-SRC_PATH_DISC_FILES := $(SRC_PATH_DISC)/files
 
-# ------------------------------------------------------------------------------
-# Object folder paths
-# ------------------------------------------------------------------------------
-
-OBJ_PATH_DISC       := $(OBJ_PATH)/$(SRC_PATH_DISC)
-OBJ_PATH_DISC_BOOT  := $(OBJ_PATH)/$(SRC_PATH_DISC_BOOT)
+OBJ_PATH_DISC_BOOT  := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_DISC_BOOT))
 
 # ------------------------------------------------------------------------------
 # Files
@@ -19,33 +13,26 @@ OBJ_PATH_DISC_BOOT  := $(OBJ_PATH)/$(SRC_PATH_DISC_BOOT)
 
 SRC_DISC_BOOT       := $(SRC_PATH_DISC_BOOT)/header.asm \
                        $(SRC_PATH_DISC_BOOT)/boot.asm
-OBJ_DISC_BOOT       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DISC_BOOT))
-DEPEND_DISC_BOOT    := $(patsubst %.o,%.d,$(OBJ_DISC_BOOT))
 
-# ------------------------------------------------------------------------------
-# Dependencies
-# ------------------------------------------------------------------------------
+OBJ_DISC_BOOT       := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_DISC_BOOT))
+
+DEPEND_DISC_BOOT    := $(patsubst %.o,%.d,$(OBJ_DISC_BOOT))
 
 -include $(DEPEND_DISC_BOOT)
 
 # ------------------------------------------------------------------------------
-# Boot rules
+# Boot program rules
 # ------------------------------------------------------------------------------
 
 $(OUT_DISC_BOOT): $(OBJ_DISC_BOOT) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DISC)/link_boot.link -o $@ $^
-ifeq ($(OS),Windows_NT)
-	@xcopy /q /y /v "$(SRC_PATH_DISC_FILES)" "$(FILES_PATH)" > nul
-else
-	@cp -a "$(SRC_PATH_DISC_FILES)/." "$(FILES_PATH)" > /dev/null
-endif
 
-$(OBJ_DISC_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DISC_BOOT)
+$(OBJ_DISC_BOOT): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_DISC_BOOT)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
+$(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_DISC_BOOT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -53,10 +40,7 @@ $(DEPEND_DISC_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DISC_BOOT)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_DISC_BOOT): | $(OBJ_PATH_DISC)
-	@$(MKDIR) "$@"
-
-$(OBJ_PATH_DISC): | $(OBJ_PATH)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_DISC_BOOT):
+	$(call mkdir,$@)
 
 # ------------------------------------------------------------------------------

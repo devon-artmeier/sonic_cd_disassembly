@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Source folder paths
+# Folder paths
 # ------------------------------------------------------------------------------
 
 SRC_PATH_SYSTEM    := $(SRC_PATH)/system
@@ -9,36 +9,19 @@ SRC_PATH_MAIN_BOOT := $(SRC_PATH_SYSTEM)/main_boot
 SRC_PATH_MAIN_CORE := $(SRC_PATH_SYSTEM)/main_core
 SRC_PATH_MD_INIT   := $(SRC_PATH_SYSTEM)/md_initialize
 
-# ------------------------------------------------------------------------------
-# Object folder paths
-# ------------------------------------------------------------------------------
-
-OBJ_PATH_SYSTEM    := $(OBJ_PATH)/$(SRC_PATH_SYSTEM)
-OBJ_PATH_SUB_CORE  := $(OBJ_PATH)/$(SRC_PATH_SUB_CORE)
-OBJ_PATH_SUB_EXT   := $(OBJ_PATH)/$(SRC_PATH_SUB_EXT)
-OBJ_PATH_MAIN_BOOT := $(OBJ_PATH)/$(SRC_PATH_MAIN_BOOT)
-OBJ_PATH_MAIN_CORE := $(OBJ_PATH)/$(SRC_PATH_MAIN_CORE)
-OBJ_PATH_MD_INIT   := $(OBJ_PATH)/$(SRC_PATH_MD_INIT)
+OBJ_PATH_SUB_CORE  := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_SUB_CORE))
+OBJ_PATH_SUB_EXT   := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_SUB_EXT))
+OBJ_PATH_MAIN_BOOT := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_MAIN_BOOT))
+OBJ_PATH_MAIN_CORE := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_MAIN_CORE))
+OBJ_PATH_MD_INIT   := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_MD_INIT))
 
 # ------------------------------------------------------------------------------
-# Sub CPU core files
+# Files
 # ------------------------------------------------------------------------------
 
 SRC_SUB_CORE       := $(SRC_PATH_SUB_CORE)/main.asm \
                       $(SRC_PATH_SUB_CORE)/temp_save_data.asm \
                       $(SRC_PATH_SUB_CORE)/file_engine.asm
-OBJ_SUB_CORE       := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_CORE))
-DEPEND_SUB_CORE    := $(patsubst %.o,%.d,$(OBJ_SUB_CORE))
-
-SYMBOLS_SUB_CORE   := -iy TempSaveData \
-                      -iy FileEngineIrq \
-                      -iy LoadFile \
-                      -iy GetFileName \
-                      -iy FileFunction
-
-# ------------------------------------------------------------------------------
-# Sub CPU extension files
-# ------------------------------------------------------------------------------
 
 SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/files.asm \
                       $(SRC_PATH_SUB_EXT)/main.asm \
@@ -63,25 +46,8 @@ SRC_SUB_EXT        := $(SRC_PATH_SUB_EXT)/files.asm \
                       $(SRC_PATH_SUB_EXT)/sound.asm \
                       $(SRC_PATH_SUB_EXT)/io.asm \
                       $(SRC_PATH_SUB_EXT)/data.asm
-OBJ_SUB_EXT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_EXT))
-DEPEND_SUB_EXT     := $(patsubst %.o,%.d,$(OBJ_SUB_EXT))
-
-SYMBOLS_SUB_EXT    := -ip FILE_ \
-                      -ip SYS_ \
-                      -xp FILE_STATUS_ \
-                      -xy FILE_NAME_SIZE
-
-# ------------------------------------------------------------------------------
-# Main CPU bootloader files
-# ------------------------------------------------------------------------------
-
+                      
 SRC_MAIN_BOOT      := $(SRC_PATH_MAIN_BOOT)/main.asm
-OBJ_MAIN_BOOT      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_BOOT))
-DEPEND_MAIN_BOOT   := $(patsubst %.o,%.d,$(OBJ_MAIN_BOOT))
-
-# ------------------------------------------------------------------------------
-# Main CPU core files
-# ------------------------------------------------------------------------------
 
 SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
                       $(SRC_PATH_MAIN_CORE)/best_staff_times.asm \
@@ -95,40 +61,49 @@ SRC_MAIN_CORE      := $(SRC_PATH_MAIN_CORE)/main.asm \
                       $(SRC_PATH_MAIN_CORE)/da_garden.asm \
                       $(SRC_PATH_MAIN_CORE)/time_attack.asm \
                       $(SRC_PATH_MAIN_CORE)/functions.asm
-OBJ_MAIN_CORE      := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
-DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
-
-# ------------------------------------------------------------------------------
-# Mega Drive initialization files
-# ------------------------------------------------------------------------------
 
 SRC_MD_INIT        := $(SRC_PATH_MD_INIT)/main.asm \
                       $(SRC_PATH_MD_INIT)/io.asm
-OBJ_MD_INIT        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_MD_INIT))
-DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
 
-# ------------------------------------------------------------------------------
-# Dependencies
-# ------------------------------------------------------------------------------
+OBJ_SUB_CORE       := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_CORE))
+OBJ_SUB_EXT        := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_SUB_EXT))
+OBJ_MAIN_BOOT      := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_BOOT))
+OBJ_MAIN_CORE      := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_MAIN_CORE))
+OBJ_MD_INIT        := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_MD_INIT))
+
+DEPEND_SUB_CORE    := $(patsubst %.o,%.d,$(OBJ_SUB_CORE))
+DEPEND_SUB_EXT     := $(patsubst %.o,%.d,$(OBJ_SUB_EXT))
+DEPEND_MAIN_BOOT   := $(patsubst %.o,%.d,$(OBJ_MAIN_BOOT))
+DEPEND_MAIN_CORE   := $(patsubst %.o,%.d,$(OBJ_MAIN_CORE))
+DEPEND_MD_INIT     := $(patsubst %.o,%.d,$(OBJ_MD_INIT))
 
 -include $(DEPEND_SUB_CORE) $(DEPEND_SUB_EXT) $(DEPEND_MAIN_BOOT) $(DEPEND_MAIN_CORE) $(DEPEND_MD_INIT)
 
 # ------------------------------------------------------------------------------
-# Mega Drive initialization core rules
+# Symbols
 # ------------------------------------------------------------------------------
 
-$(OUT_MD_INIT): $(OBJ_MD_INIT) | $(FILES_PATH)
-	$(LINKING)
-	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_md_initialize.link -o $@ $^
+SYMBOLS_SUB_CORE   := -iy TempSaveData \
+                      -iy FileEngineIrq \
+                      -iy LoadFile \
+                      -iy GetFileName \
+                      -iy FileFunction
 
-$(OBJ_MD_INIT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MD_INIT)
-	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+SYMBOLS_SUB_EXT    := -ip FILE_ \
+                      -ip SYS_ \
+                      -xp FILE_STATUS_ \
+                      -xy FILE_NAME_SIZE
 
-$(DEPEND_MD_INIT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MD_INIT)
-	$(MAKING_DEPENDS)
-	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+# ------------------------------------------------------------------------------
+# Symbol file rules
+# ------------------------------------------------------------------------------
 
+$(OUT_SYSTEM_SYMBOLS): $(OUT_SUB_CORE) | $(MISC_PATH)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
+
+$(OUT_SYSTEM_IDS): $(OUT_SUB_EXT) | $(MISC_PATH)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/files.o $(OBJ_PATH_SUB_EXT)/main.o
+        
 # ------------------------------------------------------------------------------
 # Main CPU core rules
 # ------------------------------------------------------------------------------
@@ -137,11 +112,11 @@ $(OUT_MAIN_CORE): $(OBJ_MAIN_CORE) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_core.link -o $@ $^
 
-$(OBJ_MAIN_CORE): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MAIN_CORE)
+$(OBJ_MAIN_CORE): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_MAIN_CORE)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_MAIN_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_CORE)
+$(DEPEND_MAIN_CORE): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_MAIN_CORE)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -153,43 +128,29 @@ $(OUT_MAIN_BOOT): $(OBJ_MAIN_BOOT) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_main_boot.link -o $@ $^
 
-$(OBJ_MAIN_BOOT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_MAIN_BOOT)
+$(OBJ_MAIN_BOOT): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_MAIN_BOOT)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_MAIN_BOOT)
+$(DEPEND_MAIN_BOOT): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_MAIN_BOOT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # ------------------------------------------------------------------------------
-# Sub CPU extension symbols rules
-# ------------------------------------------------------------------------------
-
-$(OUT_SYSTEM_IDS): $(OUT_SUB_EXT) | $(MISC_PATH)
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_EXT) $(OBJ_PATH_SUB_EXT)/files.o $(OBJ_PATH_SUB_EXT)/main.o
-	
-# ------------------------------------------------------------------------------
 # Sub CPU extension rules
 # ------------------------------------------------------------------------------
-
+        
 $(OUT_SUB_EXT): $(OBJ_SUB_EXT) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_extension.link -o $@ $^
 
-$(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_EXT)
+$(OBJ_SUB_EXT): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_SUB_EXT)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_EXT)
+$(DEPEND_SUB_EXT): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_SUB_EXT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
-
-# ------------------------------------------------------------------------------
-# Sub CPU core symbols rules
-# ------------------------------------------------------------------------------
-
-$(OUT_SYSTEM_SYMBOLS): $(OUT_SUB_CORE) | $(MISC_PATH)
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(SYMBOLS_SUB_CORE) $(OBJ_PATH)/sp.sym
 
 # ------------------------------------------------------------------------------
 # Sub CPU core rules
@@ -199,11 +160,27 @@ $(OUT_SUB_CORE): $(OBJ_SUB_CORE) | $(MISC_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_sub_core.link -symfile $(OBJ_PATH)/sp.sym -o $@ $^
 
-$(OBJ_SUB_CORE): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_SUB_CORE)
+$(OBJ_SUB_CORE): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_SUB_CORE)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_CORE)
+$(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_SUB_CORE)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
+
+# ------------------------------------------------------------------------------
+# Mega Drive initialization core rules
+# ------------------------------------------------------------------------------
+
+$(OUT_MD_INIT): $(OBJ_MD_INIT) | $(FILES_PATH)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_SYSTEM)/link_md_initialize.link -o $@ $^
+
+$(OBJ_MD_INIT): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_MD_INIT)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
+
+$(DEPEND_MD_INIT): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_MD_INIT)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -211,22 +188,19 @@ $(DEPEND_SUB_CORE): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_SUB_CORE)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_SUB_CORE): | $(OBJ_PATH_SYSTEM)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_SUB_CORE):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_SUB_EXT): | $(OBJ_PATH_SYSTEM)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_SUB_EXT):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_MAIN_BOOT): | $(OBJ_PATH_SYSTEM)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_MAIN_BOOT):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_MAIN_CORE): | $(OBJ_PATH_SYSTEM)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_MAIN_CORE):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_MD_INIT): | $(OBJ_PATH_SYSTEM)
-	@$(MKDIR) "$@"
-
-$(OBJ_PATH_SYSTEM): | $(OBJ_PATH)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_MD_INIT):
+	$(call mkdir,$@)
 
 # ------------------------------------------------------------------------------

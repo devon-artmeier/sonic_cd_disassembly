@@ -207,7 +207,7 @@ VSync:
 
 	xdef SetAllButtons
 SetAllButtons:
-	move.w	#$FF00,sub_p2_ctrl_data				; Set all buttons
+	move.w	#$FF00,ctrl_data				; Set all buttons
 	rts
 
 ; ------------------------------------------------------------------------------

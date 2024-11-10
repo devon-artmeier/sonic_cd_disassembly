@@ -35,7 +35,7 @@ TrackSelection:
 ; ------------------------------------------------------------------------------
 
 CheckTrackPlay:
-	btst	#5,sub_p2_ctrl_hold				; Is C being held?
+	btst	#5,ctrl_hold					; Is C being held?
 	bne.s	.HeldC						; If so, branch
 	btst	#5,button_flags					; If not, was it being held before?
 	beq.s	.CheckB						; If not, branch
@@ -56,7 +56,7 @@ CheckTrackPlay:
 	bclr	#5,button_flags					; Mark as released
 
 .CheckB:
-	btst	#4,sub_p2_ctrl_hold				; Is B being held?
+	btst	#4,ctrl_hold					; Is B being held?
 	bne.s	.HeldB						; If so, branch
 	btst	#4,button_flags					; If not, was it being held before?
 	beq.s	.CheckC						; If not, branch
@@ -77,7 +77,7 @@ CheckTrackPlay:
 	bclr	#4,button_flags					; Mark as released
 
 .CheckC:
-	btst	#6,sub_p2_ctrl_hold				; Is A being held?
+	btst	#6,ctrl_hold					; Is A being held?
 	bne.s	.AHeld						; If so, branch
 	btst	#6,button_flags					; If not, was it being held before?
 	beq.s	.CheckTextSpawn					; If not, branch

@@ -28,7 +28,7 @@ Start:
 	move.b	d0,MCD_MAIN_FLAG
 	
 	; Go to "InitPlanetRender" for more information on why this is here
-	move.w	#$8000,sub_p2_ctrl_data				; Force program to assume start button was being held
+	move.w	#$8000,ctrl_data				; Force program to assume start button was being held
 	
 	bsr.w	InitAnimation					; Initialize animation
 	

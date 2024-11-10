@@ -136,7 +136,7 @@ StartZ80:
 
 	xdef ReadController
 ReadController:
-	lea	sub_p2_ctrl_data,a0				; Controller data buffer
+	lea	ctrl_data,a0					; Controller data buffer
 	lea	IO_DATA_1,a1					; Controller port 1
 	
 	move.b	#0,(a1)						; TH = 0

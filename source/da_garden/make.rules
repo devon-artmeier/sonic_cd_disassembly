@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Source folder paths
+# Folder paths
 # ------------------------------------------------------------------------------
 
 SRC_PATH_DA_GARDEN          := $(SRC_PATH)/da_garden
@@ -7,18 +7,16 @@ SRC_PATH_DA_GARDEN_MAIN     := $(SRC_PATH_DA_GARDEN)/main
 SRC_PATH_DA_GARDEN_OBJECTS  := $(SRC_PATH_DA_GARDEN_MAIN)/objects
 SRC_PATH_DA_GARDEN_SUB      := $(SRC_PATH_DA_GARDEN)/sub
 
-# ------------------------------------------------------------------------------
-# Object folder paths
-# ------------------------------------------------------------------------------
-
-OBJ_PATH_DA_GARDEN          := $(OBJ_PATH)/$(SRC_PATH_DA_GARDEN)
-OBJ_PATH_DA_GARDEN_MAIN     := $(OBJ_PATH)/$(SRC_PATH_DA_GARDEN_MAIN)
-OBJ_PATH_DA_GARDEN_OBJECTS  := $(OBJ_PATH)/$(SRC_PATH_DA_GARDEN_OBJECTS)
-OBJ_PATH_DA_GARDEN_SUB      := $(OBJ_PATH)/$(SRC_PATH_DA_GARDEN_SUB)
+OBJ_PATH_DA_GARDEN          := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_DA_GARDEN))
+OBJ_PATH_DA_GARDEN_MAIN     := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_DA_GARDEN_MAIN))
+OBJ_PATH_DA_GARDEN_OBJECTS  := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_DA_GARDEN_OBJECTS))
+OBJ_PATH_DA_GARDEN_SUB      := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_DA_GARDEN_SUB))
 
 # ------------------------------------------------------------------------------
-# Main CPU program files
+# Files
 # ------------------------------------------------------------------------------
+
+SRC_DA_GARDEN_TITLES        := $(SRC_PATH_DA_GARDEN)/track_titles.asm
 
 SRC_DA_GARDEN_MAIN          := $(SRC_PATH_DA_GARDEN_MAIN)/main.asm \
                                $(SRC_PATH_DA_GARDEN_MAIN)/draw.asm \
@@ -41,34 +39,45 @@ SRC_DA_GARDEN_MAIN          := $(SRC_PATH_DA_GARDEN_MAIN)/main.asm \
                                $(SRC_PATH_DA_GARDEN_MAIN)/nemesis.asm \
                                $(SRC_PATH_DA_GARDEN_MAIN)/track_selection.asm \
                                $(SRC_PATH_DA_GARDEN_OBJECTS)/track_title.asm
-OBJ_DA_GARDEN_MAIN          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_MAIN))
-DEPEND_DA_GARDEN_MAIN       := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_MAIN))
 
 SRC_DA_GARDEN_MAIN_DATA     := $(SRC_PATH_DA_GARDEN_MAIN)/data.asm
-OBJ_DA_GARDEN_MAIN_DATA     := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_MAIN_DATA))
-DEPEND_DA_GARDEN_MAIN_DATA  := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_MAIN_DATA))
-
-# ------------------------------------------------------------------------------
-# Sub CPU program files
-# ------------------------------------------------------------------------------
 
 SRC_DA_GARDEN_SUB           := $(SRC_PATH_DA_GARDEN_SUB)/main.asm
-OBJ_DA_GARDEN_SUB           := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_SUB))
+
+OBJ_DA_GARDEN_TITLES        := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_TITLES))
+OBJ_DA_GARDEN_MAIN          := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_MAIN))
+OBJ_DA_GARDEN_MAIN_DATA     := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_MAIN_DATA))
+OBJ_DA_GARDEN_SUB           := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_SUB))
+
+DEPEND_DA_GARDEN_TITLES     := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_TITLES))
+DEPEND_DA_GARDEN_MAIN       := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_MAIN))
+DEPEND_DA_GARDEN_MAIN_DATA  := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_MAIN_DATA))
 DEPEND_DA_GARDEN_SUB        := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_SUB))
 
-# ------------------------------------------------------------------------------
-# Track titles files
-# ------------------------------------------------------------------------------
-
-SRC_DA_GARDEN_TITLES        := $(SRC_PATH_DA_GARDEN)/track_titles.asm
-OBJ_DA_GARDEN_TITLES        := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_DA_GARDEN_TITLES))
-DEPEND_DA_GARDEN_TITLES     := $(patsubst %.o,%.d,$(OBJ_DA_GARDEN_TITLES))
-
-# ------------------------------------------------------------------------------
-# Dependencies
-# ------------------------------------------------------------------------------
-
 -include $(DEPEND_DA_GARDEN_MAIN) $(DEPEND_DA_GARDEN_SUB)
+
+# ------------------------------------------------------------------------------
+# Symbol file rules
+# ------------------------------------------------------------------------------
+
+$(OUT_DA_GARDEN_SYMBOLS): $(OUT_DA_GARDEN_TITLES) | $(MISC_PATH)
+	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(OBJ_PATH)/da_garden.sym
+
+# ------------------------------------------------------------------------------
+# Track title data rules
+# ------------------------------------------------------------------------------
+	
+$(OUT_DA_GARDEN_TITLES): $(OBJ_DA_GARDEN_TITLES) | $(FILES_PATH)
+	$(LINKING)
+	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_track_titles.link -symfile $(OBJ_PATH)/da_garden.sym -o $@ $^
+
+$(OBJ_DA_GARDEN_TITLES): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_DA_GARDEN_TITLES)
+	$(ASSEMBLING)
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
+
+$(DEPEND_DA_GARDEN_TITLES): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_DA_GARDEN)
+	$(MAKING_DEPENDS)
+	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
 # ------------------------------------------------------------------------------
 # Main CPU program rules
@@ -78,19 +87,19 @@ $(OUT_DA_GARDEN_MAIN): $(OBJ_DA_GARDEN_MAIN) $(OBJ_DA_GARDEN_MAIN_DATA) | $(FILE
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_main.link -o $@ $^
 
-$(OBJ_DA_GARDEN_MAIN): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DA_GARDEN_MAIN)
+$(OBJ_DA_GARDEN_MAIN): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_DA_GARDEN_MAIN)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(OBJ_DA_GARDEN_MAIN_DATA): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DA_GARDEN_MAIN_DATA)
+$(OBJ_DA_GARDEN_MAIN_DATA): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_DA_GARDEN_MAIN_DATA)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS_ALT) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS_ALT) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_DA_GARDEN_MAIN): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN_MAIN) $(OBJ_PATH_DA_GARDEN_OBJECTS)
+$(DEPEND_DA_GARDEN_MAIN): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_DA_GARDEN_MAIN) $(OBJ_PATH_DA_GARDEN_OBJECTS)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
-$(DEPEND_DA_GARDEN_MAIN_DATA): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN_MAIN)
+$(DEPEND_DA_GARDEN_MAIN_DATA): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_DA_GARDEN_MAIN)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -102,34 +111,11 @@ $(OUT_DA_GARDEN_SUB): $(OBJ_DA_GARDEN_SUB) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_sub.link -o $@ $^
 
-$(OBJ_DA_GARDEN_SUB): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DA_GARDEN_SUB)
+$(OBJ_DA_GARDEN_SUB): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_DA_GARDEN_SUB)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_DA_GARDEN_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN_SUB)
-	$(MAKING_DEPENDS)
-	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
-
-# ------------------------------------------------------------------------------
-# Symbols rules
-# ------------------------------------------------------------------------------
-
-$(OUT_DA_GARDEN_SYMBOLS): $(OUT_DA_GARDEN_TITLES) | $(MISC_PATH)
-	@$(EXTRACT_SYM) $(EXTRACT_SYM_FLAGS) -o $@ $(OBJ_PATH)/da_garden.sym
-
-# ------------------------------------------------------------------------------
-# Track titles rules
-# ------------------------------------------------------------------------------
-
-$(OUT_DA_GARDEN_TITLES): $(OBJ_DA_GARDEN_TITLES) | $(FILES_PATH)
-	$(LINKING)
-	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_DA_GARDEN)/link_track_titles.link -symfile $(OBJ_PATH)/da_garden.sym -o $@ $^
-
-$(OBJ_DA_GARDEN_TITLES): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_DA_GARDEN_TITLES)
-	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
-
-$(DEPEND_DA_GARDEN_TITLES): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN)
+$(DEPEND_DA_GARDEN_SUB): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_DA_GARDEN_SUB)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -137,16 +123,16 @@ $(DEPEND_DA_GARDEN_TITLES): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_DA_GARDEN)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_DA_GARDEN_OBJECTS): | $(OBJ_PATH_DA_GARDEN_MAIN)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_DA_GARDEN):
+	$(call mkdir,$@)
+	
+$(OBJ_PATH_DA_GARDEN_MAIN):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_DA_GARDEN_MAIN): | $(OBJ_PATH_DA_GARDEN)
-	@$(MKDIR) "$@"
-
-$(OBJ_PATH_DA_GARDEN_SUB): | $(OBJ_PATH_DA_GARDEN)
-	@$(MKDIR) "$@"
-
-$(OBJ_PATH_DA_GARDEN): | $(OBJ_PATH)
-	@$(MKDIR) "$@"
-
+$(OBJ_PATH_DA_GARDEN_OBJECTS):
+	$(call mkdir,$@)
+	
+$(OBJ_PATH_DA_GARDEN_SUB): 
+	$(call mkdir,$@)
+	
 # ------------------------------------------------------------------------------

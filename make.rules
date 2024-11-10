@@ -1,4 +1,14 @@
 # ------------------------------------------------------------------------------
+# Make directory
+# ------------------------------------------------------------------------------
+
+define mkdir
+        @$(if ,$(shell which sh) \
+                sh -c 'mkdir -p "$(1)"', \
+                mkdir "$(subst /,\,$(1))")
+endef
+
+# ------------------------------------------------------------------------------
 # Regions
 # ------------------------------------------------------------------------------
 
@@ -20,12 +30,12 @@ endif
 # Folder paths
 # ------------------------------------------------------------------------------
 
-BUILD_PATH            := build/$(REGION_FOLDER)
+SRC_PATH              := source
+INCLUDE_PATH          := include
+BUILD_PATH            := $(BUILD_ROOT_PATH)/$(REGION_FOLDER)
 FILES_PATH            := $(BUILD_PATH)/files
 MISC_PATH             := $(BUILD_PATH)/misc
-OBJ_PATH              := $(BUILD_PATH)/.obj
-INCLUDE_PATH          := include
-SRC_PATH              := source
+OBJ_PATH              := $(BUILD_PATH)/asm
 
 # ------------------------------------------------------------------------------
 # Disc files
@@ -61,18 +71,16 @@ EXTRACT_SYM_FLAGS     := -m asm -v u64
 MAKE_DEPEND_FLAGS     := -i $(INCLUDE_PATH) -i $(MISC_PATH) -r
 MKISOFS_FLAGS         := -quiet -abstract ABS.TXT -biblio BIB.TXT -copyright CPY.TXT -A "SEGA ENTERPRISES" \
                          -V SONIC_CD___ -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid MEGA_CD \
-		         -G $(OUT_DISC_BOOT) -iso-level 1 -pad
-SCD_FILE_TOOL_FLAGS   := -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches
+		         -iso-level 1 -pad
 
 # ------------------------------------------------------------------------------
 # Messages
 # ------------------------------------------------------------------------------
 
-COPYING               = @echo Copying    "$@"
-ASSEMBLING            = @echo Assembling "$<"
-LINKING               = @echo Linking    "$@"
-MAKING_DEPENDS        = @echo Generating "$@"
-BUILDING_DISC         = @echo Building   "$@"
+ASSEMBLING            = @echo Assembling $<
+LINKING               = @echo Linking    $@
+MAKING_DEPENDS        = @echo Generating $@
+BUILDING_DISC         = @echo Building   $@
 
 # ------------------------------------------------------------------------------
 # Output files
@@ -154,10 +162,13 @@ all: $(OUT_DISC)
 # Disc image rules
 # ------------------------------------------------------------------------------
 
-$(OUT_DISC): $(OUT_FILES) $(OUT_DISC_BOOT) | $(BUILD_ROOT_PATH) $(BUILD_PATH) $(FILES_PATH) $(MISC_PATH) $(OBJ_PATH)
+$(OUT_DISC): $(OUT_FILES) $(OUT_DISC_BOOT) | $(FILES_PATH) $(MISC_PATH)
 	$(BUILDING_DISC)
-	@$(SCD_FILE_TOOL) $(SCD_FILE_TOOL_FLAGS) $(FILES_PATH)
-	@$(MKISOFS) $(MKISOFS_FLAGS) -o $@ $(FILES_PATH)
+	@$(if ,$(shell which sh) \
+		cp -a "$(SRC_PATH)/disc/files/." "$(FILES_PATH)", \
+		copy /b /y /v "$(subst /,\,$(SRC_PATH)/disc/files)" "$(subst /,\,$(FILES_PATH))" >NUL)
+	@$(SCD_FILE_TOOL) -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches $(FILES_PATH)
+	@$(MKISOFS) $(MKISOFS_FLAGS) -G $(OUT_DISC_BOOT) -o $@ $(FILES_PATH)
 
 # ------------------------------------------------------------------------------
 # Rules files
@@ -174,19 +185,10 @@ include $(SRC_PATH)/disc/make.rules
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(FILES_PATH): | $(BUILD_PATH)
-	@$(MKDIR) "$@"
+$(FILES_PATH):
+	$(call mkdir,$@)
 	
-$(MISC_PATH): | $(BUILD_PATH)
-	@$(MKDIR) "$@"
-	
-$(OBJ_PATH): | $(BUILD_PATH)
-	@$(MKDIR) "$@"
-
-$(BUILD_PATH): | $(BUILD_ROOT_PATH)
-	@$(MKDIR) "$@"
-	
-$(BUILD_ROOT_PATH):
-	@$(MKDIR) "$@"
+$(MISC_PATH):
+	$(call mkdir,$@)
 
 # ------------------------------------------------------------------------------

@@ -96,7 +96,7 @@ EnterTrackTitle:
 ; ------------------------------------------------------------------------------
 
 WaitTrackSelection:
-	btst	#3,sub_p2_ctrl_hold				; Has right been pressed?
+	btst	#3,ctrl_hold					; Has right been pressed?
 	beq.s	.CheckLeft					; If not, branch
 
 	move.w	#3,obj.routine(a0)				; Set to exit routine
@@ -104,7 +104,7 @@ WaitTrackSelection:
 	bset	#3,obj.flags(a0)				; Mark as moving right
 
 .CheckLeft:
-	btst	#2,sub_p2_ctrl_hold				; Has left been pressed?
+	btst	#2,ctrl_hold					; Has left been pressed?
 	beq.s	.End						; If not, branch
 	
 	move.l	#-$200000,obj.x_speed(a0)			; Move left

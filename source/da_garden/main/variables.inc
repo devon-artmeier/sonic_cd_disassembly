@@ -120,9 +120,9 @@ disable_palette_cycle	rs.b 1					; Disable palette cycle flag
 			rs.b $845
 VARIABLES_SIZE		equ __RS-VARIABLES			; Size of variables area
 
-sub_p2_ctrl_data	equ MCD_MAIN_COMM_14			; Controller data
-sub_p2_ctrl_hold	equ sub_p2_ctrl_data			; Controller held buttons data
-sub_p2_ctrl_tap		equ sub_p2_ctrl_data+1			; Controller tapped buttons data
+ctrl_data		equ MCD_MAIN_COMM_14			; Controller data
+ctrl_hold		equ ctrl_data				; Controller held buttons data
+ctrl_tap		equ ctrl_data+1				; Controller tapped buttons data
 
 ; ------------------------------------------------------------------------------
 ; Copy planet image to VRAM

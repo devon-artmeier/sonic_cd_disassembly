@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Source folder paths
+# Folder paths
 # ------------------------------------------------------------------------------
 
 SRC_PATH_TITLE          := $(SRC_PATH)/title
@@ -7,17 +7,12 @@ SRC_PATH_TITLE_MAIN     := $(SRC_PATH_TITLE)/main
 SRC_PATH_TITLE_OBJECTS  := $(SRC_PATH_TITLE_MAIN)/objects
 SRC_PATH_TITLE_SUB      := $(SRC_PATH_TITLE)/sub
 
-# ------------------------------------------------------------------------------
-# Object folder paths
-# ------------------------------------------------------------------------------
-
-OBJ_PATH_TITLE          := $(OBJ_PATH)/$(SRC_PATH_TITLE)
-OBJ_PATH_TITLE_MAIN     := $(OBJ_PATH)/$(SRC_PATH_TITLE_MAIN)
-OBJ_PATH_TITLE_OBJECTS  := $(OBJ_PATH)/$(SRC_PATH_TITLE_OBJECTS)
-OBJ_PATH_TITLE_SUB      := $(OBJ_PATH)/$(SRC_PATH_TITLE_SUB)
+OBJ_PATH_TITLE_MAIN     := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_TITLE_MAIN))
+OBJ_PATH_TITLE_OBJECTS  := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_TITLE_OBJECTS))
+OBJ_PATH_TITLE_SUB      := $(subst $(SRC_PATH),$(OBJ_PATH),$(SRC_PATH_TITLE_SUB))
 
 # ------------------------------------------------------------------------------
-# Main CPU program files
+# Files
 # ------------------------------------------------------------------------------
 
 SRC_TITLE_MAIN          := $(SRC_PATH_TITLE_MAIN)/main.asm \
@@ -37,12 +32,6 @@ SRC_TITLE_MAIN          := $(SRC_PATH_TITLE_MAIN)/main.asm \
                            $(SRC_PATH_TITLE_OBJECTS)/copyright.asm \
                            $(SRC_PATH_TITLE_MAIN)/tilemap.asm \
                            $(SRC_PATH_TITLE_MAIN)/data.asm
-OBJ_TITLE_MAIN          := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_MAIN))
-DEPEND_TITLE_MAIN       := $(patsubst %.o,%.d,$(OBJ_TITLE_MAIN))
-
-# ------------------------------------------------------------------------------
-# Sub CPU program files
-# ------------------------------------------------------------------------------
 
 SRC_TITLE_SUB           := $(SRC_PATH_TITLE_SUB)/main.asm \
                            $(SRC_PATH_TITLE_SUB)/clouds.asm \
@@ -50,12 +39,12 @@ SRC_TITLE_SUB           := $(SRC_PATH_TITLE_SUB)/main.asm \
                            $(SRC_PATH_TITLE_SUB)/kosinski.asm \
                            $(SRC_PATH_TITLE_SUB)/load_data.asm \
                            $(SRC_PATH_TITLE_SUB)/data.asm
-OBJ_TITLE_SUB           := $(patsubst %.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_SUB))
-DEPEND_TITLE_SUB        := $(patsubst %.o,%.d,$(OBJ_TITLE_SUB))
+                           
+OBJ_TITLE_MAIN          := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_MAIN))
+OBJ_TITLE_SUB           := $(patsubst $(SRC_PATH)/%.asm,$(OBJ_PATH)/%.o,$(SRC_TITLE_SUB))
 
-# ------------------------------------------------------------------------------
-# Dependencies
-# ------------------------------------------------------------------------------
+DEPEND_TITLE_MAIN       := $(patsubst %.o,%.d,$(OBJ_TITLE_MAIN))
+DEPEND_TITLE_SUB        := $(patsubst %.o,%.d,$(OBJ_TITLE_SUB))
 
 -include $(DEPEND_TITLE_MAIN) $(DEPEND_TITLE_SUB)
 
@@ -67,11 +56,11 @@ $(OUT_TITLE_MAIN): $(OBJ_TITLE_MAIN) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_TITLE)/link_main.link -o $@ $^
 
-$(OBJ_TITLE_MAIN): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_TITLE_MAIN)
+$(OBJ_TITLE_MAIN): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_TITLE_MAIN)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_TITLE_MAIN): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_MAIN) $(OBJ_PATH_TITLE_OBJECTS)
+$(DEPEND_TITLE_MAIN): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_TITLE_MAIN) $(OBJ_PATH_TITLE_OBJECTS)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -83,11 +72,11 @@ $(OUT_TITLE_SUB): $(OBJ_TITLE_SUB) | $(FILES_PATH)
 	$(LINKING)
 	@$(VLINK) $(VLINK_FLAGS) -T $(SRC_PATH_TITLE)/link_sub.link -o $@ $^
 
-$(OBJ_TITLE_SUB): $(OBJ_PATH)/%.o: %.asm | $(DEPEND_TITLE_SUB)
+$(OBJ_TITLE_SUB): $(OBJ_PATH)/%.o: $(SRC_PATH)/%.asm | $(DEPEND_TITLE_SUB)
 	$(ASSEMBLING)
-	@$(VASM_M68K) $(VASM_M68K_FLAGS) -o $@ $<
+	@$(VASM_M68K) $(VASM_M68K_FLAGS) -L $(patsubst %.o,%.lst,$@) -o $@ $<
 
-$(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
+$(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: $(SRC_PATH)/%.asm | $(OBJ_PATH_TITLE_SUB)
 	$(MAKING_DEPENDS)
 	@$(MAKE_DEPEND) $(MAKE_DEPEND_FLAGS) -o $@ $(patsubst %.d,%.o,$@) $<
 
@@ -95,16 +84,13 @@ $(DEPEND_TITLE_SUB): $(OBJ_PATH)/%.d: %.asm | $(OBJ_PATH_TITLE_SUB)
 # Create folders
 # ------------------------------------------------------------------------------
 
-$(OBJ_PATH_TITLE_OBJECTS): | $(OBJ_PATH_TITLE_MAIN)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_TITLE_MAIN):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_TITLE_MAIN): | $(OBJ_PATH_TITLE)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_TITLE_OBJECTS):
+	$(call mkdir,$@)
 
-$(OBJ_PATH_TITLE_SUB): | $(OBJ_PATH_TITLE)
-	@$(MKDIR) "$@"
-
-$(OBJ_PATH_TITLE): | $(OBJ_PATH)
-	@$(MKDIR) "$@"
+$(OBJ_PATH_TITLE_SUB):
+	$(call mkdir,$@)
 
 # ------------------------------------------------------------------------------
