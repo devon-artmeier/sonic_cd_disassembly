@@ -1,10 +1,8 @@
 # ------------------------------------------------------------------------------
-# Make directory
+# Commands
 # ------------------------------------------------------------------------------
 
-define mkdir
-	@sh -c 'mkdir -p "$(1)"' > $(NULL) || mkdir "$(subst /,\,$(1))"
-endef
+include make.cmds
 
 # ------------------------------------------------------------------------------
 # Regions
@@ -162,7 +160,7 @@ all: $(OUT_DISC)
 
 $(OUT_DISC): $(OUT_FILES) $(OUT_DISC_BOOT) | $(FILES_PATH) $(MISC_PATH)
 	$(BUILDING_DISC)
-	@sh -c 'cp -a "$(SRC_PATH)/disc/files/." "$(FILES_PATH)"' > $(NULL) || copy /b /y /v "$(subst /,\,$(SRC_PATH)/disc/files)" "$(subst /,\,$(FILES_PATH))" > $(NULL)
+	$(call copy,$(SRC_PATH)/disc/files/.,$(FILES_PATH))
 	@$(SCD_FILE_TOOL) -r $(REGION) -i $(OUT_DISC_IP) -s $(OUT_DISC_SP) -p patches $(FILES_PATH)
 	@$(MKISOFS) $(MKISOFS_FLAGS) -G $(OUT_DISC_BOOT) -o $@ $(FILES_PATH)
 
