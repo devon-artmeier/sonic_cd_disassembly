@@ -1,4 +1,5 @@
 build/
+original/
 *.o
 *.lst
 *.sym
