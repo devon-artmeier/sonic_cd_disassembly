@@ -207,6 +207,7 @@ static AnalyzeObject(addr, name)
 	
 	MakeName(addr, name);
 	AnalyzeObjCode(addr, name);
+	Wait();
 	
 	DeleteArray(addrs);
 	DeleteArray(tables);

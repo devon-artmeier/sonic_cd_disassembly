@@ -23,15 +23,32 @@ extern SectionInitArtLists;
 extern SectionUpdateArtLists;
 extern InitMapObjectSpawn;
 extern UpdateMapObjectSpawn;
+extern VBlankRoutines;
 extern VBlankGeneral;
 extern VBlankUpdates;
 extern NullMapObjects;
 extern CheckObjectDespawn2;
+extern RunStageEvents;
+extern StageEvents;
+extern RunStageEventsR1;
+extern RunStageEventsR3;
+extern RunStageEventsR4;
+extern RunStageEventsR5;
+extern RunStageEventsR6;
+extern RunStageEventsR7;
+extern RunStageEventsR8;
+extern RunStageEventsR13;
+extern CheckBossStart;
+extern SetBossBoundaries;
 extern debug_speed;
-extern section_count;
 
 static DefineKnownFunctions(void)
 {
+	if (file_id == 0 || file_id == 1 || file_id == 4 || file_id == 5) {
+		StartFunction(0x200188, "CyclePaletteOld");
+		StartFunction(0x200228, "DoCyclePalette");
+	}
+	
 	DrawHudPosition = StartFuncFromOp(UpdateHud + 8, "DrawHudPosition", 0);
 	DrawHudNumber = StartFuncFromOp(UpdateHud + 0x4E, "DrawHudNumber", 0);
 	ResetHudScore = StartFuncFromOp(UpdateHud + 0x60, "ResetHudScore", 0);
@@ -54,23 +71,6 @@ static DefineKnownFunctions(void)
 	}
 	
 	auto idx, idx_2, count;
-	
-	VBlank = 0;
-	HBlank = 0;
-	ObjectIndex = 0;
-	ArtListIndex = 0;
-	MapIndex = 0;
-	SectionRanges = 0;
-	SectionInitArtLists = 0;
-	SectionUpdateArtLists = 0;
-	InitMapObjectSpawn = 0;
-	UpdateMapObjectSpawn = 0;
-	VBlankGeneral = 0;
-	VBlankUpdates = 0;
-	NullMapObjects = 0;
-	CheckObjectDespawn2 = 0;
-	debug_speed = 0;
-	section_count = 0;
 	
 	SetMacro(0x200000, 0x100, "mmd 0, WORD_RAM_2M, 0, StartEntry, HBlankEntry, VBlankEntry");
 	
@@ -147,7 +147,7 @@ static DefineKnownFunctions(void)
 		SectionUpdateArtLists = NameFromOp(UpdateSectionArt + 0x24, "SectionUpdateArtLists", 0);
 
 		auto done = 0;
-		section_count = 0;
+		auto section_count = 0;
 		while (done == 0) {
 			MakeWord(SectionRanges + (section_count * 2));
 			if (Word(SectionRanges + (section_count * 2)) == 0xFFFF) {
@@ -191,25 +191,25 @@ static DefineKnownFunctions(void)
 		ForceWord(idx + 6);
 	}
 	
-	auto vblankPos = VBlank;
-	while (Word(vblankPos) != 0x4EBB) {
-		vblankPos = vblankPos + 2;
+	auto vblank_pos = VBlank;
+	while (Word(vblank_pos) != 0x4EBB) {
+		vblank_pos = vblank_pos + 2;
 	}
-	auto vintTable = NameFromOp(vblankPos, "VBlankRoutines", 0);
+	VBlankRoutines = NameFromOp(vblank_pos, "VBlankRoutines", 0);
 	
-	SetTableOffFunc(vintTable, 0, "VBlankLag");
-	VBlankGeneral = SetTableOffFunc(vintTable, 2, "VBlankGeneral");
-	SetTableOffFunc(vintTable, 4, "VBlankS1Title");
-	SetTableOffFunc(vintTable, 6, "VBlankUnknown6");
-	SetTableOffFunc(vintTable, 8, "VBlankStage");
-	SetTableOffFunc(vintTable, 0xA, "VBlankS1SpecialStage");
-	SetTableOffFunc(vintTable, 0xC, "VBlankStageLoad");
-	SetTableOffFunc(vintTable, 0xE, "VBlankUnknownE");
-	SetTableOffFunc(vintTable, 0x10, "VBlankPause");
-	SetTableOffFunc(vintTable, 0x12, "VBlankFade");
-	SetTableOffFunc(vintTable, 0x14, "VBlankS1Sega");
-	SetTableOffFunc(vintTable, 0x16, "VBlankS1Continue");
-	SetTableOffFunc(vintTable, 0x18, "VBlankStageLoad");
+	SetTableOffFunc(VBlankRoutines, 0, "VBlankLag");
+	VBlankGeneral = SetTableOffFunc(VBlankRoutines, 2, "VBlankGeneral");
+	SetTableOffFunc(VBlankRoutines, 4, "VBlankS1Title");
+	SetTableOffFunc(VBlankRoutines, 6, "VBlankUnknown6");
+	SetTableOffFunc(VBlankRoutines, 8, "VBlankStage");
+	SetTableOffFunc(VBlankRoutines, 0xA, "VBlankS1SpecialStage");
+	SetTableOffFunc(VBlankRoutines, 0xC, "VBlankStageLoad");
+	SetTableOffFunc(VBlankRoutines, 0xE, "VBlankUnknownE");
+	SetTableOffFunc(VBlankRoutines, 0x10, "VBlankPause");
+	SetTableOffFunc(VBlankRoutines, 0x12, "VBlankFade");
+	SetTableOffFunc(VBlankRoutines, 0x14, "VBlankS1Sega");
+	SetTableOffFunc(VBlankRoutines, 0x16, "VBlankS1Continue");
+	SetTableOffFunc(VBlankRoutines, 0x18, "VBlankStageLoad");
 	
 	VBlankUpdates = StartFuncFromOp(VBlankGeneral, "VBlankUpdates", 0);
 	
@@ -227,4 +227,52 @@ static DefineKnownFunctions(void)
 		SetTableOffFunc(idx, 2, "WaterEventsAct2");
 		SetTableOffFunc(idx, 4, "WaterEventsAct3");
 	}
+
+	if (file_id == 0) {
+		RunStageEvents = StartFuncFromOp(ScrollMap + 0x20, "RunStageEvents", 0);
+	} else {
+		RunStageEvents = StartFuncFromOp(ScrollMap + 0x24, "RunStageEvents", 0);
+	}
+	
+	StageEvents = NameFromOp(RunStageEvents + 0xE, "StageEvents", 0);
+	RunStageEventsR1 = SetTableOffFunc(StageEvents, 0, "RunStageEventsR1");
+	RunStageEventsR3 = SetTableOffFunc(StageEvents, 2, "RunStageEventsR3");
+	RunStageEventsR4 = SetTableOffFunc(StageEvents, 4, "RunStageEventsR4");
+	RunStageEventsR5 = SetTableOffFunc(StageEvents, 6, "RunStageEventsR5");
+	RunStageEventsR6 = SetTableOffFunc(StageEvents, 8, "RunStageEventsR6");
+	RunStageEventsR7 = SetTableOffFunc(StageEvents, 0xA, "RunStageEventsR7");
+	RunStageEventsR8 = SetTableOffFunc(StageEvents, 0xC, "RunStageEventsR8");
+
+	auto events_table = NameFromOp(RunStageEventsR1 + 0xE, "StageEventsR1", 0);
+	SetTableOffFunc(events_table, 0, "RunStageEventsR11");
+	SetTableOffFunc(events_table, 2, "RunStageEventsR12");
+	RunStageEventsR13 = SetTableOffFunc(events_table, 4, "RunStageEventsR13");
+
+	events_table = NameFromOp(RunStageEventsR3 + 0xE, "StageEventsR3", 0);
+	SetTableOffFunc(events_table, 0, "RunStageEventsR312");
+	SetTableOff(events_table, 2, "");
+	SetTableOffFunc(events_table, 4, "RunStageEventsR33");
+
+	events_table = NameFromOp(RunStageEventsR4 + 0xE, "StageEventsR4", 0);
+	SetTableOffFunc(events_table, 0, "RunStageEventsR41");
+	SetTableOffFunc(events_table, 2, "RunStageEventsR42");
+	SetTableOffFunc(events_table, 4, "RunStageEventsR43");
+
+	events_table = NameFromOp(RunStageEventsR5 + 0xE, "StageEventsR5", 0);
+	SetTableOffFunc(events_table, 0, "RunStageEventsR512");
+	SetTableOff(events_table, 2, "");
+	SetTableOffFunc(events_table, 4, "RunStageEventsR53");
+
+	events_table = NameFromOp(RunStageEventsR7 + 0xE, "StageEventsR7", 0);
+	SetTableOffFunc(events_table, 0, "RunStageEventsR71");
+	SetTableOffFunc(events_table, 2, "RunStageEventsR72");
+	SetTableOffFunc(events_table, 4, "RunStageEventsR73");
+
+	events_table = NameFromOp(RunStageEventsR8 + 0xE, "StageEventsR8", 0);
+	SetTableOffFunc(events_table, 0, "RunStageEventsR812");
+	SetTableOff(events_table, 2, "");
+	SetTableOffFunc(events_table, 4, "RunStageEventsR83");
+	
+	CheckBossStart = StartFuncFromOp(RunStageEventsR13 + 0x14, "CheckBossStart", 0);
+	SetBossBoundaries = StartFuncFromOp(CheckBossStart + 4, "SetBossBoundaries", 0);
 }

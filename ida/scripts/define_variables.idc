@@ -311,8 +311,8 @@ static DefineMemory(void)
 
 	DeleteSegment(0x200000, 0x240000);
 	DeleteSegment(0xFF0F00, 0xFF5000);
-	DeleteSegment(0xFFA000, 0xFFFD00);
-	DeleteSegment(0xFFFFA000, 0xFFFFFD00);
+	DeleteSegment(0xFFA000, 0xFFFC00);
+	DeleteSegment(0xFFFFA000, 0xFFFFFC00);
 	DeleteSegment(0xC00000, 0xC0000A);
 	DeleteSegment(0xA00000, 0xA02000);
 	DeleteSegment(0xA10000, 0xA1000E);
@@ -330,7 +330,7 @@ static DefineMemory(void)
 	CreateSegment(0x200000, 0x240000, "WORD_RAM");
 
 	CreateSegment(0xFF0F00, 0xFF5000, "RAM_LOW");
-	CreateSegment(0xFFFFA000 & addr_mask, 0xFFFFFD00 & addr_mask, "RAM_HIGH");
+	CreateSegment(0xFFFFA000 & addr_mask, 0xFFFFFC00 & addr_mask, "RAM_HIGH");
 	
 	CreateSegment(0xC00000, 0xC0000A, "VDP");
 	DefineVariable(0xC00000, "VDP_DATA", 4);
@@ -549,12 +549,15 @@ static DefineMemory(void)
 	DefineVariable(0xFFFFA800 & addr_mask, "parallax_buffer", 0x200);
 	DefineVariable(0xFFFFAA00 & addr_mask, "nem_code_table", 0x200);
 	DefineVariable(0xFFFFAC00 & addr_mask, "object_draw_queue", 0x400);
+	DefineVariable(0xFFFFB000 & addr_mask, "", 0x1800);
 	DefineVariable(0xFFFFC800 & addr_mask, "player_art_buffer", 0x300);
 	DefineVariable(0xFFFFCB00 & addr_mask, "player_positions", 0x100);
 	DefineVariable(0xFFFFCC00 & addr_mask, "hscroll_lines", 0x400);
+	DefineVariable(0xFFFFF000 & addr_mask, "", 0xA);
 	DefineVariable(0xFFFFF00A & addr_mask, "fm_queue_1", 1);
 	DefineVariable(0xFFFFF00B & addr_mask, "fm_queue_2", 1);
 	DefineVariable(0xFFFFF00C & addr_mask, "fm_queue_3", 1);
+	DefineVariable(0xFFFFF00D & addr_mask, "", 0x5F3);
 	DefineVariable(0xFFFFF600 & addr_mask, "game_mode", 1);
 	DefineVariable(0xFFFFF602 & addr_mask, "player_control_hold", 1);
 	DefineVariable(0xFFFFF603 & addr_mask, "player_control_tap", 1);
