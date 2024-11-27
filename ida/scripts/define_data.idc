@@ -2582,7 +2582,6 @@ extern Spr_20F02C;
 extern Ani_20F6E8;
 extern Spr_20F6FE;
 extern Spr_20F818;
-extern Spr_21F602;
 extern Spr_23F484;
 extern Spr_23F4AE;
 extern Pal_20085E;
@@ -5283,7 +5282,6 @@ static DefineData(void)
 	Ani_20F6E8 = 0;
 	Spr_20F6FE = 0;
 	Spr_20F818 = 0;
-	Spr_21F602 = 0;
 	Spr_23F484 = 0;
 	Spr_23F4AE = 0;
 	Pal_20085E = 0;
@@ -51916,9 +51914,6 @@ static DefineData(void)
 		SignSprites = 0x21F584;
 		MakeName(0x21F584, "SignSprites");
 		AnalyzeSprites(0x21F584, "@SignSprites", 6);
-		Spr_21F602 = 0x21F602;
-		MakeName(0x21F602, "Spr_21F602");
-		AnalyzeSprites(0x21F602, "@Spr_21F602", 2);
 		SonicArt = 0x220000;
 		MakeName(0x220000, "SonicArt");
 		DefineFile(0x220000, 59232, "R82C/ArtUnc/SonicArt.bin");
